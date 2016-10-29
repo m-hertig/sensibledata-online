@@ -22,7 +22,6 @@ app = Flask(__name__, static_url_path='')
 CORS(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-
 @app.route("/")
 def hello():
     return "Hello World!"
@@ -119,4 +118,4 @@ def get_picture(path):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0',debug=True)
