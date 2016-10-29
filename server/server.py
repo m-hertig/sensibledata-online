@@ -13,8 +13,9 @@ rekognition_url = "http://rekognition.com/func/api/"
 api_key = "yHvz5xQExIxdKT1M"
 api_secret = "IoAdfLyIgoPBn8VB"
 
-elasticsearch_url = "http://localhost:9200"
-elasticsearch_index_url = "http://localhost:9200/ppl/p/%s"
+#elasticsearch_url = "http://localhost:9200"
+elasticsearch_url = "http://data.iterativ.ch:9200"
+elasticsearch_index_url = elasticsearch_url+"/ppl/p/%s"
 
 UPLOAD_FOLDER = './uploads'
 
