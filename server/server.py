@@ -15,7 +15,7 @@ api_secret = "IoAdfLyIgoPBn8VB"
 
 #elasticsearch_url = "http://localhost:9200"
 elasticsearch_url = "http://data.iterativ.ch:9200"
-elasticsearch_index_url = elasticsearch_url+"/ppl/p/%s"
+elasticsearch_index_url = elasticsearch_url+"/moods/mood/%s"
 
 UPLOAD_FOLDER = './uploads'
 
@@ -88,7 +88,7 @@ def upload():
                 print "Trying to put data into elasticsearch"
 
                 es = Elasticsearch(
-                    ['localhost:9200'],
+                    [elasticsearch_url],
                     # port=80,
                     # use_ssl=True,
                     # verify_certs=True,
