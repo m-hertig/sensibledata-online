@@ -29,9 +29,8 @@ const AlbumHitsGridItem = (props)=> {
     return (
       <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
         <a href={url} target="_blank">
-          <img data-qa="poster" className={bemBlocks.item("poster")} src={url} width="200" height="200"/>
-          <div data-qa="title" className={bemBlocks.item("title")}>Beauty: {source.beauty}</div>
-          <div data-qa="title" className={bemBlocks.item("title")}>Age: {source.age}</div>
+          <img data-qa="face" className={bemBlocks.item("face")} src={url} width="200" height="200"/>
+          <div data-qa="title" className={bemBlocks.item("title")}>{source.beauty}% / {source.age}yrs</div>
         </a>
       </div>
     )
@@ -43,13 +42,9 @@ export class SearchPage extends React.Component {
 		return (
 			<SearchkitProvider searchkit={searchkit}>
 		    <Layout>
-		      <TopBar>
-		        <SearchBox
-		          autofocus={true}
-		          searchOnChange={true}
-							placeholder="Search faces..."
-		          prefixQueryFields={["age", "mood", "beauty"]}/>
-		      </TopBar>
+		      {/*<TopBar>
+          <img src="logo.png" alt="logo" />
+		       </TopBar>*/}
 		      <LayoutBody>
 		        <SideBar>
             <RangeFilter
@@ -79,9 +74,9 @@ export class SearchPage extends React.Component {
 		              <HitsStats/>
                   <ViewSwitcherToggle/>
 									<SortingSelector options={[
-										{label:"Relevance", field:"_score", order:"desc", defaultOption:true},
-										{label:"Latest Releases", field:"released", order:"desc"},
-										{label:"Earliest Releases", field:"released", order:"asc"}
+										{label:"Newest first", field:"timestamp", order:"desc", defaultOption:true},
+										{label:"Beauty low to high", field:"beauty", order:"asc"},
+										{label:"Beauty high to low", field:"beauty", order:"desc"}
 									]}/>
 		            </ActionBarRow>
 		            <ActionBarRow>

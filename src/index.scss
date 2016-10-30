@@ -1,1 +1,17 @@
+body,
+a {
+  color: red !important;
+}
 
+.sk-layout {
+  background-color: white;
+}
+
+.sk-layout__filters,
+.sk-layout__results {
+  box-shadow: none;
+}
+
+.sk-toggle {
+  display: none;
+}

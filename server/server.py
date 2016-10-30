@@ -8,22 +8,14 @@ from flask_cors import CORS, cross_origin
 from flask import request
 from werkzeug.utils import secure_filename
 import requests, json, sys
-
-rekognition_url = "http://rekognition.com/func/api/"
-api_key = "yHvz5xQExIxdKT1M"
-api_secret = "IoAdfLyIgoPBn8VB"
-
-pictures_url = "http://195.141.112.151:8000/server/uploads/"
-
-#elasticsearch_url = "http://localhost:9200"
-elasticsearch_url = "http://data.iterativ.ch:9200"
-elasticsearch_index_url = elasticsearch_url+"/moods/mood/%s"
+from configobj import ConfigObj
 
 UPLOAD_FOLDER = './uploads'
 
 app = Flask(__name__, static_url_path='')
 CORS(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 
 @app.route("/")
 def hello():
@@ -32,6 +24,8 @@ def hello():
 
 @app.route("/upload", methods=['POST'])
 def upload():
+    configobj = ConfigObj('server.config')
+    print configobj["rekognition_api_key"]
     print 'hallo uploader!!!!'
     req = request
     if request.method == 'POST':
@@ -42,11 +36,13 @@ def upload():
                 filename = secure_filename(str(uuid.uuid4())+".jpg")
                 webcam_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-		picture_url = pictures_url+filename
+		        #picture_url = config[pictures_url]+filename
+                picture_url = "http://idowebsites.ch/sensibleData/imageToAnalyze.jpg";
                 print 'saved? %s ' % picture_url
-                data = {'api_key':api_key, 'api_secret':api_secret, 'jobs':'face_gender_emotion_age_beauty', 'urls':picture_url}
+                print "api key: "+configobj["rekognition_api_key"];
+                data = {'api_key':configobj["rekognition_api_key"], 'api_secret':configobj["rekognition_api_secret"], 'jobs':'face_gender_emotion_age_beauty', 'urls':picture_url}
                 print "Trying to get Face Analysis from Rekognition"
-                r = requests.get(rekognition_url, params=data)
+                r = requests.get(configobj["rekognition_url"], params=data)
                 jsondata =  r.json()
                 # sample jsondata = {u'url': u'https://www.dropbox.com/s/m8gkdlh6zdeea9e/2015-05-16%2016.13.08.jpg?dl=1', u'face_detection': [{u'emotion': {u'calm': 0.03, u'confused': 0.28, u'sad': 0.09}, u'confidence': 0.99, u'beauty': 0.12593, u'pose': {u'yaw': 0.08, u'roll': 0.1, u'pitch': 14.79}, u'sex': 1, u'race': {u'white': 0.58}, u'boundingbox': {u'tl': {u'y': 48.46, u'x': 139.23}, u'size': {u'width': 376.15, u'height': 376.15}}, u'smile': 0, u'quality': {u'brn': 0.51, u'shn': 1.6}, u'mustache': 0, u'beard': 0}], u'ori_img_size': {u'width': 576, u'height': 576}, u'usage': {u'status': u'Succeed.', u'quota': 19968, u'api_id': u'yHvz5xQExIxdKT1M'}}
                 print "Got it"
@@ -85,12 +81,12 @@ def upload():
                     print "error parsing data"
 
                 # here comes the elasticsearch index command
-                data = {'beauty':beauty, 'age':age, 'gender':sex, 'mood':mood, 'file':pictures_url+filename}
+                data = {'beauty':beauty, 'age':age, 'gender':sex, 'mood':mood, 'file':configobj["pictures_url"]+filename, 'timestamp':time.time()}
                 print data
                 print "Trying to put data into elasticsearch"
 
                 es = Elasticsearch(
-                    [elasticsearch_url],
+                    [configobj["elasticsearch_url"]],
                     # port=80,
                     # use_ssl=True,
                     # verify_certs=True,
@@ -102,7 +98,7 @@ def upload():
                 except Exception as e:
                     print e
 
-                #target_url = elasticsearch_index_url % filename
+                #target_url = config[config[elasticsearch_index_url]] % filename
                 #r = requests.put(target_url, data=json.dumps(data))
                 #jsondata =  r.json()
                 # sample jsondata = {u'url': u'https://www.dropbox.com/s/m8gkdlh6zdeea9e/2015-05-16%2016.13.08.jpg?dl=1', u'face_detection': [{u'emotion': {u'calm': 0.03, u'confused': 0.28, u'sad': 0.09}, u'confidence': 0.99, u'beauty': 0.12593, u'pose': {u'yaw': 0.08, u'roll': 0.1, u'pitch': 14.79}, u'sex': 1, u'race': {u'white': 0.58}, u'boundingbox': {u'tl': {u'y': 48.46, u'x': 139.23}, u'size': {u'width': 376.15, u'height': 376.15}}, u'smile': 0, u'quality': {u'brn': 0.51, u'shn': 1.6}, u'mustache': 0, u'beard': 0}], u'ori_img_size': {u'width': 576, u'height': 576}, u'usage': {u'status': u'Succeed.', u'quota': 19968, u'api_id': u'yHvz5xQExIxdKT1M'}}
