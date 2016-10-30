@@ -13,6 +13,8 @@ rekognition_url = "http://rekognition.com/func/api/"
 api_key = "yHvz5xQExIxdKT1M"
 api_secret = "IoAdfLyIgoPBn8VB"
 
+pictures_url = "http://195.141.112.151:8000/server/uploads/"
+
 #elasticsearch_url = "http://localhost:9200"
 elasticsearch_url = "http://data.iterativ.ch:9200"
 elasticsearch_index_url = elasticsearch_url+"/moods/mood/%s"
@@ -40,9 +42,9 @@ def upload():
                 filename = secure_filename(str(uuid.uuid4())+".jpg")
                 webcam_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-                print 'saved? %s ' % filename
-
-                data = {'api_key':api_key, 'api_secret':api_secret, 'jobs':'face_gender_emotion_age_beauty', 'urls':'http://idowebsites.ch/sensibleData/imageToAnalyze.jpg'}
+		picture_url = pictures_url+filename
+                print 'saved? %s ' % picture_url
+                data = {'api_key':api_key, 'api_secret':api_secret, 'jobs':'face_gender_emotion_age_beauty', 'urls':picture_url}
                 print "Trying to get Face Analysis from Rekognition"
                 r = requests.get(rekognition_url, params=data)
                 jsondata =  r.json()
@@ -83,7 +85,7 @@ def upload():
                     print "error parsing data"
 
                 # here comes the elasticsearch index command
-                data = {'beauty':beauty, 'age':age, 'gender':sex, 'mood':mood, 'file':"http://localhost:8000/server/uploads/"+filename}
+                data = {'beauty':beauty, 'age':age, 'gender':sex, 'mood':mood, 'file':pictures_url+filename}
                 print data
                 print "Trying to put data into elasticsearch"
 
