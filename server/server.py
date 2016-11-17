@@ -87,14 +87,14 @@ def upload():
 
                 es = Elasticsearch(
                     [configobj["elasticsearch_url"]],
-                    # port=80,
-                    # use_ssl=True,
+                    #port=80,
+                    #use_ssl=True,
                     # verify_certs=True,
                     # ca_certs=certifi.where(),
                     request_timeout=1000
                 )
                 try:
-                    es.index(index='moods', doc_type='mood', body=data)
+                    es.index(index='faces', doc_type='face', body=data)
                 except Exception as e:
                     print e
 

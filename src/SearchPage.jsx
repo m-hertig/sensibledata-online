@@ -13,7 +13,7 @@ import {
 
 require("./index.scss");
 
-const host = "https://search-sensibledata-mnmvjeckzqxbuqjpnrlamqgxhu.eu-central-1.es.amazonaws.com/moods";
+const host = "https://search-sensibledata-mnmvjeckzqxbuqjpnrlamqgxhu.eu-central-1.es.amazonaws.com/faces";
 const searchkit = new SearchkitManager(host);
 
 const AlbumHitsGridItem = (props)=> {
