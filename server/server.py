@@ -36,8 +36,8 @@ def upload():
                 filename = secure_filename(str(uuid.uuid4())+".jpg")
                 webcam_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-		        #picture_url = config[pictures_url]+filename
-                picture_url = "http://idowebsites.ch/sensibleData/imageToAnalyze.jpg";
+		picture_url = configobj["pictures_url"]+filename
+                #picture_url = "http://idowebsites.ch/sensibleData/imageToAnalyze.jpg";
                 print 'saved? %s ' % picture_url
                 print "api key: "+configobj["rekognition_api_key"];
                 data = {'api_key':configobj["rekognition_api_key"], 'api_secret':configobj["rekognition_api_secret"], 'jobs':'face_gender_emotion_age_beauty', 'urls':picture_url}
