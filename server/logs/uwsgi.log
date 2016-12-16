@@ -1,0 +1,531 @@
+*** Starting uWSGI 2.0.14 (64bit) on [Fri Dec 16 11:16:03 2016] ***
+compiled with version: 4.8.5 20150623 (Red Hat 4.8.5-4) on 01 December 2016 18:00:39
+os: Linux-3.10.0-327.36.3.el7.x86_64 #1 SMP Mon Oct 24 16:09:20 UTC 2016
+nodename: mhertig.localdomain
+machine: x86_64
+clock source: unix
+detected number of CPU cores: 1
+current working directory: /home/mhertig/sensibledata-online/server
+detected binary path: /home/mhertig/sensibledata-online/projectenv/bin/uwsgi
+!!! no internal routing support, rebuild with pcre support !!!
+your processes number limit is 3818
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /usr/share/nginx/html/socket/sensibledata.sock fd 3
+Python version: 2.7.5 (default, Nov  6 2016, 00:28:07)  [GCC 4.8.5 20150623 (Red Hat 4.8.5-11)]
+*** Python threads support is disabled. You can enable it with --enable-threads ***
+Python main interpreter initialized at 0x979c10
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 436560 bytes (426 KB) for 5 cores
+*** Operational MODE: preforking ***
+WSGI app 0 (mountpoint='') ready in 1 seconds on interpreter 0x979c10 pid: 4079 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 4079)
+spawned uWSGI worker 1 (pid: 4088, cores: 1)
+spawned uWSGI worker 2 (pid: 4089, cores: 1)
+spawned uWSGI worker 3 (pid: 4090, cores: 1)
+spawned uWSGI worker 4 (pid: 4091, cores: 1)
+spawned uWSGI worker 5 (pid: 4092, cores: 1)
+[pid: 4088|app: 0|req: 1/1] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:16:53 2016] GET /upload => generated 233 bytes in 9 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 4088|app: 0|req: 2/2] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:16:54 2016] GET /upload => generated 233 bytes in 0 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 4088|app: 0|req: 3/3] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:16:54 2016] GET /upload => generated 233 bytes in 0 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 4089|app: 0|req: 1/4] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:16:54 2016] GET /upload => generated 233 bytes in 13 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 4088|app: 0|req: 4/5] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:16:55 2016] GET /upload => generated 233 bytes in 0 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 4088|app: 0|req: 5/6] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:16:55 2016] GET /upload => generated 233 bytes in 0 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 4091|app: 0|req: 1/7] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:16:55 2016] GET /upload => generated 233 bytes in 9 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 4088|app: 0|req: 6/8] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:18:13 2016] GET /upload => generated 233 bytes in 0 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 4089|app: 0|req: 2/9] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:18:13 2016] GET /upload => generated 233 bytes in 0 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 4091|app: 0|req: 2/10] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:18:14 2016] GET /upload => generated 233 bytes in 0 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 4090|app: 0|req: 1/11] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:18:14 2016] GET /upload => generated 233 bytes in 9 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 4088|app: 0|req: 7/12] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:18:14 2016] GET /upload => generated 233 bytes in 0 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 4089|app: 0|req: 3/13] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:18:15 2016] GET /upload => generated 233 bytes in 0 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 4090|app: 0|req: 2/14] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:18:15 2016] GET /upload => generated 233 bytes in 0 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 4092|app: 0|req: 1/15] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:18:15 2016] GET /upload => generated 233 bytes in 11 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 4088|app: 0|req: 8/16] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:18:16 2016] GET /upload => generated 233 bytes in 0 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 4091|app: 0|req: 3/17] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:18:16 2016] GET /upload => generated 233 bytes in 0 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+worker 5 buried after 1 seconds
+goodbye to uWSGI.
+VACUUM: unix socket /usr/share/nginx/html/socket/sensibledata.sock removed.
+*** Starting uWSGI 2.0.14 (64bit) on [Fri Dec 16 11:19:46 2016] ***
+compiled with version: 4.8.5 20150623 (Red Hat 4.8.5-4) on 01 December 2016 18:00:39
+os: Linux-3.10.0-327.36.3.el7.x86_64 #1 SMP Mon Oct 24 16:09:20 UTC 2016
+nodename: mhertig.localdomain
+machine: x86_64
+clock source: unix
+detected number of CPU cores: 1
+current working directory: /home/mhertig/sensibledata-online/server
+detected binary path: /home/mhertig/sensibledata-online/projectenv/bin/uwsgi
+!!! no internal routing support, rebuild with pcre support !!!
+your processes number limit is 3818
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /usr/share/nginx/html/socket/sensibledata.sock fd 3
+Python version: 2.7.5 (default, Nov  6 2016, 00:28:07)  [GCC 4.8.5 20150623 (Red Hat 4.8.5-11)]
+*** Python threads support is disabled. You can enable it with --enable-threads ***
+Python main interpreter initialized at 0x2087c10
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 436560 bytes (426 KB) for 5 cores
+*** Operational MODE: preforking ***
+Traceback (most recent call last):
+  File "./wsgi.py", line 1, in <module>
+    from testapp  import application
+  File "./testapp.py", line 9, in <module>
+    @application.route("/upload")
+  File "/home/mhertig/sensibledata-online/projectenv/lib/python2.7/site-packages/flask/app.py", line 1097, in decorator
+    self.add_url_rule(rule, endpoint, f, **options)
+  File "/home/mhertig/sensibledata-online/projectenv/lib/python2.7/site-packages/flask/app.py", line 65, in wrapper_func
+    return f(self, *args, **kwargs)
+  File "/home/mhertig/sensibledata-online/projectenv/lib/python2.7/site-packages/flask/app.py", line 1068, in add_url_rule
+    'existing endpoint function: %s' % endpoint)
+AssertionError: View function mapping is overwriting an existing endpoint function: hello
+unable to load app 0 (mountpoint='') (callable not found or import error)
+*** no app loaded. going in full dynamic mode ***
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 4234)
+spawned uWSGI worker 1 (pid: 4240, cores: 1)
+spawned uWSGI worker 2 (pid: 4241, cores: 1)
+spawned uWSGI worker 3 (pid: 4242, cores: 1)
+spawned uWSGI worker 4 (pid: 4243, cores: 1)
+spawned uWSGI worker 5 (pid: 4244, cores: 1)
+--- no python application found, check your startup logs for errors ---
+[pid: 4240|app: -1|req: -1/1] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:19:49 2016] GET /upload => generated 21 bytes in 0 msecs (HTTP/1.1 500) 2 headers in 83 bytes (0 switches on core 0)
+--- no python application found, check your startup logs for errors ---
+[pid: 4240|app: -1|req: -1/2] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:19:51 2016] GET /upload => generated 21 bytes in 0 msecs (HTTP/1.1 500) 2 headers in 83 bytes (0 switches on core 0)
+--- no python application found, check your startup logs for errors ---
+[pid: 4241|app: -1|req: -1/3] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:19:52 2016] GET /upload => generated 21 bytes in 0 msecs (HTTP/1.1 500) 2 headers in 83 bytes (0 switches on core 0)
+--- no python application found, check your startup logs for errors ---
+[pid: 4242|app: -1|req: -1/4] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:19:52 2016] GET /upload => generated 21 bytes in 0 msecs (HTTP/1.1 500) 2 headers in 83 bytes (0 switches on core 0)
+--- no python application found, check your startup logs for errors ---
+[pid: 4240|app: -1|req: -1/5] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:19:53 2016] GET /upload => generated 21 bytes in 0 msecs (HTTP/1.1 500) 2 headers in 83 bytes (0 switches on core 0)
+--- no python application found, check your startup logs for errors ---
+[pid: 4241|app: -1|req: -1/6] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:19:53 2016] GET /upload => generated 21 bytes in 0 msecs (HTTP/1.1 500) 2 headers in 83 bytes (0 switches on core 0)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+worker 5 buried after 1 seconds
+goodbye to uWSGI.
+VACUUM: unix socket /usr/share/nginx/html/socket/sensibledata.sock removed.
+*** Starting uWSGI 2.0.14 (64bit) on [Fri Dec 16 11:20:14 2016] ***
+compiled with version: 4.8.5 20150623 (Red Hat 4.8.5-4) on 01 December 2016 18:00:39
+os: Linux-3.10.0-327.36.3.el7.x86_64 #1 SMP Mon Oct 24 16:09:20 UTC 2016
+nodename: mhertig.localdomain
+machine: x86_64
+clock source: unix
+detected number of CPU cores: 1
+current working directory: /home/mhertig/sensibledata-online/server
+detected binary path: /home/mhertig/sensibledata-online/projectenv/bin/uwsgi
+!!! no internal routing support, rebuild with pcre support !!!
+your processes number limit is 3818
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /usr/share/nginx/html/socket/sensibledata.sock fd 3
+Python version: 2.7.5 (default, Nov  6 2016, 00:28:07)  [GCC 4.8.5 20150623 (Red Hat 4.8.5-11)]
+*** Python threads support is disabled. You can enable it with --enable-threads ***
+Python main interpreter initialized at 0xf5cc10
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 436560 bytes (426 KB) for 5 cores
+*** Operational MODE: preforking ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0xf5cc10 pid: 4267 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 4267)
+spawned uWSGI worker 1 (pid: 4273, cores: 1)
+spawned uWSGI worker 2 (pid: 4274, cores: 1)
+spawned uWSGI worker 3 (pid: 4275, cores: 1)
+spawned uWSGI worker 4 (pid: 4276, cores: 1)
+spawned uWSGI worker 5 (pid: 4277, cores: 1)
+[pid: 4277|app: 0|req: 1/1] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:20:15 2016] GET /upload => generated 40 bytes in 1 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 4273|app: 0|req: 1/2] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:20:16 2016] GET /upload => generated 40 bytes in 1 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 4275|app: 0|req: 1/3] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:20:16 2016] GET /upload => generated 40 bytes in 1 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 4276|app: 0|req: 1/4] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:20:16 2016] GET /upload => generated 40 bytes in 1 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+worker 5 buried after 1 seconds
+goodbye to uWSGI.
+VACUUM: unix socket /usr/share/nginx/html/socket/sensibledata.sock removed.
+*** Starting uWSGI 2.0.14 (64bit) on [Fri Dec 16 11:25:13 2016] ***
+compiled with version: 4.8.5 20150623 (Red Hat 4.8.5-4) on 01 December 2016 18:00:39
+os: Linux-3.10.0-327.36.3.el7.x86_64 #1 SMP Mon Oct 24 16:09:20 UTC 2016
+nodename: mhertig.localdomain
+machine: x86_64
+clock source: unix
+detected number of CPU cores: 1
+current working directory: /home/mhertig/sensibledata-online/server
+detected binary path: /home/mhertig/sensibledata-online/projectenv/bin/uwsgi
+!!! no internal routing support, rebuild with pcre support !!!
+your processes number limit is 3818
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /usr/share/nginx/html/socket/sensibledata.sock fd 3
+Python version: 2.7.5 (default, Nov  6 2016, 00:28:07)  [GCC 4.8.5 20150623 (Red Hat 4.8.5-11)]
+*** Python threads support is disabled. You can enable it with --enable-threads ***
+Python main interpreter initialized at 0x123fc10
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 436560 bytes (426 KB) for 5 cores
+*** Operational MODE: preforking ***
+unable to load app 0 (mountpoint='') (callable not found or import error)
+*** no app loaded. going in full dynamic mode ***
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 4445)
+spawned uWSGI worker 1 (pid: 4451, cores: 1)
+spawned uWSGI worker 2 (pid: 4452, cores: 1)
+spawned uWSGI worker 3 (pid: 4453, cores: 1)
+spawned uWSGI worker 4 (pid: 4454, cores: 1)
+spawned uWSGI worker 5 (pid: 4455, cores: 1)
+--- no python application found, check your startup logs for errors ---
+[pid: 4451|app: -1|req: -1/1] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:25:15 2016] GET /upload => generated 21 bytes in 0 msecs (HTTP/1.1 500) 2 headers in 83 bytes (0 switches on core 0)
+--- no python application found, check your startup logs for errors ---
+[pid: 4451|app: -1|req: -1/2] 77.59.110.191 () {42 vars in 664 bytes} [Fri Dec 16 11:25:17 2016] GET /upload => generated 21 bytes in 0 msecs (HTTP/1.1 500) 2 headers in 83 bytes (0 switches on core 0)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+worker 5 buried after 1 seconds
+goodbye to uWSGI.
+VACUUM: unix socket /usr/share/nginx/html/socket/sensibledata.sock removed.
+*** Starting uWSGI 2.0.14 (64bit) on [Fri Dec 16 11:37:28 2016] ***
+compiled with version: 4.8.5 20150623 (Red Hat 4.8.5-4) on 01 December 2016 18:00:39
+os: Linux-3.10.0-327.36.3.el7.x86_64 #1 SMP Mon Oct 24 16:09:20 UTC 2016
+nodename: mhertig.localdomain
+machine: x86_64
+clock source: unix
+detected number of CPU cores: 1
+current working directory: /home/mhertig/sensibledata-online/server
+detected binary path: /home/mhertig/sensibledata-online/projectenv/bin/uwsgi
+!!! no internal routing support, rebuild with pcre support !!!
+your processes number limit is 3818
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /usr/share/nginx/html/socket/sensibledata.sock fd 3
+Python version: 2.7.5 (default, Nov  6 2016, 00:28:07)  [GCC 4.8.5 20150623 (Red Hat 4.8.5-11)]
+*** Python threads support is disabled. You can enable it with --enable-threads ***
+Python main interpreter initialized at 0x145cc10
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 436560 bytes (426 KB) for 5 cores
+*** Operational MODE: preforking ***
+WSGI app 0 (mountpoint='') ready in 1 seconds on interpreter 0x145cc10 pid: 4917 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 4917)
+spawned uWSGI worker 1 (pid: 4924, cores: 1)
+spawned uWSGI worker 2 (pid: 4925, cores: 1)
+spawned uWSGI worker 3 (pid: 4926, cores: 1)
+spawned uWSGI worker 4 (pid: 4927, cores: 1)
+spawned uWSGI worker 5 (pid: 4928, cores: 1)
+yHvz5xQExIxdKT1M
+hallo uploader!!!!
+400: Bad Request
+[pid: 4924|app: 0|req: 1/1] 77.59.110.191 () {42 vars in 732 bytes} [Fri Dec 16 11:37:42 2016] POST /upload => generated 12 bytes in 2 msecs (HTTP/1.1 200) 4 headers in 175 bytes (1 switches on core 0)
+yHvz5xQExIxdKT1M
+hallo uploader!!!!
+400: Bad Request
+[pid: 4927|app: 0|req: 1/2] 77.59.110.191 () {42 vars in 732 bytes} [Fri Dec 16 11:37:44 2016] POST /upload => generated 12 bytes in 3 msecs (HTTP/1.1 200) 4 headers in 175 bytes (1 switches on core 0)
+yHvz5xQExIxdKT1M
+hallo uploader!!!!
+400: Bad Request
+[pid: 4928|app: 0|req: 1/3] 77.59.110.191 () {42 vars in 732 bytes} [Fri Dec 16 11:37:44 2016] POST /upload => generated 12 bytes in 4 msecs (HTTP/1.1 200) 4 headers in 175 bytes (1 switches on core 0)
+[pid: 4924|app: 0|req: 2/4] 77.59.110.191 () {42 vars in 740 bytes} [Fri Dec 16 11:37:48 2016] POST /uploadasfd => generated 178 bytes in 2 msecs (HTTP/1.1 405) 5 headers in 204 bytes (1 switches on core 0)
+yHvz5xQExIxdKT1M
+hallo uploader!!!!
+400: Bad Request
+[pid: 4924|app: 0|req: 3/5] 77.59.110.191 () {42 vars in 732 bytes} [Fri Dec 16 11:37:53 2016] POST /upload => generated 12 bytes in 1 msecs (HTTP/1.1 200) 4 headers in 175 bytes (1 switches on core 0)
+yHvz5xQExIxdKT1M
+hallo uploader!!!!
+400: Bad Request
+[pid: 4924|app: 0|req: 4/6] 77.59.110.191 () {42 vars in 726 bytes} [Fri Dec 16 11:40:18 2016] POST /upload => generated 12 bytes in 1 msecs (HTTP/1.1 200) 4 headers in 175 bytes (1 switches on core 0)
+[pid: 4924|app: 0|req: 5/7] 77.59.110.191 () {42 vars in 681 bytes} [Fri Dec 16 11:41:01 2016] OPTIONS /upload => generated 0 bytes in 0 msecs (HTTP/1.1 200) 6 headers in 260 bytes (0 switches on core 0)
+yHvz5xQExIxdKT1M
+hallo uploader!!!!
+global name 'app' is not defined
+[pid: 4924|app: 0|req: 6/8] 77.59.110.191 () {46 vars in 907 bytes} [Fri Dec 16 11:41:04 2016] POST /upload => generated 12 bytes in 2 msecs (HTTP/1.1 200) 4 headers in 152 bytes (1 switches on core 0)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+worker 5 buried after 1 seconds
+goodbye to uWSGI.
+VACUUM: unix socket /usr/share/nginx/html/socket/sensibledata.sock removed.
+*** Starting uWSGI 2.0.14 (64bit) on [Fri Dec 16 11:44:56 2016] ***
+compiled with version: 4.8.5 20150623 (Red Hat 4.8.5-4) on 01 December 2016 18:00:39
+os: Linux-3.10.0-327.36.3.el7.x86_64 #1 SMP Mon Oct 24 16:09:20 UTC 2016
+nodename: mhertig.localdomain
+machine: x86_64
+clock source: unix
+detected number of CPU cores: 1
+current working directory: /home/mhertig/sensibledata-online/server
+detected binary path: /home/mhertig/sensibledata-online/projectenv/bin/uwsgi
+!!! no internal routing support, rebuild with pcre support !!!
+your processes number limit is 3818
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /usr/share/nginx/html/socket/sensibledata.sock fd 3
+Python version: 2.7.5 (default, Nov  6 2016, 00:28:07)  [GCC 4.8.5 20150623 (Red Hat 4.8.5-11)]
+*** Python threads support is disabled. You can enable it with --enable-threads ***
+Python main interpreter initialized at 0x1777c10
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 436560 bytes (426 KB) for 5 cores
+*** Operational MODE: preforking ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x1777c10 pid: 5159 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 5159)
+spawned uWSGI worker 1 (pid: 5165, cores: 1)
+spawned uWSGI worker 2 (pid: 5166, cores: 1)
+spawned uWSGI worker 3 (pid: 5167, cores: 1)
+spawned uWSGI worker 4 (pid: 5168, cores: 1)
+spawned uWSGI worker 5 (pid: 5169, cores: 1)
+[pid: 5169|app: 0|req: 1/1] 77.59.110.191 () {42 vars in 681 bytes} [Fri Dec 16 11:45:08 2016] OPTIONS /upload => generated 0 bytes in 2 msecs (HTTP/1.1 200) 6 headers in 260 bytes (0 switches on core 0)
+yHvz5xQExIxdKT1M
+hallo uploader!!!!
+saved? http://195.141.112.151:8000/server/uploads/62cb9df1-f3fa-4661-9c2c-b4c6ee33d96e.jpg 
+api key: yHvz5xQExIxdKT1M
+Trying to get Face Analysis from Rekognition
+Got it
+{u'usage': {u'status': u"ERROR! Can't upload image file. ", u'api_id': u'yHvz5xQExIxdKT1M'}}
+'face_detection'
+error parsing data
+local variable 'beauty' referenced before assignment
+[pid: 5166|app: 0|req: 1/2] 77.59.110.191 () {46 vars in 905 bytes} [Fri Dec 16 11:45:08 2016] POST /upload => generated 12 bytes in 666 msecs (HTTP/1.1 200) 4 headers in 152 bytes (1 switches on core 0)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+worker 5 buried after 1 seconds
+goodbye to uWSGI.
+VACUUM: unix socket /usr/share/nginx/html/socket/sensibledata.sock removed.
+*** Starting uWSGI 2.0.14 (64bit) on [Fri Dec 16 11:48:44 2016] ***
+compiled with version: 4.8.5 20150623 (Red Hat 4.8.5-4) on 01 December 2016 18:00:39
+os: Linux-3.10.0-327.36.3.el7.x86_64 #1 SMP Mon Oct 24 16:09:20 UTC 2016
+nodename: mhertig.localdomain
+machine: x86_64
+clock source: unix
+detected number of CPU cores: 1
+current working directory: /home/mhertig/sensibledata-online/server
+detected binary path: /home/mhertig/sensibledata-online/projectenv/bin/uwsgi
+!!! no internal routing support, rebuild with pcre support !!!
+your processes number limit is 3818
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /usr/share/nginx/html/socket/sensibledata.sock fd 3
+Python version: 2.7.5 (default, Nov  6 2016, 00:28:07)  [GCC 4.8.5 20150623 (Red Hat 4.8.5-11)]
+*** Python threads support is disabled. You can enable it with --enable-threads ***
+Python main interpreter initialized at 0x25b3c10
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 436560 bytes (426 KB) for 5 cores
+*** Operational MODE: preforking ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x25b3c10 pid: 5307 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 5307)
+spawned uWSGI worker 1 (pid: 5313, cores: 1)
+spawned uWSGI worker 2 (pid: 5314, cores: 1)
+spawned uWSGI worker 3 (pid: 5315, cores: 1)
+spawned uWSGI worker 4 (pid: 5316, cores: 1)
+spawned uWSGI worker 5 (pid: 5317, cores: 1)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+worker 5 buried after 1 seconds
+goodbye to uWSGI.
+VACUUM: unix socket /usr/share/nginx/html/socket/sensibledata.sock removed.
+*** Starting uWSGI 2.0.14 (64bit) on [Fri Dec 16 11:53:34 2016] ***
+compiled with version: 4.8.5 20150623 (Red Hat 4.8.5-4) on 01 December 2016 18:00:39
+os: Linux-3.10.0-327.36.3.el7.x86_64 #1 SMP Mon Oct 24 16:09:20 UTC 2016
+nodename: mhertig.localdomain
+machine: x86_64
+clock source: unix
+detected number of CPU cores: 1
+current working directory: /home/mhertig/sensibledata-online/server
+detected binary path: /home/mhertig/sensibledata-online/projectenv/bin/uwsgi
+!!! no internal routing support, rebuild with pcre support !!!
+your processes number limit is 3818
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /usr/share/nginx/html/socket/sensibledata.sock fd 3
+Python version: 2.7.5 (default, Nov  6 2016, 00:28:07)  [GCC 4.8.5 20150623 (Red Hat 4.8.5-11)]
+*** Python threads support is disabled. You can enable it with --enable-threads ***
+Python main interpreter initialized at 0x10bbc10
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 436560 bytes (426 KB) for 5 cores
+*** Operational MODE: preforking ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x10bbc10 pid: 5472 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 5472)
+spawned uWSGI worker 1 (pid: 5478, cores: 1)
+spawned uWSGI worker 2 (pid: 5479, cores: 1)
+spawned uWSGI worker 3 (pid: 5480, cores: 1)
+spawned uWSGI worker 4 (pid: 5481, cores: 1)
+spawned uWSGI worker 5 (pid: 5482, cores: 1)
+[pid: 5480|app: 0|req: 1/1] 77.59.110.191 () {42 vars in 681 bytes} [Fri Dec 16 11:53:50 2016] OPTIONS /upload => generated 0 bytes in 2 msecs (HTTP/1.1 200) 6 headers in 260 bytes (0 switches on core 0)
+yHvz5xQExIxdKT1M
+hallo uploader!!!!
+saved? http://195.141.112.151/uploads/3218acea-8060-4d37-aa3c-aa37c54f896d.jpg 
+api key: yHvz5xQExIxdKT1M
+Trying to get Face Analysis from Rekognition
+Got it
+{u'url': u'http://195.141.112.151/uploads/3218acea-8060-4d37-aa3c-aa37c54f896d.jpg', u'face_detection': [], u'ori_img_size': {u'width': 480, u'height': 480}, u'usage': {u'status': u'Succeed.', u'quota': 99, u'api_id': u'yHvz5xQExIxdKT1M'}}
+list index out of range
+error parsing data
+local variable 'beauty' referenced before assignment
+[pid: 5479|app: 0|req: 1/2] 77.59.110.191 () {46 vars in 909 bytes} [Fri Dec 16 11:53:50 2016] POST /upload => generated 12 bytes in 1478 msecs (HTTP/1.1 200) 4 headers in 152 bytes (1 switches on core 0)
+[pid: 5480|app: 0|req: 2/3] 77.59.110.191 () {42 vars in 681 bytes} [Fri Dec 16 11:55:00 2016] OPTIONS /upload => generated 0 bytes in 1 msecs (HTTP/1.1 200) 6 headers in 260 bytes (0 switches on core 0)
+yHvz5xQExIxdKT1M
+hallo uploader!!!!
+saved? http://195.141.112.151/uploads/113af676-39f5-4905-8913-a9fbe2a5e439.jpg 
+api key: yHvz5xQExIxdKT1M
+Trying to get Face Analysis from Rekognition
+Got it
+{u'url': u'http://195.141.112.151/uploads/113af676-39f5-4905-8913-a9fbe2a5e439.jpg', u'face_detection': [{u'emotion': {u'angry': 0.02, u'surprised': 0.71, u'happy': 0.02}, u'confidence': 1, u'beauty': 0.68029, u'age': 25.34, u'pose': {u'yaw': 14.97, u'roll': 0.57, u'pitch': 31.17}, u'sex': 1, u'boundingbox': {u'tl': {u'y': 156.15, u'x': 152.31}, u'size': {u'width': 191.54, u'height': 191.54}}, u'smile': 0.19, u'quality': {u'brn': 0.46, u'shn': 1.2}}], u'ori_img_size': {u'width': 480, u'height': 480}, u'usage': {u'status': u'Succeed.', u'quota': 99, u'api_id': u'yHvz5xQExIxdKT1M'}}
+angry 0.02
+surprised 0.71
+happy 0.02
+{'mood': 'surprised', 'beauty': '68', 'gender': 'M', 'age': '25', 'file': 'http://195.141.112.151/uploads/113af676-39f5-4905-8913-a9fbe2a5e439.jpg', 'timestamp': 1481889302.74916}
+Trying to put data into elasticsearch
+Root certificates are missing for certificate validation. Either pass them in using the ca_certs parameter or install certifi to use it automatically.
+[pid: 5479|app: 0|req: 2/4] 77.59.110.191 () {46 vars in 907 bytes} [Fri Dec 16 11:55:01 2016] POST /upload => generated 12 bytes in 1723 msecs (HTTP/1.1 200) 4 headers in 152 bytes (1 switches on core 0)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+worker 5 buried after 1 seconds
+goodbye to uWSGI.
+VACUUM: unix socket /usr/share/nginx/html/socket/sensibledata.sock removed.
+*** Starting uWSGI 2.0.14 (64bit) on [Fri Dec 16 12:04:54 2016] ***
+compiled with version: 4.8.5 20150623 (Red Hat 4.8.5-4) on 01 December 2016 18:00:39
+os: Linux-3.10.0-327.36.3.el7.x86_64 #1 SMP Mon Oct 24 16:09:20 UTC 2016
+nodename: mhertig.localdomain
+machine: x86_64
+clock source: unix
+detected number of CPU cores: 1
+current working directory: /home/mhertig/sensibledata-online/server
+detected binary path: /home/mhertig/sensibledata-online/projectenv/bin/uwsgi
+!!! no internal routing support, rebuild with pcre support !!!
+your processes number limit is 3818
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /usr/share/nginx/html/socket/sensibledata.sock fd 3
+Python version: 2.7.5 (default, Nov  6 2016, 00:28:07)  [GCC 4.8.5 20150623 (Red Hat 4.8.5-11)]
+*** Python threads support is disabled. You can enable it with --enable-threads ***
+Python main interpreter initialized at 0x1caec10
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 436560 bytes (426 KB) for 5 cores
+*** Operational MODE: preforking ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x1caec10 pid: 5585 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 5585)
+spawned uWSGI worker 1 (pid: 5591, cores: 1)
+spawned uWSGI worker 2 (pid: 5592, cores: 1)
+spawned uWSGI worker 3 (pid: 5593, cores: 1)
+spawned uWSGI worker 4 (pid: 5594, cores: 1)
+spawned uWSGI worker 5 (pid: 5595, cores: 1)
+[pid: 5593|app: 0|req: 1/1] 77.59.110.191 () {42 vars in 681 bytes} [Fri Dec 16 12:05:08 2016] OPTIONS /upload => generated 0 bytes in 2 msecs (HTTP/1.1 200) 6 headers in 260 bytes (0 switches on core 0)
+yHvz5xQExIxdKT1M
+hallo uploader!!!!
+saved? http://195.141.112.151/uploads/fa111ae6-d1d9-4658-8399-54a949596504.jpg 
+api key: yHvz5xQExIxdKT1M
+Trying to get Face Analysis from Rekognition
+Got it
+{u'url': u'http://195.141.112.151/uploads/fa111ae6-d1d9-4658-8399-54a949596504.jpg', u'face_detection': [], u'ori_img_size': {u'width': 480, u'height': 480}, u'usage': {u'status': u'Succeed.', u'quota': 99, u'api_id': u'yHvz5xQExIxdKT1M'}}
+list index out of range
+error parsing data
+local variable 'beauty' referenced before assignment
+[pid: 5592|app: 0|req: 1/2] 77.59.110.191 () {46 vars in 907 bytes} [Fri Dec 16 12:05:08 2016] POST /upload => generated 12 bytes in 1739 msecs (HTTP/1.1 200) 4 headers in 152 bytes (1 switches on core 0)
+[pid: 5593|app: 0|req: 2/3] 77.59.110.191 () {42 vars in 681 bytes} [Fri Dec 16 12:06:01 2016] OPTIONS /upload => generated 0 bytes in 1 msecs (HTTP/1.1 200) 6 headers in 260 bytes (0 switches on core 0)
+yHvz5xQExIxdKT1M
+hallo uploader!!!!
+saved? http://195.141.112.151/uploads/104ecca2-4ddc-4c90-9e72-0fd17618d58a.jpg 
+api key: yHvz5xQExIxdKT1M
+Trying to get Face Analysis from Rekognition
+Got it
+{u'url': u'http://195.141.112.151/uploads/104ecca2-4ddc-4c90-9e72-0fd17618d58a.jpg', u'face_detection': [], u'ori_img_size': {u'width': 480, u'height': 480}, u'usage': {u'status': u'Succeed.', u'quota': 99, u'api_id': u'yHvz5xQExIxdKT1M'}}
+list index out of range
+error parsing data
+local variable 'beauty' referenced before assignment
+[pid: 5592|app: 0|req: 2/4] 77.59.110.191 () {46 vars in 909 bytes} [Fri Dec 16 12:06:02 2016] POST /upload => generated 12 bytes in 1520 msecs (HTTP/1.1 200) 4 headers in 152 bytes (1 switches on core 0)
+[pid: 5593|app: 0|req: 3/5] 77.59.110.191 () {40 vars in 703 bytes} [Fri Dec 16 12:39:41 2016] GET /upload => generated 233 bytes in 3 msecs (HTTP/1.1 404) 3 headers in 104 bytes (1 switches on core 0)
+yHvz5xQExIxdKT1M
+hallo uploader!!!!
+saved? http://195.141.112.151/uploads/9921f913-391b-486d-8328-009b786a2e17.jpg 
+api key: yHvz5xQExIxdKT1M
+Trying to get Face Analysis from Rekognition
+Got it
+{u'usage': {u'status': u"ERROR! Can't upload image file. ", u'api_id': u'yHvz5xQExIxdKT1M'}}
+'face_detection'
+error parsing data
+local variable 'beauty' referenced before assignment
+[pid: 5593|app: 0|req: 4/6] 77.59.110.191 () {48 vars in 915 bytes} [Fri Dec 16 13:31:28 2016] POST /upload => generated 12 bytes in 618 msecs (HTTP/1.1 200) 4 headers in 153 bytes (1 switches on core 0)
+yHvz5xQExIxdKT1M
+hallo uploader!!!!
+saved? http://195.141.112.151/uploads/3ca5865b-7158-4266-8c06-f6c18979482d.jpg 
+api key: yHvz5xQExIxdKT1M
+Trying to get Face Analysis from Rekognition
+Got it
+{u'usage': {u'status': u"ERROR! Can't upload image file. ", u'api_id': u'yHvz5xQExIxdKT1M'}}
+'face_detection'
+error parsing data
+local variable 'beauty' referenced before assignment
+[pid: 5593|app: 0|req: 5/7] 77.59.110.191 () {46 vars in 910 bytes} [Fri Dec 16 14:08:02 2016] POST /upload => generated 12 bytes in 652 msecs (HTTP/1.1 200) 3 headers in 111 bytes (1 switches on core 0)
+yHvz5xQExIxdKT1M
+hallo uploader!!!!
+saved? https://1421421.teamserver.ch/uploads/4dfcbafc-794e-4de1-afb8-dd1952a7a941.jpg 
+api key: yHvz5xQExIxdKT1M
+Trying to get Face Analysis from Rekognition
+Got it
+{u'url': u'https://1421421.teamserver.ch/uploads/4dfcbafc-794e-4de1-afb8-dd1952a7a941.jpg', u'face_detection': [], u'ori_img_size': {u'width': 480, u'height': 480}, u'usage': {u'status': u'Succeed.', u'quota': 99, u'api_id': u'yHvz5xQExIxdKT1M'}}
+list index out of range
+error parsing data
+local variable 'beauty' referenced before assignment
+[pid: 5593|app: 0|req: 6/8] 77.59.110.191 () {46 vars in 910 bytes} [Fri Dec 16 14:13:19 2016] POST /upload => generated 12 bytes in 3591 msecs (HTTP/1.1 200) 3 headers in 111 bytes (1 switches on core 0)
+yHvz5xQExIxdKT1M
+hallo uploader!!!!
+saved? https://1421421.teamserver.ch/uploads/4072f124-2dbc-457a-a1af-80ed6ed58757.jpg 
+api key: yHvz5xQExIxdKT1M
+Trying to get Face Analysis from Rekognition
+Got it
+{u'url': u'https://1421421.teamserver.ch/uploads/4072f124-2dbc-457a-a1af-80ed6ed58757.jpg', u'face_detection': [{u'emotion': {u'confused': 0.43, u'surprised': 0.24, u'calm': 0.1}, u'confidence': 1, u'beauty': 0.63325, u'age': 28.86, u'pose': {u'yaw': 6.45, u'roll': -0.59, u'pitch': 4.57}, u'sex': 1, u'boundingbox': {u'tl': {u'y': 130.77, u'x': 140}, u'size': {u'width': 216.15, u'height': 216.15}}, u'smile': 0, u'quality': {u'brn': 0.46, u'shn': 1.5}}], u'ori_img_size': {u'width': 480, u'height': 480}, u'usage': {u'status': u'Succeed.', u'quota': 99, u'api_id': u'yHvz5xQExIxdKT1M'}}
+confused 0.43
+surprised 0.24
+calm 0.1
+{'mood': 'confused', 'beauty': '63', 'gender': 'M', 'age': '28', 'file': 'https://1421421.teamserver.ch/uploads/4072f124-2dbc-457a-a1af-80ed6ed58757.jpg', 'timestamp': 1481897642.125376}
+Trying to put data into elasticsearch
+Root certificates are missing for certificate validation. Either pass them in using the ca_certs parameter or install certifi to use it automatically.
+[pid: 5593|app: 0|req: 7/9] 77.59.110.191 () {46 vars in 910 bytes} [Fri Dec 16 14:13:59 2016] POST /upload => generated 12 bytes in 2142 msecs (HTTP/1.1 200) 3 headers in 111 bytes (1 switches on core 0)

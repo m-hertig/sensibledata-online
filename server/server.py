@@ -12,17 +12,17 @@ from configobj import ConfigObj
 
 UPLOAD_FOLDER = './uploads'
 
-app = Flask(__name__, static_url_path='')
-CORS(app)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+application = Flask(__name__, static_url_path='')
+CORS(application)
+application.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
-@app.route("/")
+@application.route("/")
 def hello():
     return "Hello World!"
 
 
-@app.route("/upload", methods=['POST'])
+@application.route("/upload", methods=['POST'])
 def upload():
     configobj = ConfigObj('server.config')
     print configobj["rekognition_api_key"]
@@ -34,7 +34,7 @@ def upload():
             if webcam_file:
                 randomtext = "Bla"
                 filename = secure_filename(str(uuid.uuid4())+".jpg")
-                webcam_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                webcam_file.save(os.path.join(application.config['UPLOAD_FOLDER'], filename))
 
 		picture_url = configobj["pictures_url"]+filename
                 #picture_url = "http://idowebsites.ch/sensibleData/imageToAnalyze.jpg";
@@ -111,11 +111,11 @@ def upload():
     return "Hello World!"
 
 
-@app.route('/pictures/<path:path>')
+@application.route('/pictures/<path:path>')
 def get_picture(path):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], path)
+    return send_from_directory(application.config['UPLOAD_FOLDER'], path)
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',debug=True)
+    application.run(host='0.0.0.0',debug=True)
 
