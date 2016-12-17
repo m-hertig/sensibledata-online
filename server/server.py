@@ -3,12 +3,13 @@ import os, time
 import uuid
 
 from elasticsearch import Elasticsearch
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory, render_template
 from flask_cors import CORS, cross_origin
 from flask import request
 from werkzeug.utils import secure_filename
 import requests, json, sys
 from configobj import ConfigObj
+import certifi
 
 UPLOAD_FOLDER = './uploads'
 
@@ -21,6 +22,10 @@ application.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def hello():
     return "Hello World!"
 
+
+@application.route("/upload", methods=['GET'])
+def uploadPage():
+    return render_template('index.html')
 
 @application.route("/upload", methods=['POST'])
 def upload():
@@ -83,14 +88,14 @@ def upload():
                 # here comes the elasticsearch index command
                 data = {'beauty':beauty, 'age':age, 'gender':sex, 'mood':mood, 'file':configobj["pictures_url"]+filename, 'timestamp':time.time()}
                 print data
-                print "Trying to put data into elasticsearch"
+                print "Trrrrying to put data into elasticsearch"
 
                 es = Elasticsearch(
                     [configobj["elasticsearch_url"]],
                     #port=80,
-                    #use_ssl=True,
-                    # verify_certs=True,
-                    # ca_certs=certifi.where(),
+                    use_ssl=True,
+                    verify_certs=True,
+                    ca_certs=certifi.where(),
                     request_timeout=1000
                 )
                 try:
@@ -104,12 +109,11 @@ def upload():
                 # sample jsondata = {u'url': u'https://www.dropbox.com/s/m8gkdlh6zdeea9e/2015-05-16%2016.13.08.jpg?dl=1', u'face_detection': [{u'emotion': {u'calm': 0.03, u'confused': 0.28, u'sad': 0.09}, u'confidence': 0.99, u'beauty': 0.12593, u'pose': {u'yaw': 0.08, u'roll': 0.1, u'pitch': 14.79}, u'sex': 1, u'race': {u'white': 0.58}, u'boundingbox': {u'tl': {u'y': 48.46, u'x': 139.23}, u'size': {u'width': 376.15, u'height': 376.15}}, u'smile': 0, u'quality': {u'brn': 0.51, u'shn': 1.6}, u'mustache': 0, u'beard': 0}], u'ori_img_size': {u'width': 576, u'height': 576}, u'usage': {u'status': u'Succeed.', u'quota': 19968, u'api_id': u'yHvz5xQExIxdKT1M'}}
                 print "Done"
                 print jsondata
-
+		
         except Exception as ex:
             print ex
 
-    return "Hello World!"
-
+    return redirect("https://1421421.teamserver.ch", code=302)
 
 @application.route('/pictures/<path:path>')
 def get_picture(path):

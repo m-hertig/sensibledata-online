@@ -1,3 +1,4 @@
+server/logs/uwsgi.log
 *.pyc
 *.sqlite3
 *.orig
