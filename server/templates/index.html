@@ -21,12 +21,16 @@
 </head>
 <body>
 
-	<h1 id="title">Cheese!</h1>
+
+	{% for message in get_flashed_messages() %}
+		<h1 id="title">{{ message }}</h1>
+	{% endfor %}
+	{% block body %}{% endblock %}
 
 	<div id="my_camera"></div>
 
 	<!-- First, include the Webcam.js JavaScript Library -->
-	<script type="text/javascript" src="webcam.js"></script>
+	<script type="text/javascript" src="{{url_for('static', filename='webcam.js')}}"></script>
 
 	<!-- Configure a few settings and attach camera -->
 	<script language="JavaScript">
@@ -51,7 +55,7 @@
 
 	<!-- A button for taking snaps -->
 	<div class="snapshot-wrapper">
-		<a href="#" id="snapshot-button" onClick="take_snapshot()"><img src="../src/logo.png" alt="logo"></a>
+		<a href="#" id="snapshot-button" onClick="take_snapshot()"><img src="{{url_for('static', filename='logo.png')}}" alt="logo"></a>
 	</div>
 
 	<!-- Code to handle taking the snapshot and displaying it locally -->
@@ -62,10 +66,10 @@
 				// display results in page
 				document.getElementById('my_camera').innerHTML =
 					'<img src="'+data_uri+'"/>';
-				document.getElementById('title').innerHTML = "Beautiful"
-					Webcam.upload(data_uri, 'https://1421421.teamserver.ch/upload', function(code, text) {
-					//Webcam.upload(data_uri, 'http://localhost:5000/upload', function(code, text) {
-						console.log('ungloublech');
+				document.getElementById('title').innerHTML = "Beautiful. Trying to analyze your face..."
+					//Webcam.upload(data_uri, 'https://1421421.teamserver.ch/upload', function(code, text) {
+					Webcam.upload(data_uri, 'http://localhost:5000/upload', function(code, text) {
+						console.log('upload');
 					} );
 
 			} );

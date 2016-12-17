@@ -3,7 +3,7 @@ import os, time
 import uuid
 
 from elasticsearch import Elasticsearch
-from flask import Flask, send_from_directory, render_template
+from flask import Flask, send_from_directory, render_template, redirect, flash, session, url_for
 from flask_cors import CORS, cross_origin
 from flask import request
 from werkzeug.utils import secure_filename
@@ -14,6 +14,7 @@ import certifi
 UPLOAD_FOLDER = './uploads'
 
 application = Flask(__name__, static_url_path='')
+application.secret_key = '\xc2\x10\xe9\xde\xfd\xe0Y\xad\x0e\xc8\x97\xd9y\x88\xb4\xe4q9,\xff!\x8b\xbd\x91'
 CORS(application)
 application.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -25,6 +26,7 @@ def hello():
 
 @application.route("/upload", methods=['GET'])
 def uploadPage():
+    flash("Photoautomat")
     return render_template('index.html')
 
 @application.route("/upload", methods=['POST'])
@@ -32,6 +34,7 @@ def upload():
     configobj = ConfigObj('server.config')
     print configobj["rekognition_api_key"]
     print 'hallo uploader!!!!'
+    flash("Trying to analyze your face!")
     req = request
     if request.method == 'POST':
         try:
@@ -46,15 +49,15 @@ def upload():
                 print 'saved? %s ' % picture_url
                 print "api key: "+configobj["rekognition_api_key"];
                 data = {'api_key':configobj["rekognition_api_key"], 'api_secret':configobj["rekognition_api_secret"], 'jobs':'face_gender_emotion_age_beauty', 'urls':picture_url}
-                print "Trying to get Face Analysis from Rekognition"
-                r = requests.get(configobj["rekognition_url"], params=data)
-                jsondata =  r.json()
-                # sample jsondata = {u'url': u'https://www.dropbox.com/s/m8gkdlh6zdeea9e/2015-05-16%2016.13.08.jpg?dl=1', u'face_detection': [{u'emotion': {u'calm': 0.03, u'confused': 0.28, u'sad': 0.09}, u'confidence': 0.99, u'beauty': 0.12593, u'pose': {u'yaw': 0.08, u'roll': 0.1, u'pitch': 14.79}, u'sex': 1, u'race': {u'white': 0.58}, u'boundingbox': {u'tl': {u'y': 48.46, u'x': 139.23}, u'size': {u'width': 376.15, u'height': 376.15}}, u'smile': 0, u'quality': {u'brn': 0.51, u'shn': 1.6}, u'mustache': 0, u'beard': 0}], u'ori_img_size': {u'width': 576, u'height': 576}, u'usage': {u'status': u'Succeed.', u'quota': 19968, u'api_id': u'yHvz5xQExIxdKT1M'}}
-                print "Got it"
-                print jsondata
-
                 #Parse data
                 try:
+                    print "Trying to get Face Analysis from Rekognition"
+                    r = requests.get(configobj["rekognition_url"], params=data)
+                    jsondata =  r.json()
+                    # sample jsondata = {u'url': u'https://www.dropbox.com/s/m8gkdlh6zdeea9e/2015-05-16%2016.13.08.jpg?dl=1', u'face_detection': [{u'emotion': {u'calm': 0.03, u'confused': 0.28, u'sad': 0.09}, u'confidence': 0.99, u'beauty': 0.12593, u'pose': {u'yaw': 0.08, u'roll': 0.1, u'pitch': 14.79}, u'sex': 1, u'race': {u'white': 0.58}, u'boundingbox': {u'tl': {u'y': 48.46, u'x': 139.23}, u'size': {u'width': 376.15, u'height': 376.15}}, u'smile': 0, u'quality': {u'brn': 0.51, u'shn': 1.6}, u'mustache': 0, u'beard': 0}], u'ori_img_size': {u'width': 576, u'height': 576}, u'usage': {u'status': u'Succeed.', u'quota': 19968, u'api_id': u'yHvz5xQExIxdKT1M'}}
+                    print "Got it"
+                    print jsondata
+
                     emotions = jsondata["face_detection"][0]["emotion"]
                     beauty = str(int(jsondata["face_detection"][0]["beauty"]*100))
                     # 0 = female, 1 = male
@@ -84,6 +87,8 @@ def upload():
                 except Exception as e:
                     print(e)
                     print "error parsing data"
+                    flash("Error analyzing your face! Please try again!")
+                    return redirect(url_for('uploadPage'))
 
                 # here comes the elasticsearch index command
                 data = {'beauty':beauty, 'age':age, 'gender':sex, 'mood':mood, 'file':configobj["pictures_url"]+filename, 'timestamp':time.time()}
@@ -109,11 +114,11 @@ def upload():
                 # sample jsondata = {u'url': u'https://www.dropbox.com/s/m8gkdlh6zdeea9e/2015-05-16%2016.13.08.jpg?dl=1', u'face_detection': [{u'emotion': {u'calm': 0.03, u'confused': 0.28, u'sad': 0.09}, u'confidence': 0.99, u'beauty': 0.12593, u'pose': {u'yaw': 0.08, u'roll': 0.1, u'pitch': 14.79}, u'sex': 1, u'race': {u'white': 0.58}, u'boundingbox': {u'tl': {u'y': 48.46, u'x': 139.23}, u'size': {u'width': 376.15, u'height': 376.15}}, u'smile': 0, u'quality': {u'brn': 0.51, u'shn': 1.6}, u'mustache': 0, u'beard': 0}], u'ori_img_size': {u'width': 576, u'height': 576}, u'usage': {u'status': u'Succeed.', u'quota': 19968, u'api_id': u'yHvz5xQExIxdKT1M'}}
                 print "Done"
                 print jsondata
-		
+                flash("Uploaded your face!")
+                return redirect("https://1421421.teamserver.ch/", code=302)
+
         except Exception as ex:
             print ex
-
-    return redirect("https://1421421.teamserver.ch", code=302)
 
 @application.route('/pictures/<path:path>')
 def get_picture(path):
@@ -122,4 +127,3 @@ def get_picture(path):
 
 if __name__ == "__main__":
     application.run(host='0.0.0.0',debug=True)
-
