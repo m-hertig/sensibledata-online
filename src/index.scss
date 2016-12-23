@@ -1,17 +1,135 @@
+@import url('https://fonts.googleapis.com/css?family=Space+Mono');
+$color-blue: #0028ff;
+$color-red: #ff2800;
+$color-red: rgba(255,20,0,0.5);
+$color-light: #f8f8f8;
+$color-text:rgba(0,0,0,0.87);
+
+$sk-bold-weight: 700;
+$sk-medium-weight: 500;
+$sk-light-weight: 300;
+
+$sk-font-family: -apple-system, BlinkMacSystemFont,
+  "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+  "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif;
+//
+// $sk-font-family: 'Inconsolata', monospace;
+// $sk-font-family: 'Open Sans Condensed', sans-serif;
+// $sk-font-family: 'Source Sans Pro', sans-serif;
+// $sk-font-family: 'Slabo 27px', serif;
+// $sk-font-family: 'Noto Serif', serif;
+// $sk-font-family: 'Arvo', serif;
+//
+// $sk-font-family: 'Hind', sans-serif;
+//
+// $sk-font-family: 'Cabin', sans-serif;
+//
+// $sk-font-family: 'Libre Franklin', sans-serif;
+
+$sk-font-family: 'Space Mono', monospace;
+
+$sk-layout-background: $color-light;
+$sk-layout-panel-background: $color-light;
+$sk-primary-theme-color: $color-blue;
+$sk-active-bg-color: $color-blue;
+$sk-border-color: $color-light;
+$sk-title-color: $color-text;
+$sk-text-color: $color-text;
+$sk-text-secondary-color: $color-text;
+$sk-list-text-color: $color-text;
+$sk-list-secondary-text-color: $color-text;
+$sk-action-text-color: $color-blue;
+$sk-action-active-color: #000;
+$sk-disabled-text-color: $color-text;
+$sk-remove-action-color: $color-red;
+
+$sk-selector-background: $color-light;
+$sk-selector-active-background: $color-blue;
+$sk-selector-border-color: #ccc;
+$sk-selector-text-color: black;
+$sk-selector-active-text-color: white;
+
+$sk-selected-filters-background: #eee;
+
+$sk-heading-font-size: 14px;
+$sk-text-font-size: 14px;
+$sk-list-font-size: 14px;
+$sk-action-font-size: 14px;
+$sk-list-secondary-font-size: 12px;
+
+$sk-border-radius: 3px;
+
+@import "~searchkit/theming/theme.scss";
+
 body,
-a {
-  color: red !important;
+.sk-select select {
+  background-color: $color-light;
+  font-family: $sk-font-family;
 }
 
-.sk-layout {
-  background-color: white;
+.rc-slider {
+  padding: 0px !important;
 }
 
+.rc-slider-handle {
+  position: absolute;
+  bottom: -8px;
+  margin-left: -4px;
+  width: 15px;
+  height: 20px;
+  border: 2px solid #color-red;
+  background-color: #fff;
+  cursor: pointer;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+.rc-slider-dot-active,
+.rc-slider-handle:hover {
+  border-color: $color-red !important;
+}
+
+.sk-reset-filters.is-disabled {
+  display: none;
+}
+
+.btn-add {
+  background-color: $color-red;
+  color: $color-light;
+  text-decoration: none;
+  padding: 0.6rem 2rem;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  border-radius: 3px;
+}
+
+// .sk-layout {
+//   background-color: $color-light;
+// }
+//
+// .sk-selected-filters-option__name,
+// .sk-reset-filters,
+// .sk-selected-filters-option__remove-action,
+// .sk-hits-grid-hit__title {
+//   color: $color-blue;
+// }
+//
 .sk-layout__filters,
 .sk-layout__results {
   box-shadow: none;
 }
 
+.sk-layout__filters {
+  padding-right: 30px;
+  border-right: 1px solid rgba(156, 162, 153, 0.5);
+}
+
 .sk-toggle {
+  display: none;
+}
+
+.rc-tooltip {
   display: none;
 }
