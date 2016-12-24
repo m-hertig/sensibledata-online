@@ -30,7 +30,7 @@
 	<div id="my_camera"></div>
 
 	<!-- First, include the Webcam.js JavaScript Library -->
-	<script type="text/javascript" src="{{url_for('static', filename='webcam.js')}}"></script>
+	<script type="text/javascript" src="/static/webcam.js"></script>
 
 	<!-- Configure a few settings and attach camera -->
 	<script language="JavaScript">
@@ -55,7 +55,7 @@
 
 	<!-- A button for taking snaps -->
 	<div class="snapshot-wrapper">
-		<a href="#" id="snapshot-button" onClick="take_snapshot()"><img src="{{url_for('static', filename='logo.png')}}" alt="logo"></a>
+		<a href="#" id="snapshot-button" onClick="take_snapshot()"><img src="/static/logo.png" alt="logo"></a>
 	</div>
 
 	<!-- Code to handle taking the snapshot and displaying it locally -->
