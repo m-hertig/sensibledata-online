@@ -54,13 +54,41 @@ export class SearchPage extends React.Component {
                 max={100}
                 showHistogram={true}
                 title="Beauty in %"/>
-                <RangeFilter
-                    id="age"
-                    field="age"
-                    min={0}
-                    max={100}
-                    showHistogram={true}
-                    title="Age"/>
+            <RangeFilter
+                id="age"
+                field="age"
+                min={0}
+                max={100}
+                showHistogram={true}
+                title="Age"/>
+            <RangeFilter
+                id="happy"
+                field="happy"
+                min={0}
+                max={100}
+                showHistogram={true}
+                title="Happiness"/>
+            <RangeFilter
+                id="confused"
+                field="confused"
+                min={0}
+                max={100}
+                showHistogram={true}
+                title="Confusion"/>
+            <RangeFilter
+                id="angry"
+                field="angry"
+                min={0}
+                max={100}
+                showHistogram={true}
+                title="Anger"/>
+            <RangeFilter
+                id="smile"
+                field="smile"
+                min={0}
+                max={100}
+                showHistogram={true}
+                title="Smile"/>           
 							<MenuFilter
 								id="mood"
 								title="Mood"
@@ -85,7 +113,7 @@ export class SearchPage extends React.Component {
 		            </ActionBarRow>
 		          </ActionBar>
               <ViewSwitcherHits
-                  hitsPerPage={50} highlightFields={["album_title","album_artist"]}
+                  hitsPerPage={50}
                   hitComponents={[
                       {key:"grid", title:"Grid", itemComponent:AlbumHitsGridItem, defaultOption:true}
                   ]}

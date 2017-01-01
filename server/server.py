@@ -71,7 +71,7 @@ def upload():
                     highestVal = 0
                     highestAttr = ""
                     for att,val in emotions.iteritems():
-                        moods[att] = val
+                        moods[att] = val*100
                         print att,val
                         if val>highestVal:
                             highestVal = val
