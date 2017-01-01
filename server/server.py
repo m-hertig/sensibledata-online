@@ -35,6 +35,7 @@ def upload():
     print configobj["rekognition_api_key"]
     print 'hallo uploader!!!!'
     flash("Trying to analyze your face!")
+    moods = {"happy":0,"calm":0,"confused":0,"disgust":0,"surprised":0,"sad":0,"angry":0}
     req = request
     if request.method == 'POST':
         try:
@@ -69,6 +70,7 @@ def upload():
                     highestVal = 0
                     highestAttr = ""
                     for att,val in emotions.iteritems():
+                        moods[att] = val
                         print att,val
                         if val>highestVal:
                             highestVal = val
@@ -90,7 +92,7 @@ def upload():
                     return "Error analyzing your face! Please try again!"
 
                 # here comes the elasticsearch index command
-                data = {'beauty':beauty, 'age':age, 'gender':sex, 'mood':mood, 'file':configobj["pictures_url"]+filename, 'timestamp':time.time()}
+                data = {'beauty':beauty, 'age':age, 'happy':moods['happy'],'calm':moods['calm'],'confused':moods['confused'],'disgust':moods['disgust'],'surprised':moods['surprised'],'sad':moods['sad'],'angry':moods['angry'],'gender':sex, 'mood':mood, 'file':configobj["pictures_url"]+filename, 'timestamp':time.time()}
                 print data
                 print "Trrrrying to put data into elasticsearch"
 
