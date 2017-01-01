@@ -67,6 +67,7 @@ def upload():
                     else:
                         sex = "F"
                     age = str(int(jsondata["face_detection"][0]["age"]))
+                    smile = str(int(jsondata["face_detection"][0]["smile"]))
                     highestVal = 0
                     highestAttr = ""
                     for att,val in emotions.iteritems():
@@ -92,7 +93,7 @@ def upload():
                     return "Error analyzing your face! Please try again!"
 
                 # here comes the elasticsearch index command
-                data = {'beauty':beauty, 'age':age, 'happy':moods['happy'],'calm':moods['calm'],'confused':moods['confused'],'disgust':moods['disgust'],'surprised':moods['surprised'],'sad':moods['sad'],'angry':moods['angry'],'gender':sex, 'mood':mood, 'file':configobj["pictures_url"]+filename, 'timestamp':time.time()}
+                data = {'beauty':beauty, 'age':age, 'smile':smile, 'happy':moods['happy'],'calm':moods['calm'],'confused':moods['confused'],'disgust':moods['disgust'],'surprised':moods['surprised'],'sad':moods['sad'],'angry':moods['angry'],'gender':sex, 'mood':mood, 'file':configobj["pictures_url"]+filename, 'timestamp':time.time()}
                 print data
                 print "Trrrrying to put data into elasticsearch"
 
