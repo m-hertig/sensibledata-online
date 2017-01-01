@@ -67,7 +67,7 @@ def upload():
                     else:
                         sex = "F"
                     age = str(int(jsondata["face_detection"][0]["age"]))
-                    smile = str(int(jsondata["face_detection"][0]["smile"]))
+                    smile = jsondata["face_detection"][0]["smile"]
                     highestVal = 0
                     highestAttr = ""
                     for att,val in emotions.iteritems():
