@@ -76,15 +76,6 @@ def upload():
                         if val>highestVal:
                             highestVal = val
                             highestAttr = att
-                    if len(highestAttr)<4:
-                        if highestVal < 0.2:
-                            highestAttr = "A BIT "+highestAttr
-                        elif highestVal < 0.5:
-                            highestAttr = "RATHER "+highestAttr
-                        elif highestVal < 0.6:
-                            highestAttr = "QUITE "+highestAttr
-                        elif highestVal > 0.7:
-                            highestAttr = "VERY "+highestAttr
                     mood = str(highestAttr)
 
                 except Exception as e:
@@ -92,8 +83,11 @@ def upload():
                     print "error parsing data"
                     return "Error analyzing your face! Please try again!"
 
+                #calculate happiness
+                happiness = 50+(moods['happy']/2)-(moods['sad']/2)
+
                 # here comes the elasticsearch index command
-                data = {'beauty':beauty, 'age':age, 'smile':smile, 'happy':moods['happy'],'calm':moods['calm'],'confused':moods['confused'],'disgust':moods['disgust'],'surprised':moods['surprised'],'sad':moods['sad'],'angry':moods['angry'],'gender':sex, 'mood':mood, 'file':configobj["pictures_url"]+filename, 'timestamp':time.time()}
+                data = {'beauty':beauty, 'age':age, 'smile':smile, 'happiness':happiness, 'happy':moods['happy'],'calm':moods['calm'],'confused':moods['confused'],'disgust':moods['disgust'],'surprised':moods['surprised'],'sad':moods['sad'],'angry':moods['angry'],'gender':sex, 'mood':mood, 'file':configobj["pictures_url"]+filename, 'timestamp':time.time()}
                 print data
                 print "Trrrrying to put data into elasticsearch"
 
