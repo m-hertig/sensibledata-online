@@ -72,7 +72,7 @@
 				document.getElementById('my_camera').innerHTML =
 					'<img src="'+data_uri+'"/>';
 				document.getElementById('title').innerHTML = "Beautiful. Trying to analyze your face..."
-					Webcam.upload(data_uri, 'https://1421421.teamserver.ch/upload', function(code, text) {
+					Webcam.upload(data_uri, 'https://faceatlas.co/upload', function(code, text) {
 					//Webcam.upload(data_uri, 'http://localhost:5000/upload', function(code, text) {
 						console.log('upload complete. code: '+code+' text: '+text);
 						document.getElementById('title').innerHTML = text;

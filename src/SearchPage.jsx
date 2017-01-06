@@ -13,6 +13,18 @@ import {
 
 require("./index.scss");
 
+
+const customHitStats = (props) => {
+    const {resultsFoundLabel, bemBlocks, hitsCount, timeTaken} = props
+    return (
+        <div className={bemBlocks.container()} data-qa="hits-stats">
+            <div className={bemBlocks.container("info")} data-qa="info">
+                {hitsCount} People found
+            </div>
+      </div>
+    )
+}
+
 const host = "https://search-sensibledata-mnmvjeckzqxbuqjpnrlamqgxhu.eu-central-1.es.amazonaws.com/faces";
 const searchkit = new SearchkitManager(host);
 
@@ -28,10 +40,8 @@ const AlbumHitsGridItem = (props)=> {
 
     return (
       <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
-        <a href={url} target="_blank">
           <img data-qa="face" className={bemBlocks.item("face")} src={url} width="200" height="200"/>
           <div data-qa="title" className={bemBlocks.item("title")}>{source.beauty}% / {source.age}yrs</div>
-        </a>
       </div>
     )
   }
@@ -47,13 +57,14 @@ export class SearchPage extends React.Component {
 		       </TopBar>*/}
 		      <LayoutBody>
 		        <SideBar>
+        <div  className="btn-add"><a href="/upload">New Entry</a></div>
             <RangeFilter
                 id="beauty"
                 field="beauty"
                 min={0}
                 max={100}
                 showHistogram={true}
-                title="Beauty in %"/>
+            title="Beauty in %"/>
             <RangeFilter
                 id="age"
                 field="age"
@@ -62,44 +73,23 @@ export class SearchPage extends React.Component {
                 showHistogram={true}
                 title="Age"/>
             <RangeFilter
-                id="happy"
-                field="happy"
+                id="happiness"
+                field="happiness"
                 min={0}
                 max={100}
                 showHistogram={true}
                 title="Happiness"/>
-            <RangeFilter
-                id="confused"
-                field="confused"
-                min={0}
-                max={100}
-                showHistogram={true}
-                title="Confusion"/>
-            <RangeFilter
-                id="angry"
-                field="angry"
-                min={0}
-                max={100}
-                showHistogram={true}
-                title="Anger"/>
-            <RangeFilter
-                id="smile"
-                field="smile"
-                min={0}
-                max={100}
-                showHistogram={true}
-                title="Smile"/>           
 							<MenuFilter
-								id="mood"
-								title="Mood"
-								field="mood"
+								id="gender"
+								title="Gender"
+								field="gender"
 								listComponent={ItemHistogramList}
-                size={10}/>
+                size={2}/>
 		        </SideBar>
 		        <LayoutResults>
 		          <ActionBar>
 		            <ActionBarRow>
-		              <HitsStats/>
+		              <HitsStats component={customHitStats}/>
                   <ViewSwitcherToggle/>
 									<SortingSelector options={[
 										{label:"Newest first", field:"timestamp", order:"desc", defaultOption:true},
