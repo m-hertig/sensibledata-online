@@ -1,0 +1,29 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "*"
+      },
+      "Action": "es:ESHttpPost",
+      "Resource": "arn:aws:es:eu-central-1:141626335000:domain/sensibledata/faces/_search"
+    },
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "*"
+      },
+      "Action": "es:*",
+      "Resource": "arn:aws:es:eu-central-1:141626335000:domain/sensibledata/faces/*",
+      "Condition": {
+        "IpAddress": {
+          "aws:SourceIp": [
+            "195.141.112.151",
+            "178.197.229.88"
+          ]
+        }
+      }
+    }
+  ]
+}
