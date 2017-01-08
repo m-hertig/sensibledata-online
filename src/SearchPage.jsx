@@ -41,7 +41,7 @@ const AlbumHitsGridItem = (props)=> {
     return (
       <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
           <img data-qa="face" className={bemBlocks.item("face")} src={url} width="200" height="200"/>
-          <div data-qa="title" className={bemBlocks.item("title")}>{source.beauty}% / {source.age}yrs</div>
+          <div data-qa="title" className={bemBlocks.item("title")}>{source.gender}, {source.age}yrs, B:{source.beauty}%, H:{source.happiness}%</div>
       </div>
     )
   }
@@ -57,14 +57,14 @@ export class SearchPage extends React.Component {
 		       </TopBar>*/}
 		      <LayoutBody>
 		        <SideBar>
-        <div  className="btn-add"><a href="/upload">New Entry</a></div>
+        <div  className="btn-add"><a class="animate" href="/upload">Photo Booth</a></div>
             <RangeFilter
                 id="beauty"
                 field="beauty"
                 min={0}
                 max={100}
                 showHistogram={true}
-            title="Beauty in %"/>
+            title="Beauty %"/>
             <RangeFilter
                 id="age"
                 field="age"
@@ -78,7 +78,7 @@ export class SearchPage extends React.Component {
                 min={0}
                 max={100}
                 showHistogram={true}
-                title="Happiness"/>
+                title="Happiness %"/>
 							<MenuFilter
 								id="gender"
 								title="Gender"
