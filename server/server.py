@@ -26,7 +26,7 @@ def hello():
 
 @application.route("/upload", methods=['GET'])
 def uploadPage():
-    flash("Photoautomat")
+    flash("Photo Booth")
     return render_template('index.html')
 
 @application.route("/upload", methods=['POST'])
