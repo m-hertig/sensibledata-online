@@ -57,7 +57,7 @@ export class SearchPage extends React.Component {
 		       </TopBar>*/}
 		      <LayoutBody>
 		        <SideBar>
-        <div  className="btn-add"><a class="animate" href="/upload">Photo Booth</a></div>
+        <div  className="btn-add"><a class="animate" href="/upload">Take a picture</a></div>
             <RangeFilter
                 id="beauty"
                 field="beauty"
