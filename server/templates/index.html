@@ -36,10 +36,9 @@
 	<!-- Configure a few settings and attach camera -->
 	<script language="JavaScript">
 		Webcam.set({
-				// live preview size
-			width: 640,
-			height: 480,
 
+			swfURL: "/static/webcam.swf",
+			flashNotDetectedText: "Error: can't access your webcam. Please switch to a browser like Chrome or Firefox or install Adobe Flash Player",
 			// device capture size
 			dest_width: 640,
 			dest_height: 480,
@@ -57,7 +56,7 @@
 	<!-- A button for taking snaps -->
 	<div class="snapshot-wrapper btn-add">
 		<a href="#" id="snapshot-button" onClick="take_snapshot()">Cheese!</a>
-		<p>Your beauty, age and happiness will be judged automatically<br>(Works currently only on Chrome and Firefox desktop versions)</p>
+		<p id="snapshot-infos">Your beauty, age and happiness will be judged automatically</p>
 	</div>
 
 	<!-- Code to handle taking the snapshot and displaying it locally -->
@@ -65,8 +64,13 @@
 		function take_snapshot() {
 
 			Webcam.on('uploadProgress', function() {
-				document.getElementById('title').innerHTML = "Trying to analyze your face";
+				document.getElementById('snapshot-infos').innerHTML = "Trying to analyze your face";
 			 } );
+
+			 Webcam.on( 'error', function(err) {
+				document.getElementById('snapshot-infos').innerHTML = err;
+				document.getElementById('snapshot-button').style = "display:none;";
+			} );
 
 			// take snapshot and get image data
 			Webcam.snap( function(data_uri) {
