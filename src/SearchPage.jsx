@@ -40,7 +40,7 @@ const AlbumHitsGridItem = (props)=> {
 
     return (
       <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
-          <img data-qa="face" className={bemBlocks.item("face")} src={url} width="200" height="200"/>
+          <img data-qa="face" className={bemBlocks.item("face")} src={url}/>
           <div data-qa="title" className={bemBlocks.item("title")}>{source.gender}, {source.age}yrs, B:{source.beauty}%, H:{source.happiness}%</div>
       </div>
     )

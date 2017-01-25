@@ -1,0 +1,104 @@
+future proof
+spying glass
+head shop
+Awfully Deep
+Babylon Medicine
+Join the Dots
+Black Box interlude
+Rabbit Hole
+Wisdom
+
+Stolen Youth Studio
+Deep Learning
+Deep Wisdom
+Deep Insights
+
+Computer Wisdom
+Mind Control
+Deep Blue
+Deep Thinking
+
+Face Atlas
+
+Face Maze
+Aura Atlas
+Characters
+Soul Striptease
+
+Mood Manual
+Album
+Mood Atlas
+Mood Dictionary
+Face Dictionary
+Portfolio
+look book
+Face Wisdom
+Meta Data
+
+Face Expert
+Face Knowledge
+Face Collection
+Deep Face Knowledge
+Face Navigator
+Sensible DB
+
+Encyclopedia
+openpeepmap.org
+peepmap.org
+face scanner
+faceatlas
+
+Modern Day Beauty Contest
+Big Data Beauty Contest
+Miss Universe
+Miss Data
+Mister Universal
+face.computer
+face.club
+people.expert
+.fyi
+.name
+.menu
+.network
+.ooo
+.party
+.place
+.racing
+.Space
+.today
+.travel
+vegas
+
+
+Face.guru
+.camp
+face.travel
+face.tube
+faces.tv
+
+
+Beatuy Data Contest
+
+TODO
+Fix Name
+Sliders
+Description
+Add screen
+
+Face Atlas
+
+An unmanned 
+
+
+“Sensible Data” is an interactive installation consisting of three machines that invite to create a passport from your personal data. Take a picture of yourself and a machine will draw your portrait. Send an email and an algorithm will judge your mood, age, gender and beauty. By pressing a dubious button, you can get a nice confirmation stamp. Thank you for your contribution!
+
+The three machines are modified versions of Piccolo CNC, an open-source drawing machine based on Arduino.
+A Raspberry Pi serves as the brain of the installation, running a python script for each step of the process. Each script listens to the desired input and sends the plotting commands to the needed machine.
+
+Step 1, the portrait: The photo taken with the iPad is automatically synchronized to the Pi using Dropbox. A python script transforms the photo to a line drawing using opencv and send the lines to the drawing machine.
+
+Step 2, analyzing the face: When receiving an email, the Pi sends the previously taken image to an online service called Rekognition. Their machine learning algorithm detects the beauty in percent, mood, age and gender of a person. This information is then stored in a database and stamped on the passport letter by letter by the laser-cut stamp-wheel. (All other mechanical parts and stamps are laser-cut as well)
+
+Step 3, validation stamp: The dubious button is actually a fingerprint scanner. The validation stamp is granted after the fingerprint has been scanned. After some seconds, an email with all the data of a matching person is sent to the user.
+
+If you are interested in the making process, check out this site containing images and videos.

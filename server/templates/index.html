@@ -13,7 +13,7 @@
 		#snapshot-button {margin: auto;}
 		form > input { margin-right: 15px; }
 		#results { float:right; margin:20px; padding:20px; border:1px solid; background:#ccc; }
-		#my_camera {margin: auto; padding-bottom: 20px}
+		#my_camera {margin: auto; padding-bottom: 20px; width: 480px;height: 480px; max-width: 100%;}
 		.snapshot-wrapper {
 			text-align:center;
 			display:block;
@@ -27,17 +27,18 @@
 		<h1 id="title">{{ message }}</h1>
 	{% endfor %}
 	{% block body %}{% endblock %}
-
 	<div id="my_camera"></div>
-
 	<!-- First, include the Webcam.js JavaScript Library -->
-	<script type="text/javascript" src="/static/webcam.js"></script>
-
+	<!-- <script type="text/javascript" src="/static/webcam.js"></script> -->
+<script type="text/javascript" src="/webcam.js"></script>
 	<!-- Configure a few settings and attach camera -->
 	<script language="JavaScript">
 		Webcam.set({
 
-			swfURL: "/static/webcam.swf",
+			width:640,
+			height:480,
+
+			swfURL: "/webcam.swf",
 			flashNotDetectedText: "Error: can't access your webcam. Please switch to a browser like Chrome or Firefox or install Adobe Flash Player",
 			// device capture size
 			dest_width: 640,
@@ -61,16 +62,16 @@
 
 	<!-- Code to handle taking the snapshot and displaying it locally -->
 	<script language="JavaScript">
+
+window.onload = function() {	Webcam.on( 'error', function(err) {
+	 document.getElementById('snapshot-infos').innerHTML = err;
+	 document.getElementById('snapshot-button').style = "display:none;";
+ } )};
 		function take_snapshot() {
 
 			Webcam.on('uploadProgress', function() {
 				document.getElementById('snapshot-infos').innerHTML = "Trying to analyze your face";
 			 } );
-
-			 Webcam.on( 'error', function(err) {
-				document.getElementById('snapshot-infos').innerHTML = err;
-				document.getElementById('snapshot-button').style = "display:none;";
-			} );
 
 			// take snapshot and get image data
 			Webcam.snap( function(data_uri) {
