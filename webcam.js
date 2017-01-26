@@ -8,15 +8,6 @@
 
 (function(window) {
 var _userMedia;
-var location = window.location;
-var protocol = location && location.protocol.match(/https/i) ? 'https' : 'http';
-var FLASH_EMBED_ID = 'webcam_movie_embed';
-var FLASH_OBJ_ID = 'webcam_movie_obj';
-
-var URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
-var localStorage = window.localStorage;
-var navigator = window.navigator;
-var isBrowser = window.addEventListener ? true : false;
 
 // declare error types
 
@@ -46,6 +37,7 @@ var Webcam = {
 	version: '1.0.16',
 
 	// globals
+	protocol: location.protocol.match(/https/i) ? 'https' : 'http',
 	loaded: false,   // true when webcam movie finishes loading
 	live: false,     // true when webcam is initialized and ready to snap
 	userMedia: true, // true when getUserMedia is supported natively
@@ -58,17 +50,14 @@ var Webcam = {
 		image_format: 'jpeg',  // image format (may be jpeg or png)
 		jpeg_quality: 90,      // jpeg image quality from 0 (worst) to 100 (best)
 		enable_flash: true,    // enable flash fallback,
-		force_flash: false,    // force flash mode
-		force_file: false,     // force file upload mode
+		force_flash: false,    // force flash mode,
 		flip_horiz: false,     // flip image horiz (mirror mode)
 		fps: 30,               // camera frames per second
 		upload_name: 'webcam', // name of file in upload post data
 		constraints: null,     // custom user media constraints,
 		swfURL: '',            // URI to webcam.swf movie (defaults to the js location)
 		flashNotDetectedText: 'ERROR: No Adobe Flash Player detected.  Webcam.js relies on Flash for browsers that do not support getUserMedia (like yours).',
-		enable_file_fallback: true,
-		css_prefix: 'webcamjs', // prefix for all css classes
-		noInterfaceFoundText: 'No supported webcam interface found.',
+		noInterfaceFoundText: 'No supported webcam found. Please get a webcam or try on another browser or device if you have one',
 		unfreeze_snap: true    // Whether to unfreeze the camera after snap (defaults to true)
 	},
 
@@ -95,7 +84,8 @@ var Webcam = {
 				}
 		} : null);
 
-		this.userMedia = this.userMedia && !!this.mediaDevices && !!URL;
+		window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
+		this.userMedia = this.userMedia && !!this.mediaDevices && !!window.URL;
 
 		// Older versions of firefox (< 21) apparently claim support but user media does not actually work
 		if (navigator.userAgent.match(/Firefox\D+(\d+)/)) {
@@ -104,7 +94,7 @@ var Webcam = {
 
 		// Make sure media stream is closed when navigating away from page
 		if (this.userMedia) {
-			addEventListener( 'beforeunload', function(event) {
+			window.addEventListener( 'beforeunload', function(event) {
 				self.reset();
 			} );
 		}
@@ -124,7 +114,6 @@ var Webcam = {
 
 		// insert "peg" so we can insert our preview canvas adjacent to it later on
 		var peg = document.createElement('div');
-		peg.className = this.params.css_prefix + '__peg';
 		elem.appendChild( peg );
 		this.peg = peg;
 
@@ -143,7 +132,7 @@ var Webcam = {
 
 		this.userMedia = _userMedia === undefined ? this.userMedia : _userMedia;
 		// if force_flash is set, disable userMedia
-		if (this.params.force_flash || this.params.force_file) {
+		if (this.params.force_flash) {
 			_userMedia = this.userMedia;
 			this.userMedia = null;
 		}
@@ -158,15 +147,22 @@ var Webcam = {
 		if (this.userMedia) {
 			// setup webcam video container
 			var video = document.createElement('video');
-			video.className = this.params.css_prefix + '__video';
 			video.setAttribute('autoplay', 'autoplay');
-			video.style.width = this.params.dest_width + 'px';
-			video.style.height = this.params.dest_height + 'px';
+			video.style.width = '' + this.params.dest_width + 'px';
+			video.style.height = '' + this.params.dest_height + 'px';
 
-			if (scaleX != 1.0 || scaleY != 1.0) {
+			if ((scaleX != 1.0) || (scaleY != 1.0)) {
 				elem.style.overflow = 'hidden';
-				setPrefixedStyle(video, 'transformOrigin', '0px 0px');
-				setPrefixedStyle(video, 'transform', 'scaleX('+scaleX+') scaleY('+scaleY+')');
+				video.style.webkitTransformOrigin = '0px 0px';
+				video.style.mozTransformOrigin = '0px 0px';
+				video.style.msTransformOrigin = '0px 0px';
+				video.style.oTransformOrigin = '0px 0px';
+				video.style.transformOrigin = '0px 0px';
+				video.style.webkitTransform = 'scaleX('+scaleX+') scaleY('+scaleY+')';
+				video.style.mozTransform = 'scaleX('+scaleX+') scaleY('+scaleY+')';
+				video.style.msTransform = 'scaleX('+scaleX+') scaleY('+scaleY+')';
+				video.style.oTransform = 'scaleX('+scaleX+') scaleY('+scaleY+')';
+				video.style.transform = 'scaleX('+scaleX+') scaleY('+scaleY+')';
 			}
 
 			// add video element to dom
@@ -194,8 +190,9 @@ var Webcam = {
 					self.dispatch('live');
 					self.flip();
 				};
-				video.src = URL.createObjectURL( stream ) || stream;
-			}, function(err) {
+				video.src = window.URL.createObjectURL( stream ) || stream;
+			})
+			.catch( function(err) {
 				// JH 2016-07-31 Instead of dispatching error, now falling back to Flash if userMedia fails (thx @john2014)
 				// JH 2016-08-07 But only if flash is actually installed -- if not, dispatch error here and now.
 				if (self.params.enable_flash && self.detectFlash()) {
@@ -206,20 +203,15 @@ var Webcam = {
 				}
 			});
 		}
-		else if (!this.detectFlash() && this.params.enable_file_fallback) {
-			elem.appendChild( this.getUploadFallbackNode() );
-			this.loaded = true;
-		}
 		else if (this.params.enable_flash && this.detectFlash()) {
 			// flash fallback
 			window.Webcam = Webcam; // needed for flash-to-js interface
 			var div = document.createElement('div');
-			div.className = this.params.css_prefix + '__flash-container';
 			div.innerHTML = this.getSWFHTML();
 			elem.appendChild( div );
 		}
 		else {
-			//this.dispatch('error', new WebcamError( this.params.noInterfaceFoundText ));
+			this.dispatch('error', new WebcamError( this.params.noInterfaceFoundText ));
 		}
 
 		// setup final crop for live preview
@@ -227,8 +219,8 @@ var Webcam = {
 			var scaled_crop_width = Math.floor( this.params.crop_width * scaleX );
 			var scaled_crop_height = Math.floor( this.params.crop_height * scaleY );
 
-			elem.style.width = scaled_crop_width + 'px';
-			elem.style.height = scaled_crop_height + 'px';
+			elem.style.width = '' + scaled_crop_width + 'px';
+			elem.style.height = '' + scaled_crop_height + 'px';
 			elem.style.overflow = 'hidden';
 
 			elem.scrollLeft = Math.floor( (this.params.width / 2) - (scaled_crop_width / 2) );
@@ -236,8 +228,8 @@ var Webcam = {
 		}
 		else {
 			// no crop, set size to desired
-			elem.style.width = this.params.width + 'px';
-			elem.style.height = this.params.height + 'px';
+			elem.style.width = '' + this.params.width + 'px';
+			elem.style.height = '' + this.params.height + 'px';
 		}
 	},
 
@@ -264,7 +256,8 @@ var Webcam = {
 			delete this.video;
 		}
 
-		if (!this.userMedia && this.detectFlash()) {
+		if (this.userMedia !== true) {
+			// call for turn off camera in flash
 			var movie = this.getMovie();
 			if (movie && movie._releaseCamera) movie._releaseCamera();
 		}
@@ -276,7 +269,6 @@ var Webcam = {
 
 		this.loaded = false;
 		this.live = false;
-		delete this.fallbackImage;
 	},
 
 	set: function() {
@@ -294,14 +286,14 @@ var Webcam = {
 
 	on: function(name, callback) {
 		// set callback hook
-		name = name.toLowerCase().replace(/^on/, '');
+		name = name.replace(/^on/i, '').toLowerCase();
 		if (!this.hooks[name]) this.hooks[name] = [];
 		this.hooks[name].push( callback );
 	},
 
 	off: function(name, callback) {
 		// remove callback hook
-		name = name.toLowerCase().replace(/^on/, '');
+		name = name.replace(/^on/i, '').toLowerCase();
 		if (this.hooks[name]) {
 			if (callback) {
 				// remove one selected callback from list
@@ -317,24 +309,23 @@ var Webcam = {
 
 	dispatch: function() {
 		// fire hook callback, passing optional value to it
-		var name = arguments[0].toLowerCase().replace(/^on/, '');
+		var name = arguments[0].replace(/^on/i, '').toLowerCase();
 		var args = Array.prototype.slice.call(arguments, 1);
 
 		if (this.hooks[name] && this.hooks[name].length) {
 			for (var idx = 0, len = this.hooks[name].length; idx < len; idx++) {
 				var hook = this.hooks[name][idx];
+
 				if (typeof(hook) == 'function') {
 					// callback is function reference, call directly
 					hook.apply(this, args);
 				}
 				else if ((typeof(hook) == 'object') && (hook.length == 2)) {
 					// callback is PHP-style object instance method
-					// TODO: review if this part is used anywhere?
 					hook[0][hook[1]].apply(hook[0], args);
 				}
 				else if (window[hook]) {
 					// callback is global function name
-					// TODO: remove it, as it's dangerous.
 					window[ hook ].apply(window, args);
 				}
 			} // loop
@@ -349,7 +340,8 @@ var Webcam = {
 			}
 
 			// default error handler if no custom one specified
-			alert("Webcam.js Error: " + message);
+			//alert("Webcam.js Error: " + message);
+			document.getElementById('snapshot-infos').innerHTML = message;
 		}
 
 		return false; // no hook defined
@@ -361,50 +353,33 @@ var Webcam = {
 	},
 
 	detectFlash: function() {
-		if (this.params.force_file) {
-			return false;
-		}
 		// return true if browser supports flash, false otherwise
 		// Code snippet borrowed from: https://github.com/swfobject/swfobject
 		var SHOCKWAVE_FLASH = "Shockwave Flash",
 			SHOCKWAVE_FLASH_AX = "ShockwaveFlash.ShockwaveFlash",
-			FLASH_MIME_TYPE = "application/x-shockwave-flash",
-			hasFlash = false;
+        	FLASH_MIME_TYPE = "application/x-shockwave-flash",
+        	win = window,
+        	nav = navigator,
+        	hasFlash = false;
 
-		if (navigator.plugins !== undefined && typeof navigator.plugins[SHOCKWAVE_FLASH] === "object") {
-			var desc = navigator.plugins[SHOCKWAVE_FLASH].description;
-			if (desc && (navigator.mimeTypes !== undefined && navigator.mimeTypes[FLASH_MIME_TYPE] && navigator.mimeTypes[FLASH_MIME_TYPE].enabledPlugin)) {
-				hasFlash = true;
-			}
-		}
-		else if (typeof ActiveXObject !== "undefined") {
-			try {
-				var ax = new ActiveXObject(SHOCKWAVE_FLASH_AX);
-				if (ax) {
-					var ver = ax.GetVariable("$version");
-					if (ver) hasFlash = true;
-				}
-			}
-			catch (e) {}
-		}
+        if (typeof nav.plugins !== "undefined" && typeof nav.plugins[SHOCKWAVE_FLASH] === "object") {
+        	var desc = nav.plugins[SHOCKWAVE_FLASH].description;
+        	if (desc && (typeof nav.mimeTypes !== "undefined" && nav.mimeTypes[FLASH_MIME_TYPE] && nav.mimeTypes[FLASH_MIME_TYPE].enabledPlugin)) {
+        		hasFlash = true;
+        	}
+        }
+        else if (typeof win.ActiveXObject !== "undefined") {
+        	try {
+        		var ax = new ActiveXObject(SHOCKWAVE_FLASH_AX);
+        		if (ax) {
+        			var ver = ax.GetVariable("$version");
+        			if (ver) hasFlash = true;
+        		}
+        	}
+        	catch (e) {;}
+        }
 
-		return hasFlash;
-	},
-
-	getUploadFallbackNode: function() {
-		var input = document.createElement('input');
-		input.type = 'file';
-		input.accept = 'image/*';
-		input.setAttribute('capture', 'camera');
-		input.id = 'imageLoader';
-		input.name = 'imageLoader';
-
-		var div = document.createElement('div');
-		div.className = this.params.css_prefix + '__upload-fallback';
-		div.appendChild(input);
-		input.addEventListener('change', handleImageInput.bind(this), false);
-
-		return div;
+        return hasFlash;
 	},
 
 	getSWFHTML: function() {
@@ -413,15 +388,15 @@ var Webcam = {
 			swfURL = this.params.swfURL;
 
 		// make sure we aren't running locally (flash doesn't work)
-		if (protocol.match(/file/)) {
+		if (location.protocol.match(/file/)) {
 			this.dispatch('error', new FlashError("Flash does not work from local disk.  Please run from a web server."));
-			return '<h3 class="'+this.params.css_prefix+'__error">ERROR: the Webcam.js Flash fallback does not work from local disk.  Please run it from a web server.</h3>';
+			return '<h3 style="color:red">ERROR: the Webcam.js Flash fallback does not work from local disk.  Please run it from a web server.</h3>';
 		}
 
 		// make sure we have flash
 		if (!this.detectFlash()) {
-			this.dispatch('error', new FlashError("Adobe Flash Player not found.  Please install from get.adobe.com/flashplayer and try again."));
-			return '<h3 class="'+this.params.css_prefix+'__error">' + this.params.flashNotDetectedText + '</h3>';
+			this.dispatch('error', new FlashError("Your Browser requires Adobe Flash Player to access the webcam. Please switch to another browser or install Adobe Flash Player and try again."));
+			return '<h3 style="color:red">' + this.params.flashNotDetectedText + '</h3>';
 		}
 
 		// set default swfURL if not explicitly set
@@ -436,21 +411,14 @@ var Webcam = {
 					idx = len;
 				}
 			}
-			swfURL = 'webcam.swf';
-			if (base_url) {
-				swfURL = base_url + '/' + swfURL;
-			}
+			if (base_url) swfURL = base_url + '/webcam.swf';
+			else swfURL = 'webcam.swf';
 		}
 
 		// if this is the user's first visit, set flashvar so flash privacy settings panel is shown first
-		if (localStorage && !localStorage.getItem('webcamjs_visited')) {
+		if (window.localStorage && !localStorage.getItem('visited')) {
 			this.params.new_user = 1;
-			try {
-				// Safari Private mode does not allow to write any data in localStorage.
-				// Exception is thrown instead.
-				localStorage.setItem('webcamjs_visited', 1);
-			}
-			catch (e) {}
+			localStorage.setItem('visited', 1);
 		}
 
 		// construct flashvars string
@@ -461,7 +429,7 @@ var Webcam = {
 		}
 
 		// construct object/embed tag
-		html += '<object class="'+this.params.css_prefix+'__flash" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" type="application/x-shockwave-flash" codebase="'+protocol+'://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0" width="'+this.params.width+'" height="'+this.params.height+'" id="'+FLASH_OBJ_ID+'" align="middle"><param name="wmode" value="opaque" /><param name="allowScriptAccess" value="always" /><param name="allowFullScreen" value="false" /><param name="movie" value="'+swfURL+'" /><param name="loop" value="false" /><param name="menu" value="false" /><param name="quality" value="best" /><param name="bgcolor" value="#ffffff" /><param name="flashvars" value="'+flashvars+'"/><embed id="'+FLASH_EMBED_ID+'" src="'+swfURL+'" wmode="opaque" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="'+this.params.width+'" height="'+this.params.height+'" name="'+FLASH_EMBED_ID+'" align="middle" allowScriptAccess="always" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="'+flashvars+'"></embed></object>';
+		html += '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" type="application/x-shockwave-flash" codebase="'+this.protocol+'://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0" width="'+this.params.width+'" height="'+this.params.height+'" id="webcam_movie_obj" align="middle"><param name="wmode" value="opaque" /><param name="allowScriptAccess" value="always" /><param name="allowFullScreen" value="false" /><param name="movie" value="'+swfURL+'" /><param name="loop" value="false" /><param name="menu" value="false" /><param name="quality" value="best" /><param name="bgcolor" value="#ffffff" /><param name="flashvars" value="'+flashvars+'"/><embed id="webcam_movie_embed" src="'+swfURL+'" wmode="opaque" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="'+this.params.width+'" height="'+this.params.height+'" name="webcam_movie_embed" align="middle" allowScriptAccess="always" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="'+flashvars+'"></embed></object>';
 
 		return html;
 	},
@@ -469,8 +437,8 @@ var Webcam = {
 	getMovie: function() {
 		// get reference to movie object/embed in DOM
 		if (!this.loaded) return this.dispatch('error', new FlashError("Flash Movie is not loaded yet"));
-		var movie = document.getElementById(FLASH_OBJ_ID);
-		if (!movie || !movie._snap) movie = document.getElementById(FLASH_EMBED_ID);
+		var movie = document.getElementById('webcam_movie_obj');
+		if (!movie || !movie._snap) movie = document.getElementById('webcam_movie_embed');
 		if (!movie) this.dispatch('error', new FlashError("Cannot locate Flash movie in DOM"));
 		return movie;
 	},
@@ -496,7 +464,6 @@ var Webcam = {
 
 		// create canvas for holding preview
 		var preview_canvas = document.createElement('canvas');
-		preview_canvas.className = this.params.css_prefix + '__preview';
 		preview_canvas.width = final_width;
 		preview_canvas.height = final_height;
 		var preview_context = preview_canvas.getContext('2d');
@@ -506,17 +473,25 @@ var Webcam = {
 		this.preview_context = preview_context;
 
 		// scale for preview size
-		if (scaleX != 1.0 || scaleY != 1.0) {
-			setPrefixedStyle(preview_canvas, 'transformOrigin', '0px 0px');
-			setPrefixedStyle(preview_canvas, 'transform', 'scaleX('+scaleX+') scaleY('+scaleY+')');
+		if ((scaleX != 1.0) || (scaleY != 1.0)) {
+			preview_canvas.style.webkitTransformOrigin = '0px 0px';
+			preview_canvas.style.mozTransformOrigin = '0px 0px';
+			preview_canvas.style.msTransformOrigin = '0px 0px';
+			preview_canvas.style.oTransformOrigin = '0px 0px';
+			preview_canvas.style.transformOrigin = '0px 0px';
+			preview_canvas.style.webkitTransform = 'scaleX('+scaleX+') scaleY('+scaleY+')';
+			preview_canvas.style.mozTransform = 'scaleX('+scaleX+') scaleY('+scaleY+')';
+			preview_canvas.style.msTransform = 'scaleX('+scaleX+') scaleY('+scaleY+')';
+			preview_canvas.style.oTransform = 'scaleX('+scaleX+') scaleY('+scaleY+')';
+			preview_canvas.style.transform = 'scaleX('+scaleX+') scaleY('+scaleY+')';
 		}
 
 		// take snapshot, but fire our own callback
 		this.snap( function() {
 			// add preview image to dom, adjust for crop
 			preview_canvas.style.position = 'relative';
-			preview_canvas.style.left = self.container.scrollLeft + 'px';
-			preview_canvas.style.top = self.container.scrollTop + 'px';
+			preview_canvas.style.left = '' + self.container.scrollLeft + 'px';
+			preview_canvas.style.top = '' + self.container.scrollTop + 'px';
 
 			self.container.insertBefore( preview_canvas, self.peg );
 			self.container.style.overflow = 'hidden';
@@ -546,18 +521,28 @@ var Webcam = {
 	flip: function() {
 		// flip container horiz (mirror mode) if desired
 		if (this.params.flip_horiz) {
-			setPrefixedStyle(this.container, 'transform', 'scaleX(-1)');
-			this.container.style.filter = 'FlipH';
-			this.container.style.msFilter = 'FlipH';
+			var sty = this.container.style;
+			sty.webkitTransform = 'scaleX(-1)';
+			sty.mozTransform = 'scaleX(-1)';
+			sty.msTransform = 'scaleX(-1)';
+			sty.oTransform = 'scaleX(-1)';
+			sty.transform = 'scaleX(-1)';
+			sty.filter = 'FlipH';
+			sty.msFilter = 'FlipH';
 		}
 	},
 
 	unflip: function() {
 		// unflip container horiz (mirror mode) if desired
 		if (this.params.flip_horiz) {
-			setPrefixedStyle(this.container, 'transform', 'scaleX(1)');
-			this.container.style.filter = '';
-			this.container.style.msFilter = '';
+			var sty = this.container.style;
+			sty.webkitTransform = 'scaleX(1)';
+			sty.mozTransform = 'scaleX(1)';
+			sty.msTransform = 'scaleX(1)';
+			sty.oTransform = 'scaleX(1)';
+			sty.transform = 'scaleX(1)';
+			sty.filter = '';
+			sty.msFilter = '';
 		}
 	},
 
@@ -586,6 +571,7 @@ var Webcam = {
 
 	snap: function(user_callback, user_canvas) {
 		// take snapshot and return image data uri
+		var self = this;
 		var params = this.params;
 
 		if (!this.loaded) return this.dispatch('error', new WebcamError("Webcam is not loaded yet"));
@@ -662,7 +648,7 @@ var Webcam = {
 			// fire callback right away
 			func();
 		}
-		else if (this.detectFlash()) {
+		else {
 			// flash fallback
 			var raw_data = this.getMovie()._snap();
 
@@ -670,22 +656,6 @@ var Webcam = {
 			var img = new Image();
 			img.onload = func;
 			img.src = 'data:image/'+this.params.image_format+';base64,' + raw_data;
-		}
-		else if (this.params.enable_file_fallback) {
-			if (this.fallbackImage) {
-				drawImageScaled(this.fallbackImage.data, context);
-				func();
-			}
-			else {
-				return this.dispatch('error', "Select picture first.");
-			}
-
-		}
-		else if (this.loaded) {
-			return this.dispatch('error', "Webcam has encountered an unknown error.");
-		}
-		else {
-			return this.dispatch('error', "Webcam is not loaded yet");
 		}
 
 		return null;
@@ -798,63 +768,11 @@ var Webcam = {
 
 		// send data to server
 		http.send(form);
-
-		return http;
 	}
+
 };
 
-if (isBrowser) {
-	Webcam.init();
-}
-
-// helpers
-function drawImageScaled(img, ctx) {
-	// stackoverflow.com/questions/23104582/scaling-an-image-to-fit-on-canvas#answer-23105310
-	var canvas = ctx.canvas;
-	var hRatio = canvas.width / img.width;
-	var vRatio =  canvas.height / img.height;
-	var ratio  = Math.min( hRatio, vRatio );
-	var centerShift_x = ( canvas.width - img.width*ratio ) / 2;
-	var centerShift_y = ( canvas.height - img.height*ratio ) / 2;
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	ctx.drawImage(img, 0, 0, img.width, img.height, centerShift_x, centerShift_y, img.width*ratio, img.height*ratio);
-}
-
-function handleImageInput(e) {
-	// http://jsfiddle.net/influenztial/qy7h5/
-	var rawFile = e.target.files[0];
-	if (!rawFile) {
-		return;
-	}
-	var self = this;
-	var reader = new FileReader();
-	reader.onload = function(event) {
-		var img = new Image();
-		img.onload = function() {
-			self.fallbackImage = {
-				data: img,
-				width: img.width,
-				height: img.height
-			};
-
-			self.dispatch('imageSelected', rawFile);
-		};
-		img.src = event.target.result;
-	};
-	reader.readAsDataURL(rawFile);
-}
-
-function capitalizeFirstLetter(string) {
-	return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
-function setPrefixedStyle(element, cssProp, cssValue) {
-	var prefixes = ['o', 'ms', 'moz', 'webkit'];
-	prefixes.forEach(function(prefix) {
-		element.style[prefix + capitalizeFirstLetter(cssProp)] = cssValue;
-	});
-	element.style[cssProp] = cssValue;
-}
+Webcam.init();
 
 if (typeof define === 'function' && define.amd) {
 	define( function() { return Webcam; } );
@@ -866,4 +784,4 @@ else {
 	window.Webcam = Webcam;
 }
 
-})(typeof window === 'undefined' ? {} : window);
+}(window));
