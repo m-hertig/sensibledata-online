@@ -57,7 +57,7 @@ var Webcam = {
 		constraints: null,     // custom user media constraints,
 		swfURL: '',            // URI to webcam.swf movie (defaults to the js location)
 		flashNotDetectedText: 'ERROR: No Adobe Flash Player detected.  Webcam.js relies on Flash for browsers that do not support getUserMedia (like yours).',
-		noInterfaceFoundText: 'No supported webcam interface found.',
+		noInterfaceFoundText: 'No supported webcam found. Please get a webcam or try on another browser or device if you have one',
 		unfreeze_snap: true    // Whether to unfreeze the camera after snap (defaults to true)
 	},
 
@@ -340,7 +340,8 @@ var Webcam = {
 			}
 
 			// default error handler if no custom one specified
-			alert("Webcam.js Error: " + message);
+			//alert("Webcam.js Error: " + message);
+			document.getElementById('snapshot-infos').innerHTML = message;
 		}
 
 		return false; // no hook defined
@@ -394,7 +395,7 @@ var Webcam = {
 
 		// make sure we have flash
 		if (!this.detectFlash()) {
-			this.dispatch('error', new FlashError("Adobe Flash Player not found.  Please install from get.adobe.com/flashplayer and try again."));
+			this.dispatch('error', new FlashError("Your Browser requires Adobe Flash Player to access the webcam. Please switch to another browser or install Adobe Flash Player and try again."));
 			return '<h3 style="color:red">' + this.params.flashNotDetectedText + '</h3>';
 		}
 
