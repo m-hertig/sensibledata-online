@@ -62,7 +62,8 @@ $sk-border-radius: 3px;
 
 @import "~searchkit/theming/theme.scss";
 
-body {
+body,
+.root {
   width: 100%;
   overflow-x: hidden;
 }
