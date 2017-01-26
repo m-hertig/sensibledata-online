@@ -8,6 +8,7 @@ Icon?
 Thumbs.db
 helloclass-2.0.iml
 projectenv/
+server/server.config 
 
 # Node Files #
 /node_modules

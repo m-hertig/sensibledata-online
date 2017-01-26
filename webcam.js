@@ -57,7 +57,7 @@ var Webcam = {
 		constraints: null,     // custom user media constraints,
 		swfURL: '',            // URI to webcam.swf movie (defaults to the js location)
 		flashNotDetectedText: 'ERROR: No Adobe Flash Player detected.  Webcam.js relies on Flash for browsers that do not support getUserMedia (like yours).',
-		noInterfaceFoundText: 'No supported webcam found. Please get a webcam or try on another browser or device if you have one',
+		noInterfaceFoundText: "No webcam found :(<br>Please switch to a browser like Chrome or Firefox or get a webcam if you don't have one",
 		unfreeze_snap: true    // Whether to unfreeze the camera after snap (defaults to true)
 	},
 
@@ -342,6 +342,7 @@ var Webcam = {
 			// default error handler if no custom one specified
 			//alert("Webcam.js Error: " + message);
 			document.getElementById('snapshot-infos').innerHTML = message;
+	 	 document.getElementById('snapshot-button').style = "display:none;";
 		}
 
 		return false; // no hook defined
