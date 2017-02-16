@@ -2,7 +2,7 @@
 $color-blue: #0028ff;
 $color-red: #ff2800;
 //$color-red: rgba(255,20,0,0.5);
-$color-light: #f8f8f8;
+$color-light: #fbfbfb;
 $color-text:rgba(0,0,0,0.87);
 
 $sk-bold-weight: 700;
@@ -72,6 +72,7 @@ body,
 .sk-select select {
   background-color: $color-light;
   font-family: $sk-font-family;
+  font-weight: normal;
 }
 
 
@@ -100,6 +101,12 @@ body,
   float: right;
   margin-right: 20px;
   margin-top:5px;
+}
+
+a,
+a:active,
+a:visited {
+  color: $color-text;
 }
 
 .btn-add {
@@ -151,9 +158,7 @@ body,
   padding: 10px 20px 0 0;
 }
 
-.sk-results-list__action-bar .sk-select {
-  display: none;
-}
+
 
 .sk-hits-grid-hit__title {
   font-size: 12px;
@@ -186,9 +191,40 @@ body,
   margin-top: 0;
 }
 
+.btn-info {
+  cursor: pointer;
+}
+
+.modal {
+  display: none;
+}
+
+.hideInfos {
+  display: none;
+}
+
+.showInfos {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.9);
+  z-index: 999;
+  .modal-text {
+    width: 70%;
+    max-width: 800px;
+    margin: 200px auto;
+    text-align: center;
+  }
+}
+
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
 
-  span.sidebar-filters {
+  .sk-results-list__action-bar .sk-select {
+    display: none;
+  }
+
+  span.sidebar-filters{
     display: none;
   }
   .hideFilters span.sidebar-filters {
@@ -199,11 +235,15 @@ body,
     display: block;
   }
 
-  .sk-layout__filters div.filter--gender {
+  .showInfos .modal-text {
+    margin: 65px auto;
+  }
+
+  .btn-info {
     margin-bottom: 200px;
   }
 
-  .btn-add {
+  .btn-shoot {
     float: left;
     padding-right: 20px;
   }
@@ -214,9 +254,11 @@ body,
     height: 32px;
     cursor: pointer;
     margin-right: 30px;
-    margin-top: 7px;
+    mrgin-top: 7px;
     background: url("https://faceatlas.co/static/saw.svg") no-repeat;
   }
+
+
 
 .showFilters .btn-filter {
   background: url("https://faceatlas.co/static/hand.svg") no-repeat;

@@ -56,7 +56,7 @@ export class SearchPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = { showFilters: "hideFilters" };
-    this.state = { showInfos: false };
+    this.state = { showInfos: "hideInfos"  };
     this.handleFilterClick = this.handleFilterClick.bind(this);
     this.handleInfoClick = this.handleInfoClick.bind(this);
   }
@@ -67,7 +67,8 @@ export class SearchPage extends React.Component {
 }
 
   handleInfoClick() {
-    this.setState({ showInfos: !this.state.showInfos });
+    var css = (this.state.showInfos === "showInfos") ? "hideInfos" : "showInfos";
+    this.setState({ showInfos: css });
   }
 
 	render(){
@@ -78,9 +79,16 @@ export class SearchPage extends React.Component {
           <img src="logo.png" alt="logo" />
 		       </TopBar>*/}
 		      <LayoutBody>
+            <div className={ this.state.showInfos }>
+              <div className="modal-text"><p>Face Atlas is a crowdsourced collection of portraits, that were judged by an algorithm. It is an experiment in privacy and computer people knowledge.</p>
+<p>Made by <a href="https://twitter.com/m_hertig">m-hertig</a> using AWS, Rekognition, Elasticsearch, Searchkit & React</p>
+<p>Many thanks to <a href="https://twitter.com/paweloque">Pawel</a> for his support</p>
+  <div className="btn-add"><a href="#" onClick={ this.handleInfoClick } >OK</a></div>
+</div>
+            </div>
             <SideBar className={this.state.showFilters}>
             <div className="filter-buttons">
-      <div  className="btn-add"><a href="/upload">Take a picture</a></div><div className="btn-filter" onClick={ this.handleFilterClick }></div>
+      <div  className="btn-add btn-shoot"><a href="/upload">Take a picture</a></div><div className="btn-filter" onClick={ this.handleFilterClick }></div>
               </div>
                             <span className="sidebar-filters">
             <RangeFilter
@@ -110,6 +118,7 @@ export class SearchPage extends React.Component {
 								field="gender"
 								listComponent={ItemHistogramList}
                 size={2}/>
+                <div className="btn-info" onClick={ this.handleInfoClick }>?</div>
                 </span>
 		        </SideBar>
 		        <LayoutResults>
@@ -119,8 +128,9 @@ export class SearchPage extends React.Component {
                   <ViewSwitcherToggle/>
 									<SortingSelector options={[
 										{label:"Newest first", field:"timestamp", order:"desc", defaultOption:true},
-										{label:"Beauty low to high", field:"beauty", order:"asc"},
-										{label:"Beauty high to low", field:"beauty", order:"desc"}
+										{label:"Beauty", field:"beauty", order:"desc"},
+										{label:"Age", field:"age", order:"desc"},
+										{label:"Happiness", field:"happiness", order:"desc"}
 									]}/>
 		            </ActionBarRow>
 		            <ActionBarRow>
