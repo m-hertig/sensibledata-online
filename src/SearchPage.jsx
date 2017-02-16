@@ -25,6 +25,7 @@ const customHitStats = (props) => {
     )
 }
 
+
 const host = "https://search-sensibledata-mnmvjeckzqxbuqjpnrlamqgxhu.eu-central-1.es.amazonaws.com/faces";
 const searchkit = new SearchkitManager(host);
 
@@ -47,7 +48,28 @@ const AlbumHitsGridItem = (props)=> {
   }
 };
 
+
+
+
 export class SearchPage extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { showFilters: "hideFilters" };
+    this.state = { showInfos: false };
+    this.handleFilterClick = this.handleFilterClick.bind(this);
+    this.handleInfoClick = this.handleInfoClick.bind(this);
+  }
+
+  handleFilterClick() {
+    var css = (this.state.showFilters === "showFilters") ? "hideFilters" : "showFilters";
+    this.setState({ showFilters: css });
+}
+
+  handleInfoClick() {
+    this.setState({ showInfos: !this.state.showInfos });
+  }
+
 	render(){
 		return (
 			<SearchkitProvider searchkit={searchkit}>
@@ -56,8 +78,11 @@ export class SearchPage extends React.Component {
           <img src="logo.png" alt="logo" />
 		       </TopBar>*/}
 		      <LayoutBody>
-		        <SideBar>
-        <div  className="btn-add"><a class="animate" href="/upload">Take a picture</a></div>
+            <SideBar className={this.state.showFilters}>
+            <div className="filter-buttons">
+      <div  className="btn-add"><a href="/upload">Take a picture</a></div><div className="btn-filter" onClick={ this.handleFilterClick }></div>
+              </div>
+                            <span className="sidebar-filters">
             <RangeFilter
                 id="beauty"
                 field="beauty"
@@ -85,6 +110,7 @@ export class SearchPage extends React.Component {
 								field="gender"
 								listComponent={ItemHistogramList}
                 size={2}/>
+                </span>
 		        </SideBar>
 		        <LayoutResults>
 		          <ActionBar>

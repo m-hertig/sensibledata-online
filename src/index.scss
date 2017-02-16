@@ -89,6 +89,19 @@ body,
   display: none;
 }
 
+.filter-buttons {
+  height: 70px;
+}
+.btn-filter {
+  display: none;
+}
+
+.filter-icon {
+  float: right;
+  margin-right: 20px;
+  margin-top:5px;
+}
+
 .btn-add {
   height: 70px;
 
@@ -99,7 +112,7 @@ body,
     color: $color-red;
     position: relative;
     display: inline-block;
-    border: 2px solid $color-red;
+    border: 2px dotted $color-red;
   }
 
   a:hover {
@@ -174,14 +187,61 @@ body,
 }
 
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+
+  span.sidebar-filters {
+    display: none;
+  }
+  .hideFilters span.sidebar-filters {
+    display: none;
+  }
+
+  .showFilters span.sidebar-filters {
+    display: block;
+  }
+
+  .sk-layout__filters div.filter--gender {
+    margin-bottom: 200px;
+  }
+
+  .btn-add {
+    float: left;
+    padding-right: 20px;
+  }
+  .btn-filter {
+    display: block;
+    float: right;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    margin-right: 30px;
+    margin-top: 7px;
+    background: url("https://faceatlas.co/static/saw.svg") no-repeat;
+  }
+
+.showFilters .btn-filter {
+  background: url("https://faceatlas.co/static/hand.svg") no-repeat;
+  height: 45px;
+}
+
   .sk-layout__body {
     flex-direction: column;
     min-width: 0;
   }
 
+  .sk-layout__results {
+    margin-top: 80px;
+  }
+
   .sk-layout__filters  {
-    margin: 20px;
-    padding: 0px;
+    position: fixed;
+    width: 100%;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 20px;
+    padding-bottom: 0px;
+  }
+  .sk-panel {
+      width: 88%;
   }
   .sk-hits-grid {
     flex-flow: column;
