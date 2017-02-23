@@ -78,7 +78,7 @@ export class SearchPage extends React.Component {
 		      {/*<TopBar>
           <img src="logo.png" alt="logo" />
 		       </TopBar>*/}
-		      <LayoutBody>
+		      <LayoutBody className={this.state.showFilters}>
             <div className={ this.state.showInfos }>
               <div className="modal-text"><p>Face Atlas is a crowdsourced collection of portraits, that were judged by an algorithm. It is an experiment in privacy and computer people knowledge.</p>
 <p>Made by <a href="https://twitter.com/m_hertig">m-hertig</a> using AWS, Rekognition, Elasticsearch, Searchkit & React</p>
@@ -86,7 +86,7 @@ export class SearchPage extends React.Component {
   <div className="btn-add"><a href="#" onClick={ this.handleInfoClick } >OK</a></div>
 </div>
             </div>
-            <SideBar className={this.state.showFilters}>
+            <SideBar>
             <div className="filter-buttons">
       <div  className="btn-add btn-shoot"><a href="/upload">Take a picture</a></div><div className="btn-filter" onClick={ this.handleFilterClick }></div>
               </div>
@@ -118,7 +118,7 @@ export class SearchPage extends React.Component {
 								field="gender"
 								listComponent={ItemHistogramList}
                 size={2}/>
-                <div className="btn-info" onClick={ this.handleInfoClick }>?</div>
+                <div className="btn-info"><a onClick={ this.handleInfoClick } href="#">?</a></div>
                 </span>
 		        </SideBar>
 		        <LayoutResults>

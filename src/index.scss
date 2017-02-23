@@ -68,11 +68,16 @@ body,
   overflow-x: hidden;
 }
 
-body,
-.sk-select select {
+body .sk-select select {
   background-color: $color-light;
   font-family: $sk-font-family;
   font-weight: normal;
+  border: 2px dotted #ccc;
+}
+
+.sk-select::after {
+  top: 69%;
+  border-top: 6px solid black;
 }
 
 
@@ -193,6 +198,14 @@ a:visited {
 
 .btn-info {
   cursor: pointer;
+  a {
+    border-radius: 50%;
+    padding: 2px 9px;
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+    border: 2px dotted #ccc;
+}
 }
 
 .modal {
@@ -224,15 +237,39 @@ a:visited {
     display: none;
   }
 
+ .showFilters {
+   .rc-slider-handle {
+     width: 24px;
+     height: 24px;
+   }
+   .rc-slider-mark {
+     top: 21px;
+   }
+
+   .sk-range-slider {
+     padding-bottom: 24px;
+ }
+ }
+
+
   span.sidebar-filters{
     display: none;
+  }
+  .sk-layout__results {
+    display: block;
   }
   .hideFilters span.sidebar-filters {
     display: none;
   }
 
-  .showFilters span.sidebar-filters {
-    display: block;
+  .showFilters
+  {
+    span.sidebar-filters {
+      display: block;
+    }
+    .sk-layout__results {
+      display: none;
+    }
   }
 
   .showInfos .modal-text {
@@ -241,7 +278,7 @@ a:visited {
 
   .btn-info {
     margin-bottom: 200px;
-  }
+}
 
   .btn-shoot {
     float: left;
@@ -254,15 +291,18 @@ a:visited {
     height: 32px;
     cursor: pointer;
     margin-right: 30px;
-    mrgin-top: 7px;
+    margin-top: 7px;
     background: url("https://faceatlas.co/static/saw.svg") no-repeat;
   }
 
 
 
-.showFilters .btn-filter {
-  background: url("https://faceatlas.co/static/hand.svg") no-repeat;
-  height: 45px;
+.showFilters
+{
+  .btn-filter {
+    background: url("https://faceatlas.co/static/hand.svg") no-repeat;
+    height: 45px;
+  }
 }
 
   .sk-layout__body {
@@ -350,3 +390,12 @@ a:visited {
     animation-name: shake;
   }
 }
+
+.sk-range-histogram__bar,
+.sk-range-slider .rc-slider-track {
+    background: hsla(100,5%,62%,.2);
+}
+
+.sk-range-histogram__bar.is-out-of-bounds {
+    background: hsla(100,5%,62%,.07);
+  }
