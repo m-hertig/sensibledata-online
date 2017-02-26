@@ -111,7 +111,7 @@ export class TakePicture extends React.Component {
       <div className="snapshot-view" id="snapshot-view">
       <p id="snapshot-infos" ref="snapshot-infos">Photo time! Your beauty, age and happiness will be judged automatically</p>
     <div className="portrait_wrapper">
-        <img className="head-img" src={require('../static/face.svg')} />
+        <img className="head-img" src="https://faceatlas.co/static/face.svg" />
   		<div id="my_camera"></div>
   </div>	<div className="snapshot-wrapper btn-add">
   		<a href="#" id="snapshot-button" onClick={ this.takeSnapshot }>Cheese!</a>
@@ -153,7 +153,7 @@ export class SearchPage extends React.Component {
         {this.state.showTakePicture ? (
           <div className="showInfos">
             <div className="btn-close"><a href="#" onClick={ this.handlePictureClick } >
-                <img className="close-img" src={require('../static/close.svg')} /></a></div>
+                <img className="close-img" src="https://faceatlas.co/static/close.svg" /></a></div>
             <div className="modal-snap"><TakePicture />
         </div>
         </div>
