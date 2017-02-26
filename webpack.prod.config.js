@@ -17,6 +17,9 @@ module.exports = {
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(true),
     new ExtractTextPlugin("styles.css"),
+    new webpack.ProvidePlugin({
+        Webcam: "webcamjs"
+    }),
     new webpack.optimize.UglifyJsPlugin({
       mangle: true,
       warnings: false,
