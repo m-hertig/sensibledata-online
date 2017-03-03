@@ -81,7 +81,8 @@ def upload():
                 except Exception as e:
                     print(e)
                     print "error parsing data"
-                    return "Error analyzing your face! Please try again!"
+                    # Error analyzing your face! Please try again!
+                    return 2
 
                 #calculate happiness
                 happiness = 50+(moods['happy']/2)-(moods['sad']/2)
@@ -102,8 +103,8 @@ def upload():
                 try:
                     es.index(index='faces', doc_type='face', body=data)
                 except Exception as e:
-                    print e
-                    return "Error indexing your face! Please try again!"
+                    # "Error indexing your face! Please try again!"
+                    return 3
 
                 #target_url = config[config[elasticsearch_index_url]] % filename
                 #r = requests.put(target_url, data=json.dumps(data))
