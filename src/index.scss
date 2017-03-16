@@ -2,7 +2,7 @@
 $color-blue: #0028ff;
 $color-red: #ff2800;
 //$color-red: rgba(255,20,0,0.5);
-$color-light: #fbfbfb;
+$color-light: #ffffff;
 $color-text:rgba(0,0,0,0.87);
 
 $sk-bold-weight: 700;
@@ -28,6 +28,10 @@ $sk-font-family: -apple-system, BlinkMacSystemFont,
 // $sk-font-family: 'Libre Franklin', sans-serif;
 
 $sk-font-family: 'Space Mono', monospace;
+
+
+
+
 
 $sk-layout-background: $color-light;
 $sk-layout-panel-background: $color-light;
@@ -115,21 +119,26 @@ a:visited {
 }
 
 .btn-add {
-  height: 70px;
 
-  a {
-    border-radius: 5px;
-    padding: 10px 30px;
-    text-decoration: none;
-    color: $color-red;
-    position: relative;
-    display: inline-block;
-    border: 2px dotted $color-red;
-  }
 
-  a:hover {
-    background-color: #fff;
-  }
+    a {
+      border-radius: 5px;
+      padding: 10px 30px;
+      text-decoration: none;
+      color: $color-red;
+      position: relative;
+      display: inline-block;
+      border: 2px dotted $color-red;
+    }
+
+    a:hover {
+      background-color: #fff;
+    }
+}
+
+.filter-buttons .btn-add {
+
+  width: 100%;
 }
 
 .btn-close {
@@ -165,6 +174,7 @@ a:visited {
 .sk-selected-filters-option__name,
 .sk-selected-filters-option__remove-action {
   color: $color-text;
+  border-left: none;
 }
 
 .sk-hits-grid__item {
@@ -213,7 +223,8 @@ a:visited {
     text-decoration: none;
     position: relative;
     display: inline-block;
-    border: 2px dotted #ccc;
+    border: 2px dotted $color-red;
+    margin-top: 30px;
 }
 }
 
@@ -246,7 +257,24 @@ a:visited {
   }
 }
 
+
+.sk-panel__header {
+  font-size: 1.8rem;
+}
+
+.sk-layout__filters .sk-panel {
+  margin-bottom: 35px;
+}
+
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+
+  .sk-panel__header {
+    font-size: 0.92rem;
+  }
+
+  .sk-layout__filters .sk-panel {
+    margin-bottom: 16px;
+  }
 
   .sk-results-list__action-bar .sk-select {
     display: none;
@@ -375,7 +403,7 @@ a:visited {
   #my_camera {margin: auto; padding-bottom: 20px; width: 480px;height: 480px; max-width: 100%;}
   .snapshot-wrapper{
     text-align:center;
-    display:block;
+    display:none;
     margin-top: 20px;
   }
 
@@ -384,11 +412,12 @@ a:visited {
     display:block;
     max-width: 500px;
     margin: auto;
+    height: 80px;
     padding: 10px 0px;
   }
 
   .animated {
-    animation-duration: 5s;
+    animation-duration: 2s;
     animation-fill-mode: both;
   }
 
@@ -418,6 +447,7 @@ a:visited {
 .sk-range-histogram__bar,
 .sk-range-slider .rc-slider-track {
     background: hsla(100,5%,62%,.2);
+    background: rgba(255, 96, 236, 0.2);
 }
 
 .sk-range-histogram__bar.is-out-of-bounds {
@@ -440,4 +470,143 @@ a:visited {
   z-index:99;
   top: 0px;
   left: 0px;
+  display: none;
+}
+
+
+$button-animation-speed: 100ms;
+
+$butt-radius: 0.5em;
+$butt-padding: 1em 2em;
+$butt-thickness: 1rem;
+$butt-depression: 0.5rem;
+
+$butt-bg-color:$color-red;
+$butt-text-color: $color-light;
+
+$butt-text-size: 2.4em;
+$butt-font: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+
+@mixin notselectable() {
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+  /* Rules below not implemented in browsers yet */
+  -o-user-select: none;
+  user-select: none;
+}
+
+// Main button Styles
+
+button {
+  @include notselectable();
+  &, * {
+    box-sizing:border-box;
+  }
+
+  //Configure animations ( prefix-free will hook things up )
+  &, &:after {
+  	transition:
+			color $button-animation-speed ease-out,
+			top $button-animation-speed ease-out,
+			background-color $button-animation-speed ease-in,
+			text-shadow $button-animation-speed ease-in,
+			box-shadow $button-animation-speed ease-in;
+  }
+
+  //Remove the little outline around the button when it has focus
+  outline: none;
+
+  font-family: $butt-font;
+  font-size: $butt-text-size;
+  color: $butt-text-color;
+
+  text-shadow:rgba(255,255,255,0.35) 0 1px 0;
+
+  position:relative;
+  padding:$butt-padding;
+  margin:0 auto ($butt-thickness * 3);
+
+  border-radius: $butt-radius;
+  background: $butt-bg-color;
+  border-top: 2px solid lighten($butt-bg-color, 10%);
+  border-right: 2px solid lighten($butt-bg-color, 5%);
+  border-left: 2px solid lighten($butt-bg-color, 15%);
+  border-bottom: 1px solid lighten($butt-bg-color, 30%);
+  top:0;
+
+  &:after {
+    display:block;
+    content:'';
+    position:absolute;
+    top: $butt-thickness;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:-1;
+    will-change: top background-color;
+    border-radius: $butt-radius;
+    background: darken($butt-bg-color, 7%);
+    border-left: 1px solid lighten($butt-bg-color, 15%);
+    border-bottom: 3px solid darken($butt-bg-color, 20%);
+    border-right: 1px solid darken($butt-bg-color, 15%);
+    //Add a light shadow
+    box-shadow:rgba(0,0,0,0.55) 0px 0.25rem 10px;
+  }
+
+  //Hover State
+  &:hover {
+    background: lighten($butt-bg-color, 1%);
+  }
+
+  //Active State
+  &:active {
+    color: darken($butt-text-color, 1%);
+    background: lighten($butt-bg-color, 2%);
+    top: $butt-thickness - $butt-depression;
+    text-shadow:rgba(255,255,255,0.5) 1px 1px 0;
+    &:after {
+    	top: $butt-thickness - $butt-depression;
+	    background: darken($butt-bg-color, 7.5%);
+      //Adjust light shadow
+      box-shadow:rgba(0,0,0,0.55) 0px 0.125rem 10px;
+    }
+  }
+}
+
+
+//W.I.P. mixin…
+//Still deciding on params/functionality
+@mixin buttonsochunky($base-color){
+  position:relative;
+  top:0;
+  background: $base-color;
+  border-top: 2px solid lighten($base-color, 10%);
+  border-right: 2px solid lighten($base-color, 5%);
+  border-left: 2px solid lighten($base-color, 15%);
+  border-bottom: 1px solid lighten($base-color, 30%);
+  &:after {
+    position:absolute;
+    top: $butt-thickness;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:-1;
+    background: darken($base-color, 7%);
+    border-left: 1px solid lighten($base-color, 15%);
+    border-bottom: 3px solid darken($base-color, 20%);
+    border-right: 1px solid darken($base-color, 15%);
+    //Add a light shadow
+    box-shadow:rgba(0,0,0,0.55) 0px 0.25rem 10px;
+  }
+}
+
+.btn-shoot {
+  a {
+    width: 200px;
+    height: 200px;
+    font-size: 2rem;
+    text-align: center;
+    line-height: 543%;
+  }
 }

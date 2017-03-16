@@ -30,23 +30,61 @@ const host = "https://search-sensibledata-mnmvjeckzqxbuqjpnrlamqgxhu.eu-central-
 const searchkit = new SearchkitManager(host);
 
 const AlbumHitsGridItem = (props)=> {
-  const {bemBlocks, result} = props;
+  const {result} = props;
 
   if (result) {
     const source:any = _.extend({}, result._source, result.highlight);
     //let url = "http://idowebsites.ch/sensibleData/images/" + source.file;
     let url = source.file;
 
-    console.log(source);
 
     return (
-      <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
-          <img data-qa="face" className={bemBlocks.item("face")} src={url}/>
-          <div data-qa="title" className={bemBlocks.item("title")}>{source.gender}, {source.age}yrs, B:{source.beauty}%, H:{source.happiness}%</div>
+      <div className="sk-hits-grid-hit sk-hits-grid__item" data-qa="hit">
+          <img data-qa="face" className="sk-hits-grid-hit__face" src={url}/>
+          <div data-qa="title" className="sk-hits-grid-hit__title">{source.gender}, {source.age}yrs, B:{source.beauty}%, H:{source.happiness}%</div>
       </div>
     )
   }
 };
+
+export class FacesGrid extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { showTakePicture: false  };
+    this.handlePictureClick = this.handlePictureClick.bind(this);
+  }
+
+  handlePictureClick() {
+    window.showTakePicture = !window.showTakePicture ;
+  }
+
+  render(){
+    const { hits } = this.props
+    const listItems = hits.map((hit) =>
+      <div className="sk-hits-grid-hit sk-hits-grid__item" data-qa="hit">
+          <img data-qa="face" className="sk-hits-grid-hit__face" src={hit._source.file}/>
+          <div data-qa="title" className="sk-hits-grid-hit__title">{hit._source.gender}, {hit._source.age}yrs, B:{hit._source.beauty}%, H:{hit._source.happiness}%</div>
+      </div>
+    );
+    return (
+      <div className="sk-hits-grid" data-qa="hits">
+        <div  className="sk-hits-grid-hit sk-hits-grid__item btn-add btn-shoot"><a href="#" onClick={this.handlePictureClick}>Add</a></div><div className="btn-filter" onClick={ this.handleFilterClick }></div>
+       {listItems}
+    </div>
+    )
+  }
+}
+
+const TakePictureButton = (props)=> {
+  const {bemBlocks, result} = props;
+    return (
+      <div className={bemBlocks.item().mix(bemBlocks.container("item"))} data-qa="hit">
+          yolo
+      </div>
+    )
+};
+
+
 
 
 export class TakePicture extends React.Component {
@@ -70,7 +108,13 @@ export class TakePicture extends React.Component {
         image_format: 'jpeg',
         jpeg_quality: 90
       });
-
+      Webcam.on( 'live', function() {
+      // camera is live, showing preview image
+      // (and user has allowed access)
+      console.log("webcam live");
+      document.getElementById('head-img').style.display = "block";
+      document.getElementById('snapshot-wrapper').style.display = "block";
+      } );
   }
 
   componentDidMount() {
@@ -80,28 +124,29 @@ export class TakePicture extends React.Component {
   takeSnapshot() {
     Webcam.on('uploadProgress', function() {
       document.getElementById('snapshot-infos').innerHTML = "Beautiful. Trying to analyze your face..";
-      document.getElementById('snapshot-infos').className = "animated shake infinite";
+      //document.getElementById('portrait-wrapper').className += "animated shake infinite";
      } );
-
-    Webcam.on( 'live', function() {
-    // camera is live, showing preview image
-    // (and user has allowed access)
-    text = "Photo time! Your beauty, age and happiness will be judged automatically"
-    document.getElementById('snapshot-infos').innerHTML = text;
-    document.getElementById('snapshot-view').style.display = block;
-    } );
 
 
     // take snapshot and get image data
     Webcam.snap( function(data_uri) {
       // display results in page
-      document.getElementById('my_camera').innerHTML =
-        '<img src="'+data_uri+'"/>';
+      // document.getElementById('my_camera').innerHTML =
+      //   '<img src="'+data_uri+'"/>';
+      Webcam.freeze()
           Webcam.upload(data_uri, 'https://faceatlas.co/upload', function(code, text) {
         //Webcam.upload(data_uri, 'http://localhost:5000/upload', function(code, text) {
           console.log('upload complete. code: '+code+' text: '+text);
-          document.getElementById('snapshot-infos').innerHTML = text;
-          document.getElementById('snapshot-infos').className = "";
+          if (text == "2") {
+            document.getElementById('snapshot-infos').innerHTML = "Sorry I could not recognize your face. Please try again";
+            Webcam.unfreeze()
+          } else if (text == "3") {
+            document.getElementById('snapshot-infos').innerHTML = "Sorry I had troubles storing your face. Please try again.";
+            Webcam.unfreeze()
+          } else {
+            document.getElementById('snapshot-infos').innerHTML = text;
+            document.getElementById('snapshot-infos').className = "";
+          }
         } );
     } );
   }
@@ -110,10 +155,10 @@ export class TakePicture extends React.Component {
     return (
       <div className="snapshot-view" id="snapshot-view">
       <p id="snapshot-infos" ref="snapshot-infos">Photo time! Your beauty, age and happiness will be judged automatically</p>
-    <div className="portrait_wrapper">
-        <img className="head-img" src="https://faceatlas.co/static/face.svg" />
+    <div className="portrait_wrapper" id="portrait-wrapper">
+        <img className="head-img" id="head-img" src="https://faceatlas.co/static/face.svg" />
   		<div id="my_camera"></div>
-  </div>	<div className="snapshot-wrapper btn-add">
+  </div>	<div className="snapshot-wrapper btn-add" id="snapshot-wrapper">
   		<a href="#" id="snapshot-button" onClick={ this.takeSnapshot }>Cheese!</a>
   	</div>
     </div>
@@ -143,14 +188,20 @@ export class SearchPage extends React.Component {
     this.setState({ showInfos: css });
   }
   handlePictureClick() {
-    this.setState({ showTakePicture: !this.state.showTakePicture });
+    window.showTakePicture = !window.showTakePicture;
   }
+
+  componentWillMount() {
+    window.showTakePicture = false;
+  }
+
+
 
 	render(){
 		return (
 			<SearchkitProvider searchkit={searchkit}>
 		    <Layout>
-        {this.state.showTakePicture ? (
+        {window.showTakePicture ? (
           <div className="showInfos">
             <div className="btn-close"><a href="#" onClick={ this.handlePictureClick } >
                 <img className="close-img" src="https://faceatlas.co/static/close.svg" /></a></div>
@@ -172,10 +223,7 @@ export class SearchPage extends React.Component {
 </div>
             </div>
             <SideBar>
-            <div className="filter-buttons">
-      <div  className="btn-add btn-shoot"><a href="#" onClick={this.handlePictureClick}>Take a picture</a></div><div className="btn-filter" onClick={ this.handleFilterClick }></div>
-              </div>
-                            <span className="sidebar-filters">
+          <span className="sidebar-filters">
             <RangeFilter
                 id="beauty"
                 field="beauty"
@@ -203,6 +251,13 @@ export class SearchPage extends React.Component {
 								field="gender"
 								listComponent={ItemHistogramList}
                 size={2}/>
+                <div className="sk-panel__header">Sort by</div>
+                <SortingSelector options={[
+                  {label:"Newest first", field:"timestamp", order:"desc", defaultOption:true},
+                  {label:"Beauty", field:"beauty", order:"desc"},
+                  {label:"Age", field:"age", order:"desc"},
+                  {label:"Happiness", field:"happiness", order:"desc"}
+                ]}/>
                 <div className="btn-info"><a onClick={ this.handleInfoClick } href="#">?</a></div>
                 </span>
 		        </SideBar>
@@ -211,12 +266,6 @@ export class SearchPage extends React.Component {
 		            <ActionBarRow>
 		              <HitsStats component={customHitStats}/>
                   <ViewSwitcherToggle/>
-									<SortingSelector options={[
-										{label:"Newest first", field:"timestamp", order:"desc", defaultOption:true},
-										{label:"Beauty", field:"beauty", order:"desc"},
-										{label:"Age", field:"age", order:"desc"},
-										{label:"Happiness", field:"happiness", order:"desc"}
-									]}/>
 		            </ActionBarRow>
 		            <ActionBarRow>
 		              <SelectedFilters/>
@@ -226,12 +275,13 @@ export class SearchPage extends React.Component {
               <ViewSwitcherHits
                   hitsPerPage={50}
                   hitComponents={[
-                      {key:"grid", title:"Grid", itemComponent:AlbumHitsGridItem, defaultOption:true}
+                      {key:"grid", title:"Grid", listComponent:FacesGrid, defaultOption:true}
                   ]}
                   scrollTo="body" />
 		          <NoHits/>
 							<Pagination showNumbers={true}/>
 		        </LayoutResults>
+
 		      </LayoutBody>
 		    </Layout>
 		  </SearchkitProvider>
