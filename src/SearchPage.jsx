@@ -50,14 +50,26 @@ const AlbumHitsGridItem = (props)=> {
 export class FacesGrid extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { showTakePicture: false  };
+    this.state = { showFilters: "hideFilters", showInfos: "hideInfos", showTakePicture: false  };
+    this.handleFilterClick = this.handleFilterClick.bind(this);
+    this.handleInfoClick = this.handleInfoClick.bind(this);
     this.handlePictureClick = this.handlePictureClick.bind(this);
   }
 
-  handlePictureClick() {
-    window.showTakePicture = !window.showTakePicture ;
-  }
+  handleFilterClick() {
+    var css = (this.state.showFilters === "showFilters") ? "hideFilters" : "showFilters";
+    this.setState({ showFilters: css });
+}
 
+  handleInfoClick() {
+    var css = (this.state.showInfos === "showInfos") ? "hideInfos" : "showInfos";
+    this.setState({ showInfos: css });
+  }
+  handlePictureClick() {
+
+      alert("yo");
+    this.setState({ showTakePicture: !this.state.showTakePicture });
+  }
   render(){
     const { hits } = this.props
     const listItems = hits.map((hit) =>
@@ -68,7 +80,7 @@ export class FacesGrid extends React.Component {
     );
     return (
       <div className="sk-hits-grid" data-qa="hits">
-        <div  className="sk-hits-grid-hit sk-hits-grid__item btn-add btn-shoot"><a href="#" onClick={this.handlePictureClick}>Add</a></div><div className="btn-filter" onClick={ this.handleFilterClick }></div>
+        <div  className="sk-hits-grid-hit sk-hits-grid__item btn-add btn-shoot"><a href="#" onClick={this.handlePictureClick}><img src="https://faceatlas.co/static/plus.svg" alt="camera"></img></a></div><div className="btn-filter" onClick={ this.handleFilterClick }></div>
        {listItems}
     </div>
     )
@@ -166,6 +178,7 @@ export class TakePicture extends React.Component {
   }
 }
 
+let showTakePicture = false;
 
 
 export class SearchPage extends React.Component {
@@ -188,11 +201,9 @@ export class SearchPage extends React.Component {
     this.setState({ showInfos: css });
   }
   handlePictureClick() {
-    window.showTakePicture = !window.showTakePicture;
-  }
+    alert("yo");
+    this.setState({ showTakePicture: !this.state.showTakePicture });
 
-  componentWillMount() {
-    window.showTakePicture = false;
   }
 
 
@@ -201,7 +212,7 @@ export class SearchPage extends React.Component {
 		return (
 			<SearchkitProvider searchkit={searchkit}>
 		    <Layout>
-        {window.showTakePicture ? (
+        {this.state.showTakePicture ? (
           <div className="showInfos">
             <div className="btn-close"><a href="#" onClick={ this.handlePictureClick } >
                 <img className="close-img" src="https://faceatlas.co/static/close.svg" /></a></div>
@@ -232,19 +243,19 @@ export class SearchPage extends React.Component {
                 showHistogram={true}
             title="Beauty %"/>
             <RangeFilter
-                id="age"
-                field="age"
-                min={0}
-                max={100}
-                showHistogram={true}
-                title="Age"/>
-            <RangeFilter
                 id="happiness"
                 field="happiness"
                 min={0}
                 max={100}
                 showHistogram={true}
                 title="Happiness %"/>
+            <RangeFilter
+                id="age"
+                field="age"
+                min={0}
+                max={100}
+                showHistogram={true}
+                title="Age"/>
 							<MenuFilter
 								id="gender"
 								title="Gender"
