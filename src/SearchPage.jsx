@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as _ from "lodash";
+import { createStore } from 'redux'
 
 import {
     SearchkitManager, SearchkitProvider,
@@ -13,6 +14,19 @@ import {
 
 require("./index.scss");
 
+let showTakePicture = false;
+// a "reducer" that handleshowTakePicture some events and return a state
+function takePictureToggle(showTakePicture = false, action) {
+  return  action.type === 'TOGGLE' ? showTakePicture = !showTakePicture
+        : showTakePicture;
+}
+
+let store = createStore(takePictureToggle)
+
+
+store.dispatch({ type: 'TOGGLE' }) // 1
+store.dispatch({ type: 'TOGGLE' }) // 2
+store.dispatch({ type: 'TOGGLE' }) // 1
 
 const customHitStats = (props) => {
     const {resultsFoundLabel, bemBlocks, hitsCount, timeTaken} = props
@@ -29,31 +43,31 @@ const customHitStats = (props) => {
 const host = "https://search-sensibledata-mnmvjeckzqxbuqjpnrlamqgxhu.eu-central-1.es.amazonaws.com/faces";
 const searchkit = new SearchkitManager(host);
 
-const AlbumHitsGridItem = (props)=> {
-  const {result} = props;
-
-  if (result) {
-    const source:any = _.extend({}, result._source, result.highlight);
-    //let url = "http://idowebsites.ch/sensibleData/images/" + source.file;
-    let url = source.file;
-
-
-    return (
-      <div className="sk-hits-grid-hit sk-hits-grid__item" data-qa="hit">
-          <img data-qa="face" className="sk-hits-grid-hit__face" src={url}/>
-          <div data-qa="title" className="sk-hits-grid-hit__title">{source.gender}, {source.age}yrs, B:{source.beauty}%, H:{source.happiness}%</div>
-      </div>
-    )
-  }
-};
+// const AlbumHitsGridItem = (props)=> {
+//   const {result} = props;
+//
+//   if (result) {
+//     const source:any = _.extend({}, result._source, result.highlight);
+//     //let url = "http://idowebsites.ch/sensibleData/images/" + source.file;
+//     let url = source.file;
+//
+//
+//     return (
+//       <div className="sk-hits-grid-hit sk-hits-grid__item" data-qa="hit">
+//           <img data-qa="face" className="sk-hits-grid-hit__face" src={url}/>
+//           <div data-qa="title" className="sk-hits-grid-hit__title">{source.gender}, {source.age}yrs, B:{source.beauty}%, H:{source.happiness}%</div>
+//       </div>
+//     )
+//   }
+// };
 
 export class FacesGrid extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { showFilters: "hideFilters", showInfos: "hideInfos", showTakePicture: false  };
-    this.handleFilterClick = this.handleFilterClick.bind(this);
-    this.handleInfoClick = this.handleInfoClick.bind(this);
-    this.handlePictureClick = this.handlePictureClick.bind(this);
+    // this.state = { showFilters: "hideFilters", showInfos: "hideInfos"  };
+    // this.handleFilterClick = this.handleFilterClick.bind(this);
+    // this.handleInfoClick = this.handleInfoClick.bind(this);
+    // this.handlePictureClick = this.handlePictureClick.bind(this);
   }
 
   handleFilterClick() {
@@ -66,9 +80,10 @@ export class FacesGrid extends React.Component {
     this.setState({ showInfos: css });
   }
   handlePictureClick() {
-
-      alert("yo");
-    this.setState({ showTakePicture: !this.state.showTakePicture });
+    store.dispatch({ type: 'TOGGLE' })
+    // this.showTakePicture = !this.showTakePicture;
+    //alert(store.getState());
+    // this.forceUpdate();
   }
   render(){
     const { hits } = this.props
@@ -80,7 +95,7 @@ export class FacesGrid extends React.Component {
     );
     return (
       <div className="sk-hits-grid" data-qa="hits">
-        <div  className="sk-hits-grid-hit sk-hits-grid__item btn-add btn-shoot"><a href="#" onClick={this.handlePictureClick}><img src="https://faceatlas.co/static/plus.svg" alt="camera"></img></a></div><div className="btn-filter" onClick={ this.handleFilterClick }></div>
+        <div  className="sk-hits-grid-hit sk-hits-grid__item btn-add btn-shoot"><a href="#" onClick={this.handlePictureClick}><img src="https://faceatlas.co/static/plus.svg" alt="+"></img></a></div>
        {listItems}
     </div>
     )
@@ -166,7 +181,7 @@ export class TakePicture extends React.Component {
   render() {
     return (
       <div className="snapshot-view" id="snapshot-view">
-      <p id="snapshot-infos" ref="snapshot-infos">Photo time! Your beauty, age and happiness will be judged automatically</p>
+      <p id="snapshot-infos" ref="snapshot-infos">Photo time! Your beauty, age and happiness will be judged automatically. Please consider that algorithms are not yet able to detect real beauty and happiness.</p>
     <div className="portrait_wrapper" id="portrait-wrapper">
         <img className="head-img" id="head-img" src="https://faceatlas.co/static/face.svg" />
   		<div id="my_camera"></div>
@@ -178,14 +193,12 @@ export class TakePicture extends React.Component {
   }
 }
 
-let showTakePicture = false;
-
 
 export class SearchPage extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { showFilters: "hideFilters", showInfos: "hideInfos", showTakePicture: false  };
+    this.state = { showFilters: "hideFilters", showInfos: "hideInfos", showTakePicture: false };
     this.handleFilterClick = this.handleFilterClick.bind(this);
     this.handleInfoClick = this.handleInfoClick.bind(this);
     this.handlePictureClick = this.handlePictureClick.bind(this);
@@ -196,14 +209,20 @@ export class SearchPage extends React.Component {
     this.setState({ showFilters: css });
 }
 
+componentWillMount() {
+  store.subscribe(() =>
+  this.setState({ showTakePicture: store.getState() })
+)
+}
+
   handleInfoClick() {
     var css = (this.state.showInfos === "showInfos") ? "hideInfos" : "showInfos";
     this.setState({ showInfos: css });
   }
   handlePictureClick() {
-    alert("yo");
-    this.setState({ showTakePicture: !this.state.showTakePicture });
-
+    store.dispatch({ type: 'TOGGLE' }) // 1
+    //showTakePicture = !showTakePicture;
+    //this.forceUpdate();
   }
 
 
@@ -212,6 +231,7 @@ export class SearchPage extends React.Component {
 		return (
 			<SearchkitProvider searchkit={searchkit}>
 		    <Layout>
+
         {this.state.showTakePicture ? (
           <div className="showInfos">
             <div className="btn-close"><a href="#" onClick={ this.handlePictureClick } >
@@ -283,11 +303,8 @@ export class SearchPage extends React.Component {
 		              <ResetFilters/>
 		            </ActionBarRow>
 		          </ActionBar>
-              <ViewSwitcherHits
-                  hitsPerPage={50}
-                  hitComponents={[
-                      {key:"grid", title:"Grid", listComponent:FacesGrid, defaultOption:true}
-                  ]}
+              <Hits
+                  hitsPerPage={50} listComponent={FacesGrid} handlePictureClick={this.state.handlePictureClick}
                   scrollTo="body" />
 		          <NoHits/>
 							<Pagination showNumbers={true}/>
