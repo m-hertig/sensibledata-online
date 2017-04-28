@@ -10,6 +10,7 @@ from werkzeug.utils import secure_filename
 import requests, json, sys
 from configobj import ConfigObj
 import certifi
+import boto3, pprint
 
 UPLOAD_FOLDER = './uploads'
 
@@ -35,48 +36,51 @@ def upload():
     print configobj["rekognition_api_key"]
     print 'hallo uploader!!!!'
     flash("Trying to analyze your face!")
-    moods = {"happy":0,"calm":0,"confused":0,"disgust":0,"surprised":0,"sad":0,"angry":0}
+    moods = {"happy":0,"calm":0,"confused":0,"disgusted":0,"surprised":0,"sad":0,"angry":0}
     req = request
     if request.method == 'POST':
         try:
             webcam_file = request.files['webcam']
             if webcam_file:
-                randomtext = "Bla"
                 filename = secure_filename(str(uuid.uuid4())+".jpg")
-                webcam_file.save(os.path.join(application.config['UPLOAD_FOLDER'], filename))
+                filePath = os.path.join(application.config['UPLOAD_FOLDER'], filename)
+                webcam_file.save(filePath)
 
 		picture_url = configobj["pictures_url"]+filename
-                #picture_url = "http://idowebsites.ch/sensibleData/imageToAnalyze.jpg";
-                print 'saved? %s ' % picture_url
-                print "api key: "+configobj["rekognition_api_key"];
-                data = {'api_key':configobj["rekognition_api_key"], 'api_secret':configobj["rekognition_api_secret"], 'jobs':'face_gender_emotion_age_beauty', 'urls':picture_url}
-                #Parse data
                 try:
-                    print "Trying to get Face Analysis from Rekognition"
-                    r = requests.get(configobj["rekognition_url"], params=data)
-                    jsondata =  r.json()
+                    print "Trying to get Face Analysis from AWS Rekognition"
+                    rekognition = boto3.client('rekognition')
+
+                    with open(filePath, 'rb') as source_image:
+                        source_bytes = source_image.read()
+
+                    response = rekognition.detect_faces(
+                                   Image={ 'Bytes': source_bytes },
+                		   Attributes=['ALL'],
+                    )
+
+                    pprint.pprint(response)
+
+
                     # sample jsondata = {u'url': u'https://www.dropbox.com/s/m8gkdlh6zdeea9e/2015-05-16%2016.13.08.jpg?dl=1', u'face_detection': [{u'emotion': {u'calm': 0.03, u'confused': 0.28, u'sad': 0.09}, u'confidence': 0.99, u'beauty': 0.12593, u'pose': {u'yaw': 0.08, u'roll': 0.1, u'pitch': 14.79}, u'sex': 1, u'race': {u'white': 0.58}, u'boundingbox': {u'tl': {u'y': 48.46, u'x': 139.23}, u'size': {u'width': 376.15, u'height': 376.15}}, u'smile': 0, u'quality': {u'brn': 0.51, u'shn': 1.6}, u'mustache': 0, u'beard': 0}], u'ori_img_size': {u'width': 576, u'height': 576}, u'usage': {u'status': u'Succeed.', u'quota': 19968, u'api_id': u'yHvz5xQExIxdKT1M'}}
                     print "Got it"
-                    print jsondata
+                    print response
+                    firstPerson = response["FaceDetails"][0]
 
-                    emotions = jsondata["face_detection"][0]["emotion"]
-                    beauty = str(int(jsondata["face_detection"][0]["beauty"]*100))
+                    #beauty = str(int(jsondata["face_detection"][0]["beauty"]*100))
                     # 0 = female, 1 = male
-                    if jsondata["face_detection"][0]["sex"]==1:
+                    if firstPerson["Gender"]["Value"]=="Male":
                         sex = "M"
                     else:
                         sex = "F"
-                    age = str(int(jsondata["face_detection"][0]["age"]))
-                    smile = jsondata["face_detection"][0]["smile"]
-                    highestVal = 0
-                    highestAttr = ""
-                    for att,val in emotions.iteritems():
-                        moods[att] = val*100
-                        print att,val
-                        if val>highestVal:
-                            highestVal = val
-                            highestAttr = att
-                    mood = str(highestAttr)
+                    age = str(int((firstPerson["AgeRange"]["High"] + firstPerson["AgeRange"]["Low"])/2))
+                    #smile = jsondata["face_detection"][0]["smile"]
+                    emotions = firstPerson["Emotions"]
+                    for emotion in emotions:
+                        att = emotion['Type'].lower()
+                        val = int(round(emotion['Confidence']))
+                        moods[att] = val
+
 
                 except Exception as e:
                     print(e)
@@ -88,7 +92,7 @@ def upload():
                 happiness = 50+(moods['happy']/2)-(moods['sad']/2)
 
                 # here comes the elasticsearch index command
-                data = {'beauty':beauty, 'age':age, 'smile':smile, 'happiness':happiness, 'happy':moods['happy'],'calm':moods['calm'],'confused':moods['confused'],'disgust':moods['disgust'],'surprised':moods['surprised'],'sad':moods['sad'],'angry':moods['angry'],'gender':sex, 'mood':mood, 'file':configobj["pictures_url"]+filename, 'timestamp':time.time()}
+                data = {'beauty':beauty, 'age':age, 'smile':smile, 'happiness':happiness, 'happy':moods['happy'],'calm':moods['calm'],'confused':moods['confused'],'disgusted':moods['disgusted'],'surprised':moods['surprised'],'sad':moods['sad'],'angry':moods['angry'],'gender':sex, 'mood':mood, 'file':configobj["pictures_url"]+filename, 'timestamp':time.time()}
                 print data
                 print "Trrrrying to put data into elasticsearch"
 
