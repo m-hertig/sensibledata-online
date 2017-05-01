@@ -23,11 +23,6 @@ function takePictureToggle(showTakePicture = false, action) {
 
 let store = createStore(takePictureToggle)
 
-
-store.dispatch({ type: 'TOGGLE' }) // 1
-store.dispatch({ type: 'TOGGLE' }) // 2
-store.dispatch({ type: 'TOGGLE' }) // 1
-
 const customHitStats = (props) => {
     const {resultsFoundLabel, bemBlocks, hitsCount, timeTaken} = props
     return (
@@ -82,7 +77,7 @@ export class FacesGrid extends React.Component {
   handlePictureClick() {
     store.dispatch({ type: 'TOGGLE' })
     // this.showTakePicture = !this.showTakePicture;
-    //alert(store.getState());
+    // alert(store.getState());
     // this.forceUpdate();
   }
   render(){
@@ -148,10 +143,15 @@ export class TakePicture extends React.Component {
           Webcam.attach( '#my_camera' );
   }
 
+  componentWillUnmount() {
+        Webcam.reset( '#my_camera' );
+        searchkit.reloadSearch();
+  }
+
   takeSnapshot() {
     Webcam.on('uploadProgress', function() {
-      document.getElementById('snapshot-infos').innerHTML = "Beautiful. Trying to analyze your face..";
-      //document.getElementById('portrait-wrapper').className += "animated shake infinite";
+      document.getElementById('snapshot-infos').innerHTML = "Trying to analyze your face. Please be patient.";
+      document.getElementById('snapshot-infos').className += "animated shake infinite";
      } );
 
 
@@ -164,6 +164,7 @@ export class TakePicture extends React.Component {
           Webcam.upload(data_uri, 'https://faceatlas.co/upload', function(code, text) {
         //Webcam.upload(data_uri, 'http://localhost:5000/upload', function(code, text) {
           console.log('upload complete. code: '+code+' text: '+text);
+          document.getElementById('snapshot-infos').className = "";
           if (text == "2") {
             document.getElementById('snapshot-infos').innerHTML = "Sorry I could not recognize your face. Please try again";
             Webcam.unfreeze()
@@ -173,6 +174,7 @@ export class TakePicture extends React.Component {
           } else {
             document.getElementById('snapshot-infos').innerHTML = text;
             document.getElementById('snapshot-infos').className = "";
+            searchkit.reloadSearch();
           }
         } );
     } );
@@ -256,19 +258,40 @@ componentWillMount() {
             <SideBar>
           <span className="sidebar-filters">
             <RangeFilter
-                id="beauty"
-                field="beauty"
+                id="happy"
+                field="happy"
                 min={0}
                 max={100}
                 showHistogram={true}
-            title="Beauty %"/>
+                title="Happy %"/>
             <RangeFilter
-                id="happiness"
-                field="happiness"
-                min={0}
+                id="sad"
+                field="sad"
+                min={1}
                 max={100}
                 showHistogram={true}
-                title="Happiness %"/>
+                title="Sad %"/>
+            <RangeFilter
+                id="Confused"
+                field="confused"
+                min={1}
+                max={100}
+                showHistogram={true}
+                title="Confused %"/>
+            <RangeFilter
+                id="surprised"
+                field="surprised"
+                min={1}
+                max={100}
+                showHistogram={true}
+                title="Surprised %"/>
+            <RangeFilter
+                id="calm"
+                field="calm"
+                min={1}
+                max={100}
+                showHistogram={true}
+                title="Calm %"/>
             <RangeFilter
                 id="age"
                 field="age"
