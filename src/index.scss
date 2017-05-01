@@ -297,12 +297,48 @@ a:visited {
 
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
 
+  .filter-buttons .btn-add {
+    width: auto;
+    float: left;
+  }
   .sk-panel__header {
     font-size: 0.92rem;
   }
 
   .sk-layout__filters .sk-panel {
     margin-bottom: 16px;
+  }
+
+  .showFilters {
+    .btn-add {
+      display: none;
+    }
+    .filter-buttons {
+      position: fixed;
+      right: 0px;
+      z-index: 9999;
+
+      .btn-filter {
+        padding: 32px;
+        border-radius: 50%;
+        background-color: $color-light;
+        z-index: 9999;
+        background-position: 50% 50%;
+        border: 1px solid black;
+      }
+    }
+    span.sidebar-filters {
+      margin-top: 70px;
+    }
+  }
+
+  .showInfos .snapshot-view  #snapshot-infos {
+    padding: 20px;
+    margin-top: 90px;
+  }
+
+  .sk-hits-grid__item.btn-add {
+    display: none;
   }
 
   .sk-results-list__action-bar .sk-select {
@@ -397,6 +433,7 @@ a:visited {
     margin-bottom: 0px;
     padding-top: 20px;
     padding-bottom: 0px;
+    background: $color-light;
   }
   .showFilters .sk-layout__filters {
     position: relative;

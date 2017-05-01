@@ -183,7 +183,7 @@ export class TakePicture extends React.Component {
   render() {
     return (
       <div className="snapshot-view" id="snapshot-view">
-      <p id="snapshot-infos" ref="snapshot-infos">Photo time! Your beauty, age and happiness will be judged automatically. Please consider that algorithms are not yet able to detect real beauty and happiness.</p>
+      <p id="snapshot-infos" ref="snapshot-infos">Photo time! Your beauty, age and happiness will be judged automatically.</p>
     <div className="portrait_wrapper" id="portrait-wrapper">
         <img className="head-img" id="head-img" src="https://faceatlas.co/static/face.svg" />
   		<div id="my_camera"></div>
@@ -255,7 +255,10 @@ componentWillMount() {
   <div className="btn-add"><a href="#" onClick={ this.handleInfoClick } >OK</a></div>
 </div>
             </div>
-            <SideBar>
+          <SideBar className={this.state.showFilters}>
+            <div className="filter-buttons">
+<div  className="btn-add"><a href="#" onClick={ this.handlePictureClick }>Take a picture</a></div><div className="btn-filter" onClick={ this.handleFilterClick }></div>
+  </div>
           <span className="sidebar-filters">
             <RangeFilter
                 id="happy"
