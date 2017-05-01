@@ -1,23 +1,30 @@
 import pprint
-
+import json
 import boto3
-
-# Set this to whatever percentage of 'similarity'
-# you'd want
-SIMILARITY_THRESHOLD = 75.0
+import os
 
 if __name__ == '__main__':
-    client = boto3.client('rekognition')
+    rekognition = boto3.client('rekognition')
 
-    # Our source image: http://i.imgur.com/OK8aDRq.jpg
-    with open('source.jpg', 'rb') as source_image:
-        source_bytes = source_image.read()
+    dir = "/Users/martinhertig/Documents/Workspace/sensible-data/imagesConverted/"
+    for filename in os.listdir(dir):
+        abspath= dir+filename
+        with open(abspath, 'rb') as source_image:
+            source_bytes = source_image.read()
 
-    response = client.detect_faces(
-                   Image={ 'Bytes': source_bytes },
-		   Attributes=['ALL'],
-    )
+        response = rekognition.detect_faces(
+                       Image={ 'Bytes': source_bytes },
+    		   Attributes=['ALL'],
+        )
 
-    pprint.pprint(response)
+        firstPerson = response["FaceDetails"][0]
 
 
+        emotions = firstPerson["Emotions"]
+        for emotion in emotions:
+            att = emotion['Type'].lower()
+            val = int(round(emotion['Confidence']))
+            print att,val
+
+
+    #pprint.pprint(response)
