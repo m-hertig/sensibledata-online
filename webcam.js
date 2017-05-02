@@ -57,7 +57,7 @@ var Webcam = {
 		constraints: null,     // custom user media constraints,
 		swfURL: '',            // URI to webcam.swf movie (defaults to the js location)
 		flashNotDetectedText: 'ERROR: No Adobe Flash Player detected.  Webcam.js relies on Flash for browsers that do not support getUserMedia (like yours).',
-		noInterfaceFoundText: "No webcam found :(<br>Please switch to a browser like Chrome or Firefox or get a webcam if you don't have one",
+		noInterfaceFoundText: "Sorry, can't access your camera :(<br>Please switch to a browser like Chrome or Firefox or to another device",
 		unfreeze_snap: true    // Whether to unfreeze the camera after snap (defaults to true)
 	},
 
