@@ -126,7 +126,7 @@ body .sk-select select {
 }
 
 .filter-buttons {
-  height: 70px;
+  display: none;
 }
 .btn-filter {
   display: none;
@@ -162,11 +162,6 @@ a:visited {
       animation-duration: 1s;
       animation-fill-mode: both;
     }
-}
-
-.filter-buttons .btn-add {
-
-  width: 100%;
 }
 
 .btn-close {
@@ -211,7 +206,9 @@ a:visited {
 }
 
 
-
+.sk-hits-grid-hit {
+      flex: 220px 0 0;
+}
 .sk-hits-grid-hit__title {
   font-size: 12px;
   margin-top: 1px;
@@ -297,10 +294,15 @@ a:visited {
 
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
 
-  .filter-buttons .btn-add {
-    width: auto;
-    float: left;
+  .filter-buttons {
+    display: block;
+    height: 70px;
+    .btn-add {
+        width: auto;
+        float: left;
+    }
   }
+
   .sk-panel__header {
     font-size: 0.92rem;
   }
