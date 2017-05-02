@@ -82,6 +82,12 @@ export class FacesGrid extends React.Component {
   }
   render(){
     const { hits } = this.props
+    // hits.map(function(hit) {
+    //   listItems += (<div className="sk-hits-grid-hit sk-hits-grid__item" data-qa="hit">
+    //       <img data-qa="face" className="sk-hits-grid-hit__face" src={hit._source.file}/>
+    //       <div data-qa="title" className="sk-hits-grid-hit__title">{hit._source.gender}, {hit._source.age}yrs, B:{hit._source.beauty}%, H:{hit._source.happiness}%</div>
+    //   </div>)
+    //   })
     const listItems = hits.map((hit) =>
       <div className="sk-hits-grid-hit sk-hits-grid__item" data-qa="hit">
           <img data-qa="face" className="sk-hits-grid-hit__face" src={hit._source.file}/>
@@ -275,7 +281,7 @@ componentWillMount() {
                 showHistogram={true}
                 title="Sad %"/>
             <RangeFilter
-                id="Confused"
+                id="confused"
                 field="confused"
                 min={1}
                 max={100}
