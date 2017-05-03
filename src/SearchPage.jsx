@@ -82,18 +82,35 @@ export class FacesGrid extends React.Component {
   }
   render(){
     const { hits } = this.props
-    // hits.map(function(hit) {
-    //   listItems += (<div className="sk-hits-grid-hit sk-hits-grid__item" data-qa="hit">
-    //       <img data-qa="face" className="sk-hits-grid-hit__face" src={hit._source.file}/>
-    //       <div data-qa="title" className="sk-hits-grid-hit__title">{hit._source.gender}, {hit._source.age}yrs, B:{hit._source.beauty}%, H:{hit._source.happiness}%</div>
-    //   </div>)
-    //   })
-    const listItems = hits.map((hit) =>
-      <div className="sk-hits-grid-hit sk-hits-grid__item" data-qa="hit">
+    const listItems = hits.map((hit) => {
+      let titleValues = [hit._source.gender, hit._source.age+"y"];
+      let titleValuesLong = [hit._source.gender, hit._source.age+"yrs\n\n"];
+      if (hit._source.happy) {
+        titleValues.push("H:"+Math.round(hit._source.happy));
+        titleValues.push("Happy:"+Math.round(hit._source.happy)+"%");
+      }
+      if (hit._source.sad) {
+        titleValues.push("S:"+Math.round(hit._source.sad));
+        titleValuesLong.push("Sad:"+Math.round(hit._source.sad)+"%");
+      }
+      if (hit._source.confused) {
+        titleValues.push("Co:"+Math.round(hit._source.confused));
+        titleValuesLong.push("Confused:"+Math.round(hit._source.confused)+"%");
+      }
+      if (hit._source.surprised) {
+        titleValues.push("S:"+Math.round(hit._source.surprised));
+        titleValuesLong.push("Surprised:"+Math.round(hit._source.surprised)+"%");
+      }
+      if (hit._source.calm) {
+        titleValues.push("Ca:"+hit._source.calm);
+        titleValuesLong.push("Calm:"+hit._source.calm+"%");
+      }
+      return <div className="sk-hits-grid-hit sk-hits-grid__item" data-qa="hit">
+          <div data-qa="facedata" className="sk-hits-grid-hit__facedata"><span>{titleValuesLong.join("\n")}</span></div>
           <img data-qa="face" className="sk-hits-grid-hit__face" src={hit._source.file}/>
-          <div data-qa="title" className="sk-hits-grid-hit__title">{hit._source.gender}, {hit._source.age}yrs, B:{hit._source.beauty}%, H:{hit._source.happiness}%</div>
+          <div data-qa="title" className="sk-hits-grid-hit__title">{titleValues.join(', ')}</div>
       </div>
-    );
+    });
     return (
       <div className="sk-hits-grid" data-qa="hits">
         <div  className="sk-hits-grid-hit sk-hits-grid__item btn-add btn-shoot"><a href="#" onClick={this.handlePictureClick}><img src="https://faceatlas.co/static/plus.svg" alt="+"></img></a></div>
