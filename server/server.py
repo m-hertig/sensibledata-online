@@ -121,9 +121,9 @@ def upload():
 
                 moodString = ""
                 for key,value in moods.iteritems():
-                    moodString += str(key).capitalize()+": "+str(value)+" <br>"
+                    moodString += str(key).capitalize()+": "+str(value)+"% <br>"
 
-                return "Analyzed your face!<br>Age: "+str(age)+" yrs<br>"+moodString
+                return "Analyzed your face!<br>"+str(sex)+" "+str(age)+" yrs<br>"+moodString
 
         except Exception as ex:
             print ex

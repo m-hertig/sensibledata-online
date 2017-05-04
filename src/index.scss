@@ -6,12 +6,12 @@ $color-light: #ffffff;
 //$color-text:rgba(00,28,225,0.5);
 $color-text:rgba(00,20,22,0.87);
 
-$color-happy:#ff00ff;
+$color-happy:#FFDD00;
 $color-sad:#805b37;
-$color-confused:#ff6600;
-$color-surprised:#ffcc00;
-$color-calm:#0000ff;
-$color-age:#1c1c1c;
+$color-confused:#FD4848;
+$color-surprised:#23FF91;
+$color-calm:#030381;
+$color-age:#1C1C1C;
 
 $color-backgound: $color-light;
 
@@ -56,7 +56,7 @@ $sk-list-secondary-text-color: $color-text;
 $sk-action-text-color: $color-text;
 $sk-action-active-color: #000;
 $sk-disabled-text-color: $color-text;
-$sk-remove-action-color: $color-red;
+$sk-remove-action-color: rgba($color-red,0.5);
 
 $sk-selector-background: none;
 $sk-selector-active-background: $color-blue;
@@ -82,10 +82,19 @@ $sk-border-radius: 3px;
     transform: scale3d(1, 1, 1);
   }
 
-  to {
-    transform: scale3d(0.5, 0.5, 0.5);
+  50% {
+
+      transform: scale3d(0.85, 0.85, 0.85);
   }
 
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+
+}
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
 }
 
 .pulse {
@@ -102,7 +111,8 @@ body .sk-select select {
   background-color: $color-light;
   font-family: $sk-font-family;
   font-weight: normal;
-  border: 2px dotted #ccc;
+  border: 1px solid;
+  border-radius: 0px;
 }
 
 .sk-select::after {
@@ -118,7 +128,7 @@ body .sk-select select {
 
 .rc-slider-dot-active,
 .rc-slider-handle:hover {
-  border-color: $color-red;
+  border-color: rgba($color-red,0.5);
 }
 
 .sk-reset-filters.is-disabled {
@@ -145,23 +155,24 @@ a:visited {
 }
 
 .btn-add {
-
-
     a {
-      border-radius: 5px;
       padding: 10px 30px;
       text-decoration: none;
-      color: $color-red;
       position: relative;
       display: inline-block;
-      border: 2px dotted $color-text;
+      border: 2px solid $color-text;
+      transition: all 0.3s ease-in;
     }
 
-    a:hover img {
-      animation-name: pulse;
-      animation-duration: 1s;
-      animation-fill-mode: both;
+    a:hover  {
+      border: 2px solid $color-text;
+      img {
+        animation-name: pulse;
+        animation-duration: 0.6s;
+        animation-fill-mode: both;
+        animation-iteration-count: infinite;
     }
+  }
 }
 
 .btn-close {
@@ -286,17 +297,19 @@ a:visited {
   position: absolute;
   width: 200px;
   height: 200px;
-  text-align: center;
   padding: 30px;
-  background: none;
+  background: rgba(255,255,255,0.7);
+
+    opacity: 0;
+    transition: visibility 0s, opacity 0.1s ease-in;
   span {
-    display: none;
+    cursor: default;
   }
   &:hover {
-      background: rgba(255,255,255,0.7);
-      span {
-        display: block;
-      }
+
+      visibility: visible;
+      opacity: 1;
+
   }
 }
 
@@ -307,6 +320,10 @@ a:visited {
 
 .sk-layout__filters .sk-panel {
   margin-bottom: 35px;
+}
+
+.snapshot-infos {
+  min-height: 78px;
 }
 
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
@@ -353,7 +370,7 @@ a:visited {
 
   .showInfos .snapshot-view  #snapshot-infos {
     padding: 20px;
-    margin-top: 90px;
+    margin-top: 95px;
   }
 
   .sk-hits-grid__item.btn-add {
@@ -540,6 +557,7 @@ a:visited {
   .sk-panel__header {
     color: $fancyColor;
   }
+
   .sk-range-histogram__bar,
   .sk-range-slider .rc-slider-track {
       background: rgba($fancyColor,0.4);
@@ -547,12 +565,20 @@ a:visited {
   .sk-range-histogram__bar.is-out-of-bounds {
         background: rgba($fancyColor,0.05);
   }
-  .sk-range-slider .rc-slider-handle {
-    border-color: rgba($fancyColor,0.5);
-    margin-left: -7px;
-    margin-top: -6px;
-    width: 16px;
-    height: 16px;
+  .sk-range-slider {
+    .rc-slider {
+      background-color: rgba($fancyColor,0.1);
+      .rc-slider-dot {
+        border-color: rgba($fancyColor,0.1);
+      }
+    }
+    .rc-slider-handle {
+      border-color: rgba($fancyColor,0.5);
+      margin-left: -7px;
+      margin-top: -6px;
+      width: 16px;
+      height: 16px;
+    }
   }
 }
 

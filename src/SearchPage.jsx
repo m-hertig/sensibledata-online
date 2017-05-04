@@ -83,32 +83,32 @@ export class FacesGrid extends React.Component {
   render(){
     const { hits } = this.props
     const listItems = hits.map((hit) => {
-      let titleValues = [hit._source.gender, hit._source.age+"y"];
+      let titleValues = [hit._source.gender+" "+hit._source.age+"y"];
       let titleValuesLong = [hit._source.gender, hit._source.age+"yrs\n\n"];
       if (hit._source.happy) {
-        titleValues.push("H:"+Math.round(hit._source.happy));
-        titleValues.push("Happy:"+Math.round(hit._source.happy)+"%");
+        titleValues.push("Ha:"+Math.round(hit._source.happy)+"%");
+        titleValuesLong.push("Happy:"+Math.round(hit._source.happy)+"%");
       }
       if (hit._source.sad) {
-        titleValues.push("S:"+Math.round(hit._source.sad));
+        titleValues.push("Sa:"+Math.round(hit._source.sad)+"%");
         titleValuesLong.push("Sad:"+Math.round(hit._source.sad)+"%");
       }
       if (hit._source.confused) {
-        titleValues.push("Co:"+Math.round(hit._source.confused));
+        titleValues.push("Co:"+Math.round(hit._source.confused)+"%");
         titleValuesLong.push("Confused:"+Math.round(hit._source.confused)+"%");
       }
       if (hit._source.surprised) {
-        titleValues.push("S:"+Math.round(hit._source.surprised));
+        titleValues.push("Su:"+Math.round(hit._source.surprised)+"%");
         titleValuesLong.push("Surprised:"+Math.round(hit._source.surprised)+"%");
       }
       if (hit._source.calm) {
-        titleValues.push("Ca:"+hit._source.calm);
+        titleValues.push("Ca:"+Math.round(hit._source.calm)+"%");
         titleValuesLong.push("Calm:"+hit._source.calm+"%");
       }
       return <div className="sk-hits-grid-hit sk-hits-grid__item" data-qa="hit">
           <div data-qa="facedata" className="sk-hits-grid-hit__facedata"><span>{titleValuesLong.join("\n")}</span></div>
           <img data-qa="face" className="sk-hits-grid-hit__face" src={hit._source.file}/>
-          <div data-qa="title" className="sk-hits-grid-hit__title">{titleValues.join(', ')}</div>
+          <div data-qa="title" className="sk-hits-grid-hit__title">{titleValues.join(' ')}</div>
       </div>
     });
     return (
@@ -171,6 +171,7 @@ export class TakePicture extends React.Component {
         searchkit.reloadSearch();
   }
 
+
   takeSnapshot() {
     Webcam.on('uploadProgress', function() {
       document.getElementById('snapshot-infos').innerHTML = "Trying to analyze your face. Please be patient.";
@@ -198,6 +199,7 @@ export class TakePicture extends React.Component {
             document.getElementById('snapshot-infos').innerHTML = text;
             document.getElementById('snapshot-infos').className = "";
             searchkit.reloadSearch();
+            document.getElementById('snapshot-button').style.display = "none";
           }
         } );
     } );
@@ -206,7 +208,7 @@ export class TakePicture extends React.Component {
   render() {
     return (
       <div className="snapshot-view" id="snapshot-view">
-      <p id="snapshot-infos" ref="snapshot-infos">Photo time! Your beauty, age and happiness will be judged automatically.</p>
+      <p id="snapshot-infos" ref="snapshot-infos">Take a picutre please. Your mood and age will be detected by Amazon Rekognition</p>
     <div className="portrait_wrapper" id="portrait-wrapper">
         <img className="head-img" id="head-img" src="https://faceatlas.co/static/face.svg" />
   		<div id="my_camera"></div>
@@ -272,9 +274,9 @@ componentWillMount() {
 		       </TopBar>*/}
 		      <LayoutBody className={this.state.showFilters}>
             <div className={ this.state.showInfos }>
-              <div className="modal-text"> <p>Face Atlas is a crowdsourced collection of portraits, that were judged by an algorithm. It is an experiment in privacy and computer people knowledge.</p>
+              <div className="modal-text"> <p>Face Atlas is a playful study of <a href="https://aws.amazon.com/rekognition/">Amazon Rekognition</a>'s definition of happiness and other emotions. A post-privacy examination of todays computer people knowledge.</p>
 <p>Made by <a href="https://twitter.com/m_hertig">m-hertig</a> using AWS, Rekognition, Elasticsearch, Searchkit & React</p>
-<p>Many thanks to <a href="https://twitter.com/paweloque">Pawel</a> for his support</p>
+<p>Many thanks to Pawel, JJ, Ben, Hupf and Josh for their help</p>
   <div className="btn-add"><a href="#" onClick={ this.handleInfoClick } >OK</a></div>
 </div>
             </div>
@@ -355,7 +357,8 @@ componentWillMount() {
               <Hits
                   hitsPerPage={50} listComponent={FacesGrid} handlePictureClick={this.state.handlePictureClick}
                   scrollTo="body" />
-		          <NoHits/>
+		          <NoHits translations={{
+        "NoHits.NoResultsFound":"Oh no. Nobody found with this set of filters." }}/>
 							<Pagination showNumbers={true}/>
 		        </LayoutResults>
 
