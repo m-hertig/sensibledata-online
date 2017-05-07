@@ -355,7 +355,7 @@ componentWillMount() {
 		            </ActionBarRow>
 		          </ActionBar>
               <Hits
-                  hitsPerPage={50} listComponent={FacesGrid} handlePictureClick={this.state.handlePictureClick}
+                  hitsPerPage={60} listComponent={FacesGrid} handlePictureClick={this.state.handlePictureClick}
                   scrollTo="body" />
 		          <NoHits translations={{
         "NoHits.NoResultsFound":"Oh no. Nobody found with this set of filters." }}/>

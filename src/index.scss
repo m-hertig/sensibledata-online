@@ -59,7 +59,7 @@ $sk-disabled-text-color: $color-text;
 $sk-remove-action-color: rgba($color-red,0.5);
 
 $sk-selector-background: none;
-$sk-selector-active-background: $color-blue;
+$sk-selector-active-background: $color-text;
 $sk-selector-border-color: #ccc;
 $sk-selector-text-color: black;
 $sk-selector-active-text-color: white;
@@ -160,12 +160,11 @@ a:visited {
       text-decoration: none;
       position: relative;
       display: inline-block;
-      border: 2px solid $color-text;
+      border: 2px dotted $color-text;
       transition: all 0.3s ease-in;
     }
 
     a:hover  {
-      border: 2px solid $color-text;
       img {
         animation-name: pulse;
         animation-duration: 0.6s;
@@ -240,7 +239,16 @@ a:visited {
 }
 
 .sk-toggle {
-  display: none;
+  max-height: 35px;
+  .sk-toggle-option {
+    border-color: $color-text;
+    &:first-child {
+      border-radius: 0;
+    }
+    &:last-child {
+      border-radius: 0;
+    }
+  }
 }
 
 .rc-tooltip {
