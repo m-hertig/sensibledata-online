@@ -200,6 +200,7 @@ export class TakePicture extends React.Component {
             document.getElementById('snapshot-infos').className = "";
             searchkit.reloadSearch();
             document.getElementById('snapshot-button').style.display = "none";
+            document.getElementById('close-takepicture-button').style.display = "block";
           }
         } );
     } );

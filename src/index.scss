@@ -336,6 +336,11 @@ a:visited {
 
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
 
+  body {
+    overflow: hidden;
+     width: 100%;
+  }
+
   .filter-buttons {
     display: block;
     height: 70px;
