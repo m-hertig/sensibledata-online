@@ -200,7 +200,6 @@ export class TakePicture extends React.Component {
             document.getElementById('snapshot-infos').className = "";
             searchkit.reloadSearch();
             document.getElementById('snapshot-button').style.display = "none";
-            document.getElementById('close-takepicture-button').style.display = "block";
           }
         } );
     } );
@@ -275,7 +274,7 @@ componentWillMount() {
 		       </TopBar>*/}
 		      <LayoutBody className={this.state.showFilters}>
             <div className={ this.state.showInfos }>
-              <div className="modal-text"> <p>Face Atlas is a playful study of <a href="https://aws.amazon.com/rekognition/">Amazon Rekognition</a>'s definition of happiness and other emotions. A post-privacy examination of todays computer people knowledge.</p>
+              <div className="modal-text"> <p>Face Atlas is a playful study of <a href="https://aws.amazon.com/rekognition/">Amazon Rekognition</a>'s definition of happiness and other emotions. An experiment in todays computer people knowledge.</p>
 <p>Made by <a href="https://twitter.com/m_hertig">m-hertig</a> using AWS, Rekognition, Elasticsearch, Searchkit & React</p>
 <p>Many thanks to Pawel, JJ, Ben, Hupf and Josh for their help</p>
   <div className="btn-add"><a href="#" onClick={ this.handleInfoClick } >OK</a></div>
@@ -337,9 +336,12 @@ componentWillMount() {
                 <div className="sk-panel__header">Sort by</div>
                 <SortingSelector options={[
                   {label:"Newest first", field:"timestamp", order:"desc", defaultOption:true},
-                  {label:"Beauty", field:"beauty", order:"desc"},
-                  {label:"Age", field:"age", order:"desc"},
-                  {label:"Happiness", field:"happiness", order:"desc"}
+                  {label:"Happy", field:"happy", order:"desc"},
+                  {label:"Sad", field:"sad", order:"desc"},
+                  {label:"Confused", field:"confused", order:"desc"},
+                  {label:"Surprised", field:"surprised", order:"desc"},
+                  {label:"Calm", field:"calm", order:"desc"},
+                  {label:"Age", field:"age", order:"desc"}
                 ]}/>
                 <div className="btn-info"><a onClick={ this.handleInfoClick } href="#">?</a></div>
                 </span>
