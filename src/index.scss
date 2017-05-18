@@ -13,19 +13,12 @@ $color-third:#2929b3;
 $color-fourth: #ff2800;
 
 $color-happy:#f9de2e;
-$color-sad:#8a7c6f;
+$color-sad:#1C1C1C;
 $color-confused:#FD4848;
 $color-surprised:#4ac487;
 $color-calm:#2929b3;
-$color-age:#1C1C1C;
+$color-age:#cccccc;
 
-
-$color-happy:$color-secondary;
-$color-sad:$color-secondary;
-$color-confused:$color-secondary;
-$color-surprised:$color-secondary;
-$color-calm:$color-secondary;
-$color-age:$color-secondary;
 
 
 
@@ -243,7 +236,7 @@ a:visited {
   color: $color-secondary;
 }
 a:hover {
-  color: $color-third;
+  color: $color-fourth;
 }
 
 .btn-add {
@@ -252,11 +245,11 @@ a:hover {
       text-decoration: none;
       position: relative;
       display: inline-block;
-      border: 2px dotted $color-text;
-      transition: all 0.3s ease-in;
+      border: 2px dotted $color-secondary;
     }
 
     a:hover  {
+      border-color: $color-fourth;
       img {
         animation-name: pulse;
         animation-duration: 0.6s;
@@ -355,12 +348,13 @@ a:hover {
   cursor: pointer;
   a {
     border-radius: 50%;
-    padding: 2px 0px;
+    padding: 6px 18px;
     text-decoration: none;
     position: relative;
     display: inline-block;
     margin-top: 30px;
     font-size: 1.8rem;
+    border: 2px dotted $color-secondary;
 }
 }
 
@@ -472,8 +466,7 @@ a:hover {
         background-color: $color-light;
         z-index: 9999;
         background-position: 50% 50%;
-        border: 1px solid black;
-        box-shadow: 1px 1px 3px lightgrey;
+        border: 2px dotted $color-secondary;
       }
     }
     span.sidebar-filters {
@@ -608,7 +601,7 @@ a:hover {
   h1 {margin:auto;text-align: center;display:none;}
   h2, h3 { margin-top:0; }
   form { margin-top: 15px; }
-  #snapshot-button {margin: auto; animation-play-state: paused;}
+  #snapshot-button {margin: auto; padding: 36px 18px; border-radius: 50%; animation-play-state: paused;}
   #snapshot-button:hover {animation-play-state: running;}
   form > input { margin-right: 15px; }
   #results { float:right; margin:20px; padding:20px; border:1px solid; background:#ccc; }
@@ -668,7 +661,7 @@ a:hover {
   }
   .sk-range-histogram__bar,
   .sk-range-slider .rc-slider-track {
-      background: rgba($fancyColor,0.6);
+      background: rgba($fancyColor,0.8);
   }
   .sk-range-histogram__bar.is-out-of-bounds {
         background: rgba($fancyColor,0.05);
@@ -694,7 +687,7 @@ a:hover {
 }
 
 @mixin filterColor($fancyColor) {
-  background: rgba($fancyColor,0.4);
+  background: rgba($fancyColor,0.6);
   color: $color-primary;
 }
 

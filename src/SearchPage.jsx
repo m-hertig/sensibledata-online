@@ -108,7 +108,7 @@ export class FacesGrid extends React.Component {
       return <div className="sk-hits-grid-hit sk-hits-grid__item" data-qa="hit">
           <div data-qa="facedata" className="sk-hits-grid-hit__facedata"><span>{titleValuesLong.join("  \r\n")}</span></div>
           <img data-qa="face" className="sk-hits-grid-hit__face" src={hit._source.file}/>
-          <div data-qa="title" className="sk-hits-grid-hit__title">{titleValues.join(' ')}</div>
+          <div data-qa="title" className="sk-hits-grid-hit__title">{titleValues.join('  ')}</div>
       </div>
     });
     return (
@@ -208,7 +208,7 @@ export class TakePicture extends React.Component {
   render() {
     return (
       <div className="snapshot-view" id="snapshot-view">
-      <p id="snapshot-infos" ref="snapshot-infos">Take a picutre please. Your mood and age will be detected by Amazon Rekognition</p>
+      <p id="snapshot-infos" ref="snapshot-infos">Photo Time! Your mood and age will be detected by Amazon Rekognition</p>
     <div className="portrait_wrapper" id="portrait-wrapper">
         <img className="head-img" id="head-img" src="https://faceatlas.co/static/face.svg" />
   		<div id="my_camera"></div>
@@ -274,8 +274,9 @@ componentWillMount() {
 		       </TopBar>*/}
 		      <LayoutBody className={this.state.showFilters}>
             <div className={ this.state.showInfos }>
-              <div className="modal-text"> <p>Face Atlas is a playful study of <a href="https://aws.amazon.com/rekognition/">Amazon Rekognition</a>'s definition of happiness and other emotions. An experiment in todays computer people knowledge.</p>
+              <div className="modal-text"> <p>Face Atlas is a playful study of <a href="https://aws.amazon.com/rekognition/">Amazon Rekognition</a>'s definition of happiness and other emotions.<br/>A post-privacy experiment in computer people knowledge.</p>
 <p>Made by <a href="https://twitter.com/m_hertig">m-hertig</a> using AWS, Rekognition, Elasticsearch, Searchkit & React</p>
+<p>Font: Bubble by <a href="mailto:christian@opak.cc">Christian Baltzer</a></p>
 <p>Many thanks to Pawel, JJ, Ben, Hupf and Josh for their help</p>
   <div className="btn-add"><a href="#" onClick={ this.handleInfoClick } >OK</a></div>
 </div>
@@ -288,7 +289,7 @@ componentWillMount() {
             <RangeFilter
                 id="happy"
                 field="happy"
-                min={0}
+                min={1}
                 max={100}
                 showHistogram={true}
                 title="Happy %"/>
@@ -309,7 +310,7 @@ componentWillMount() {
             <RangeFilter
                 id="surprised"
                 field="surprised"
-                min={1}
+                min={0}
                 max={100}
                 showHistogram={true}
                 title="Surprised %"/>
