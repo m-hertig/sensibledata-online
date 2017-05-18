@@ -85,20 +85,18 @@ $sk-light-weight: 300;
 
 @font-face {
     font-family: 'bubblemedium';
-    src: url('bubble/bubble-medium-webfont.woff2') format('woff2'),
-         url('bubble/bubble-medium-webfont.woff') format('woff');
+    src: url('/static/bubble/bubble-medium-webfont.woff2') format('woff2'),
+         url('/static/bubble-medium-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 
 }
 
 
-
-
 @font-face {
     font-family: 'bubbleregular';
-    src: url('bubble/bubble-regular-webfont.woff2') format('woff2'),
-         url('bubble/bubble-regular-webfont.woff') format('woff');
+    src: url('/static/bubble/bubble-regular-webfont.woff2') format('woff2'),
+         url('/static/bubble/bubble-regular-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 
