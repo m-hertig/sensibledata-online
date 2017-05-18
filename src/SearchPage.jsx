@@ -106,7 +106,7 @@ export class FacesGrid extends React.Component {
         titleValuesLong.push("Calm:"+hit._source.calm+"%");
       }
       return <div className="sk-hits-grid-hit sk-hits-grid__item" data-qa="hit">
-          <div data-qa="facedata" className="sk-hits-grid-hit__facedata"><span>{titleValuesLong.join("\n")}</span></div>
+          <div data-qa="facedata" className="sk-hits-grid-hit__facedata"><span>{titleValuesLong.join("  \r\n")}</span></div>
           <img data-qa="face" className="sk-hits-grid-hit__face" src={hit._source.file}/>
           <div data-qa="title" className="sk-hits-grid-hit__title">{titleValues.join(' ')}</div>
       </div>
