@@ -71,9 +71,10 @@ def upload():
 
                     #beauty = str(int(jsondata["face_detection"][0]["beauty"]*100))
                     # 0 = female, 1 = male
-                    if firstPerson["Gender"]["Value"]=="Male":
+                    sex = firstPerson["Gender"]["Value"]
+                    if sex == "MALE":
                         sex = "M"
-                    else:
+                    elif sex == "FEMALE":
                         sex = "F"
                     age = str(int((firstPerson["AgeRange"]["High"] + firstPerson["AgeRange"]["Low"])/2))
                     #smile = jsondata["face_detection"][0]["smile"]
