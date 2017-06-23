@@ -12,6 +12,7 @@ from configobj import ConfigObj
 import certifi
 import boto3, pprint
 from PIL import Image
+from geoip import geolite2
 
 UPLOAD_FOLDER = './uploads'
 
@@ -47,6 +48,12 @@ def upload():
                 filename = secure_filename(str(uuid.uuid4())+".jpg")
                 filePath = os.path.join(application.config['UPLOAD_FOLDER'], filename)
                 webcam_file_image.save(filePath,optimize=True,quality=80)
+
+            clientIPAddress = request.headers.get('X-Forwarded-For', request.remote_addr)
+            print clientIPAddress
+            match = geolite2.lookup(clientIPAddress)
+            if (match is not None):
+                print match.country
 
 		picture_url = configobj["pictures_url"]+filename
                 try:
