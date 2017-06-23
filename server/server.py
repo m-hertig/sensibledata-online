@@ -11,6 +11,7 @@ import requests, json, sys
 from configobj import ConfigObj
 import certifi
 import boto3, pprint
+from PIL import Image
 
 UPLOAD_FOLDER = './uploads'
 
@@ -42,9 +43,10 @@ def upload():
         try:
             webcam_file = request.files['webcam']
             if webcam_file:
+                webcam_file_image = Image.open(webcam_file)
                 filename = secure_filename(str(uuid.uuid4())+".jpg")
                 filePath = os.path.join(application.config['UPLOAD_FOLDER'], filename)
-                webcam_file.save(filePath)
+                webcam_file_image.save(filePath,optimize=True,quality=80)
 
 		picture_url = configobj["pictures_url"]+filename
                 try:
