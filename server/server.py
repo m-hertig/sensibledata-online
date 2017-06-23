@@ -49,12 +49,6 @@ def upload():
                 filePath = os.path.join(application.config['UPLOAD_FOLDER'], filename)
                 webcam_file_image.save(filePath,optimize=True,quality=80)
 
-            clientIPAddress = request.headers.get('X-Forwarded-For', request.remote_addr)
-            print clientIPAddress
-            match = geolite2.lookup(clientIPAddress)
-            if (match is not None):
-                print match.country
-
 		picture_url = configobj["pictures_url"]+filename
                 try:
                     print "Trying to get Face Analysis from AWS Rekognition"
@@ -101,8 +95,15 @@ def upload():
                 #calculate happiness
                 #happiness = 50+(moods['happy']/2)-(moods['sad']/2)
 
+                clientIPAddress = request.headers.get('X-Forwarded-For', request.remote_addr)
+                print clientIPAddress
+                country = "Unknown"
+                match = geolite2.lookup(clientIPAddress)
+                if (match is not None):
+                    country = match.country
+
                 # here comes the elasticsearch index command
-                data = {'age':age, 'gender':sex, 'file':configobj["pictures_url"]+filename, 'timestamp':time.time()}
+                data = {'age':age, 'gender':sex, 'file':configobj["pictures_url"]+filename, 'timestamp':time.time(), 'country':country}
                 # append moods to data
                 data.update(moods)
                 print data
