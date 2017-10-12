@@ -11,6 +11,7 @@ import requests, json, sys
 from configobj import ConfigObj
 import certifi
 import boto3, pprint
+import boto3.session
 from PIL import Image
 from geoip import geolite2
 
@@ -49,13 +50,16 @@ def upload():
                 filePath = os.path.join(application.config['UPLOAD_FOLDER'], filename)
                 webcam_file_image.save(filePath,optimize=True,quality=80)
 
-		picture_url = configobj["pictures_url"]+filename
                 try:
                     print "Trying to get Face Analysis from AWS Rekognition"
                     rekognition = boto3.client('rekognition')
 
                     with open(filePath, 'rb') as source_image:
                         source_bytes = source_image.read()
+                        botoSession = boto3.session.Session(region_name='eu-central-1')
+                        s3client = botoSession.client('s3', config= boto3.session.Config(signature_version='s3v4'))
+                        bucket_name = "sensiblebucket";
+                        s3client.upload_fileobj(source_image, bucket_name, filename)
 
                     response = rekognition.detect_faces(
                                    Image={ 'Bytes': source_bytes },
