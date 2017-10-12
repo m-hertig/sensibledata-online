@@ -59,7 +59,7 @@ def upload():
                         botoSession = boto3.session.Session(region_name='eu-central-1')
                         s3client = botoSession.client('s3', config= boto3.session.Config(signature_version='s3v4'))
                         bucket_name = "sensiblebucket";
-                        s3client.upload_fileobj(source_image, bucket_name, filename)
+                        s3client.upload_fileobj(source_image, bucket_name, "uploads/"+filename)
 
                     response = rekognition.detect_faces(
                                    Image={ 'Bytes': source_bytes },
