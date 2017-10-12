@@ -28,7 +28,7 @@ const customHitStats = (props) => {
     return (
         <div className={bemBlocks.container()} data-qa="hits-stats">
             <div className={bemBlocks.container("info")} data-qa="info">
-                {hitsCount} People found
+                {hitsCount} Faces found
             </div>
       </div>
     )
@@ -84,10 +84,10 @@ export class FacesGrid extends React.Component {
     const { hits } = this.props
     const listItems = hits.map((hit) => {
       let titleValues = [hit._source.gender+" "+hit._source.age+"y"];
-      let titleValuesLong = [hit._source.gender, hit._source.age+"yrs\n\n"];
+      let titleValuesLong = [hit._source.gender+",  "+hit._source.age+"yrs"];
       if (hit._source.happy) {
         titleValues.push("Ha:"+Math.round(hit._source.happy)+"%");
-        titleValuesLong.push("Happy:"+Math.round(hit._source.happy)+"%");
+        titleValuesLong.push("Happy:"+Math.round(hit._source.happy)+'%');
       }
       if (hit._source.sad) {
         titleValues.push("Sa:"+Math.round(hit._source.sad)+"%");
@@ -105,8 +105,11 @@ export class FacesGrid extends React.Component {
         titleValues.push("Ca:"+Math.round(hit._source.calm)+"%");
         titleValuesLong.push("Calm:"+hit._source.calm+"%");
       }
+      const titleValuesListItems = titleValuesLong.map((titleValue) =>
+  <li>{titleValue}</li>
+);
       return <div className="sk-hits-grid-hit sk-hits-grid__item" data-qa="hit">
-          <div data-qa="facedata" className="sk-hits-grid-hit__facedata"><span>{titleValuesLong.join("  \r\n")}</span></div>
+          <div data-qa="facedata" className="sk-hits-grid-hit__facedata"><ul>{titleValuesListItems}</ul></div>
           <img data-qa="face" className="sk-hits-grid-hit__face" src={hit._source.file}/>
           <div data-qa="title" className="sk-hits-grid-hit__title">{titleValues.join('  ')}</div>
       </div>

@@ -117,7 +117,7 @@ $sk-font-family: -apple-system, BlinkMacSystemFont,
 $sk-font-family: 'Space Mono', monospace;
 
 
-$sk-font-family: 'bubblemedium', monospace;
+$sk-font-family: 'bubblemedium', sans-serif;
 
 
 
@@ -144,11 +144,11 @@ $sk-selector-active-text-color: white;
 
 $sk-selected-filters-background: #eee;
 
-$sk-heading-font-size: 0.92rem;
-$sk-text-font-size: 0.92rem;
-$sk-list-font-size: 0.92rem;
-$sk-action-font-size: 0.92rem;
-$sk-list-secondary-font-size: 0.85rem;
+$sk-heading-font-size: 1rem;
+$sk-text-font-size: 1rem;
+$sk-list-font-size: 1rem;
+$sk-action-font-size: 1rem;
+$sk-list-secondary-font-size: 1rem;
 
 $sk-border-radius: 3px;
 
@@ -191,6 +191,11 @@ body .sk-select select {
   font-weight: normal;
   border: 1px solid;
   border-radius: 0px;
+  font-size: 1rem;
+}
+
+.sk-item-list-option__text {
+  font-size: 1rem;
 }
 
 .sk-select::after {
@@ -210,7 +215,6 @@ body .sk-select select {
 
 .rc-slider-dot-active,
 .rc-slider-handle:hover {
-  border-color: rgba($color-red,0.5);
 }
 
 .sk-reset-filters.is-disabled {
@@ -249,7 +253,6 @@ a:hover {
     }
 
     a:hover  {
-      border-color: $color-third;
       img {
         animation-name: pulse;
         animation-duration: 0.6s;
@@ -291,22 +294,27 @@ a:hover {
 
 .sk-selected-filters-option__name,
 .sk-selected-filters-option__remove-action {
+  font-size: 1rem;
   color: $color-text;
   border-left: none;
+  &:hover {
+    color: inherit;
+  }
 }
 
 .sk-hits-grid__item {
   margin-bottom: 0;
-  padding: 10px 20px 0 0;
+  padding: 15px 15px 0 0;
 }
 
 
 .sk-hits-grid-hit {
-      flex: 220px 0 0;
+      flex: 200px 0 0;
 }
 .sk-hits-grid-hit__title {
-  font-size: 12px;
+  font-size: 1rem;
   margin-top: 1px;
+  display: none;
 }
 
 
@@ -391,8 +399,20 @@ a:hover {
   position: absolute;
   width: 200px;
   height: 200px;
-  padding: 30px;
+  padding: 12px;
   background: rgba(255,255,255,0.7);
+
+  ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    position: absolute;
+    bottom: 10px;
+
+    li {
+      padding-bottom: 2px;
+    }
+  }
 
     opacity: 0;
     transition: visibility 0s, opacity 0.1s ease-in;
@@ -420,6 +440,11 @@ a:hover {
   min-height: 78px;
 }
 
+.rc-slider-mark {
+  font-size: 1rem;
+  padding-top: 2px;
+}
+
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
 
   body {
@@ -437,7 +462,7 @@ a:hover {
   }
 
   .sk-panel__header {
-    font-size: 0.92rem;
+    font-size: 1rem;
   }
 
   .sk-layout__filters .sk-panel {
@@ -650,7 +675,7 @@ a:hover {
 
 .sk-range-histogram__bar,
 .sk-range-slider .rc-slider-track {
-    border-right: 1px solid $color-backgound;
+    border-right: 4px solid $color-backgound;
     background: hsla(100,5%,62%,.2);
 }
 
@@ -687,7 +712,7 @@ a:hover {
 }
 
 @mixin filterColor($fancyColor) {
-  background: rgba($fancyColor,0.6);
+  background: rgba($fancyColor,1);
   color: $color-primary;
 }
 
@@ -714,7 +739,11 @@ a:hover {
   @include filterColor($color-happy);
 }
 .selected-filter--sad {
-    @include filterColor($color-sad);
+    background: $color-sad;
+    .sk-selected-filters-option__name,
+    .sk-selected-filters-option__remove-action {
+      color: white;
+    }
 }
 .selected-filter--confused {
     @include filterColor($color-confused);
