@@ -30,7 +30,7 @@ export class FacesGrid extends React.Component {
     );
     return (
       <div className="sk-hits-grid" data-qa="hits">
-        <div  className="sk-hits-grid-hit sk-hits-grid__item btn-add btn-shoot"><a href="#" onClick={this.handlePictureClick}><img src="https://faceatlas.co/static/plus.svg" alt="camera"></img></a></div><div className="btn-filter" onClick={ this.handleFilterClick }></div>
+        <div  className="sk-hits-grid-hit sk-hits-grid__item btn-add btn-shoot"><a href="#" onClick={this.handlePictureClick}><img src="https://mixed-emotions.co/static/plus.svg" alt="camera"></img></a></div><div className="btn-filter" onClick={ this.handleFilterClick }></div>
        {listItems}
     </div>
     )

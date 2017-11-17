@@ -5,7 +5,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 	<title>Add yourself</title>
-	<link rel="stylesheet" href="https://faceatlas.co/dist/styles.css">
+	<link rel="stylesheet" href="https://mixed-emotions.co/dist/styles.css">
 </head>
 <body class="snapshot-view">
 
@@ -76,7 +76,7 @@ window.onload = function() {	Webcam.on( 'error', function(err) {
 				// display results in page
 				document.getElementById('my_camera').innerHTML =
 					'<img src="'+data_uri+'"/>';
-						Webcam.upload(data_uri, 'https://faceatlas.co/upload', function(code, text) {
+						Webcam.upload(data_uri, 'https://mixed-emotions.co/upload', function(code, text) {
 					//Webcam.upload(data_uri, 'http://localhost:5000/upload', function(code, text) {
 						console.log('upload complete. code: '+code+' text: '+text);
 						document.getElementById('snapshot-infos').innerHTML = text;

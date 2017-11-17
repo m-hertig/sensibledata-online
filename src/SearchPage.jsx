@@ -28,7 +28,7 @@ const customHitStats = (props) => {
     return (
         <div className={bemBlocks.container()} data-qa="hits-stats">
             <div className={bemBlocks.container("info")} data-qa="info">
-                {hitsCount} Faces found
+                {hitsCount} Faces
             </div>
       </div>
     )
@@ -116,7 +116,7 @@ export class FacesGrid extends React.Component {
     });
     return (
       <div className="sk-hits-grid" data-qa="hits">
-        <div  className="sk-hits-grid-hit sk-hits-grid__item btn-add btn-shoot"><a href="#" onClick={this.handlePictureClick}><img src="https://faceatlas.co/static/plus.svg" alt="+"></img></a></div>
+        <div  className="sk-hits-grid-hit sk-hits-grid__item btn-add btn-shoot"><a href="#" onClick={this.handlePictureClick}><img src="https://mixed-emotions.co/static/plus.svg" alt="+"></img></a></div>
        {listItems}
     </div>
     )
@@ -188,7 +188,7 @@ export class TakePicture extends React.Component {
       // document.getElementById('my_camera').innerHTML =
       //   '<img src="'+data_uri+'"/>';
       Webcam.freeze()
-          Webcam.upload(data_uri, 'https://faceatlas.co/upload', function(code, text) {
+          Webcam.upload(data_uri, 'https://mixed-emotions.co/upload', function(code, text) {
         //Webcam.upload(data_uri, 'http://localhost:5000/upload', function(code, text) {
           console.log('upload complete. code: '+code+' text: '+text);
           document.getElementById('snapshot-infos').className = "";
@@ -213,7 +213,7 @@ export class TakePicture extends React.Component {
       <div className="snapshot-view" id="snapshot-view">
       <p id="snapshot-infos" ref="snapshot-infos">Photo Time! Your mood and age will be detected by Amazon Rekognition</p>
     <div className="portrait_wrapper" id="portrait-wrapper">
-        <img className="head-img" id="head-img" src="https://faceatlas.co/static/face.svg" />
+        <img className="head-img" id="head-img" src="https://mixed-emotions.co/static/face.svg" />
   		<div id="my_camera"></div>
   </div>	<div className="snapshot-wrapper btn-add" id="snapshot-wrapper">
   		<a href="#" id="snapshot-button" onClick={ this.takeSnapshot }>Cheese!</a>
@@ -265,7 +265,7 @@ componentWillMount() {
         {this.state.showTakePicture ? (
           <div className="showInfos">
             <div className="btn-close"><a href="#" onClick={ this.handlePictureClick } >
-                <img className="close-img" src="https://faceatlas.co/static/close.svg" /></a></div>
+                <img className="close-img" src="https://mixed-emotions.co/static/close.svg" /></a></div>
             <div className="modal-snap"><TakePicture />
         </div>
         </div>
@@ -277,7 +277,7 @@ componentWillMount() {
 		       </TopBar>*/}
 		      <LayoutBody className={this.state.showFilters}>
             <div className={ this.state.showInfos }>
-              <div className="modal-text"> <p>Face Atlas is a playful study of <a href="https://aws.amazon.com/rekognition/">Amazon Rekognition</a>'s definition of happiness and other emotions.<br/>A post-privacy experiment in computer people knowledge.</p>
+              <div className="modal-text"> <p>Mixed Emotions is a playful study of <a href="https://aws.amazon.com/rekognition/">Amazon Rekognition</a>'s definition of happiness and other emotions.<br/>A post-privacy experiment in computer people knowledge.</p>
 <p>Made by <a href="https://twitter.com/m_hertig">m-hertig</a> using AWS, Rekognition, Elasticsearch, Searchkit & React</p>
 <p>Font: Bubble by <a href="mailto:christian@opak.cc">Christian Baltzer</a></p>
 <p>Many thanks to Pawel, JJ, Ben, Hupf and Josh for their help</p>
