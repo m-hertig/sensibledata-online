@@ -420,7 +420,8 @@ a:hover {
   span {
     cursor: default;
   }
-  &:hover {
+  &:hover,
+  &:active {
 
       visibility: visible;
       opacity: 1;
@@ -470,7 +471,8 @@ a:hover {
     margin-bottom: 16px;
   }
 
-  .sk-hits-grid-hit__facedata:hover {
+  .sk-hits-grid-hit__facedata:hover,
+  .sk-hits-grid-hit__facedata:active {
 
       visibility: hidden;
       opacity: 0;
