@@ -9,11 +9,13 @@ import {
     SelectedFilters, ResetFilters, ItemHistogramList,
     Layout, LayoutBody, LayoutResults, TopBar, ItemCheckboxList, TagCloud,
     SideBar, ActionBar, ActionBarRow, InputFilter, PageSizeSelector, Toggle,
-    Tabs, ItemList, CheckboxItemList, DynamicRangeFilter, ViewSwitcherToggle, ViewSwitcherHits
+    Tabs, ItemList, CheckboxItemList, DynamicRangeFilter, ViewSwitcherToggle, ViewSwitcherHits, TermQuery, FilteredQuery, BoolMust, BoolMustNot
 } from "searchkit";
 
 require("./index.scss");
 
+
+let initialShowTakePicture = false;
 let showTakePicture = false;
 // a "reducer" that handleshowTakePicture some events and return a state
 function takePictureToggle(showTakePicture = false, action) {
@@ -36,7 +38,14 @@ const customHitStats = (props) => {
 
 
 const host = "https://search-sensibledata-mnmvjeckzqxbuqjpnrlamqgxhu.eu-central-1.es.amazonaws.com/faces";
-const searchkit = new SearchkitManager(host);
+const searchkit = new SearchkitManager(host)
+searchkit.addDefaultQuery((query)=> {
+    return query.addQuery(FilteredQuery({
+      filter:BoolMust([
+        TermQuery("event", "sheffield")
+      ])
+    }))
+  });
 
 // const AlbumHitsGridItem = (props)=> {
 //   const {result} = props;
