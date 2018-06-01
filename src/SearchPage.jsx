@@ -41,7 +41,7 @@ const host = "https://search-sensibledata-mnmvjeckzqxbuqjpnrlamqgxhu.eu-central-
 const searchkit = new SearchkitManager(host)
 searchkit.addDefaultQuery((query)=> {
     return query.addQuery(FilteredQuery({
-      filter:BoolMust([
+      filter:BoolMustNot([
         TermQuery("event", "sheffield")
       ])
     }))
