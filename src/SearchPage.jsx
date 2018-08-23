@@ -42,7 +42,7 @@ const searchkit = new SearchkitManager(host)
 searchkit.addDefaultQuery((query)=> {
     return query.addQuery(FilteredQuery({
       filter:BoolMustNot([
-        TermQuery("event", "sheffield")
+        TermQuery("event", "phi")
       ])
     }))
   });
@@ -220,7 +220,7 @@ export class TakePicture extends React.Component {
   render() {
     return (
       <div className="snapshot-view" id="snapshot-view">
-      <p id="snapshot-infos" ref="snapshot-infos">Photo Time! Your mood and age will be detected by Amazon Rekognition</p>
+      <p id="snapshot-infos" ref="snapshot-infos"> </p>
     <div className="portrait_wrapper" id="portrait-wrapper">
         <img className="head-img" id="head-img" src="https://mixed-emotions.co/static/face.svg" />
   		<div id="my_camera"></div>
@@ -237,7 +237,7 @@ export class SearchPage extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { showFilters: "hideFilters", showInfos: "hideInfos", showTakePicture: false };
+    this.state = { showFilters: "hideFilters", showInfos: "hideInfos", showTakePicture: false, initialShowTakePicture: false };
     this.handleFilterClick = this.handleFilterClick.bind(this);
     this.handleInfoClick = this.handleInfoClick.bind(this);
     this.handlePictureClick = this.handlePictureClick.bind(this);
@@ -267,23 +267,32 @@ componentWillMount() {
 
 
 	render(){
+
+    let takePictureContent = null;
+    if (this.state.initialShowTakePicture) {
+      takePictureContent =           <div className="showInfos">
+                  <div className="modal-snap">
+                  <p>Welcome. Mixed Emotions is an alternative, AI driven social network. To access it you must contribute a valid face via webcam.</p>
+                  <TakePicture />
+              </div>
+              </div>;
+    } else if (this.state.showTakePicture) {
+          takePictureContent =           <div className="showInfos">
+                      <div className="btn-close"><a href="#" onClick={ this.handlePictureClick } >
+                          <img className="close-img" src="https://mixed-emotions.co/static/close.svg" /></a></div>
+                      <div className="modal-snap"><TakePicture />
+                  </div>
+                  </div>;
+        }
 		return (
 			<SearchkitProvider searchkit={searchkit}>
 		    <Layout>
 
         {this.state.showTakePicture ? (
-          <div className="showInfos">
-            <div className="btn-close"><a href="#" onClick={ this.handlePictureClick } >
-                <img className="close-img" src="https://mixed-emotions.co/static/close.svg" /></a></div>
-            <div className="modal-snap"><TakePicture />
-        </div>
-        </div>
-        ) :
-           null
-        }
-		      {/*<TopBar>
-          <img src="logo.png" alt="logo" />
-		       </TopBar>*/}
+          takePictureContent
+
+      ) : (
+
 		      <LayoutBody className={this.state.showFilters}>
             <div className={ this.state.showInfos }>
               <div className="modal-text"> <p>Mixed Emotions is a playful study of <a href="https://aws.amazon.com/rekognition/">Amazon Rekognition</a>'s definition of happiness and other emotions.<br/>A post-privacy experiment in computer people knowledge.</p>
@@ -345,7 +354,13 @@ componentWillMount() {
 								title="Gender"
 								field="gender"
 								listComponent={ItemHistogramList}
-                size={2}/>
+                />
+                <MenuFilter
+                  id="country"
+                  title="country"
+                  field="country"
+                  listComponent={ItemHistogramList}
+                  />
                 <div className="sk-panel__header">Sort by</div>
                 <SortingSelector options={[
                   {label:"Newest first", field:"timestamp", order:"desc", defaultOption:true},
@@ -379,8 +394,11 @@ componentWillMount() {
 		        </LayoutResults>
 
 		      </LayoutBody>
-		    </Layout>
-		  </SearchkitProvider>
+)
+
+   }
+   </Layout>
+ </SearchkitProvider>
 		)
 	}
 }
